@@ -5,18 +5,18 @@ using Cinemachine;
 
 public class CameraZone : MonoBehaviour
 {
-    CinemachineVirtualCamera camera;
+    private CinemachineVirtualCamera zoneCamera;
     // Start is called before the first frame update
 
     private void Awake()
     {
-        camera = GetComponent<CinemachineVirtualCamera>();
+        zoneCamera = GetComponent<CinemachineVirtualCamera>();
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject.CompareTag("Player"))
         {
-            camera.enabled = true;
+            zoneCamera.enabled = true;
             Debug.Log("Entering camera zone");
         }
     }
@@ -25,7 +25,7 @@ public class CameraZone : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            camera.enabled = false;
+            zoneCamera.enabled = false;
             Debug.Log("Exiting camera zone");
         }
     }
