@@ -27,5 +27,5 @@ public class PathNode
         fCost = gCost + hCost;
     }
 
-    public Vector2 GetCoords() { return new Vector2(x, y); }
+    public Vector3 GetCoords() { return new Vector3(x, y,0); }
 }

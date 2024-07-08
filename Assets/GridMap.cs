@@ -45,7 +45,7 @@ public class GridMap : MonoBehaviour
         }
         foreach (PathNode node in grid.GetAllGridObjects())
         {
-            Vector3 pos = node.GetCoords();
+            Vector3 pos = node.GetCoords() + transform.position;
             pos.x += cellSize / 2;
             pos.y += cellSize / 2;
 

@@ -5,7 +5,7 @@ using RobotGame.States;
 using RobotGame;
 public class Enemy : EnemyStateMachine
 {
-    [SerializeField] public int MoveSpeed { get; private set; }
+    [SerializeField] public int moveSpeed;
     [SerializeField] public Transform targetLocation;
     private Transform m_targetLocation;
 

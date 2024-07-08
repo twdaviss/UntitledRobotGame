@@ -25,27 +25,27 @@ namespace RobotGame
             {
                 for (int y = 0; y < gridArray.GetLength(1); y++)
                 {
-                    gridArray[x, y] = createGridObject(this, x + (int)originPosition.x, y + (int)originPosition.y);
+                    gridArray[x, y] = createGridObject(this, x, y);
                 }
             }
         }
 
         private Vector3 GetWorldPosition(int x, int y)
         {
-            return new Vector3(x, y, 1) * cellSize + originPosition;
+            return new Vector3(x, y, 0) * cellSize + originPosition;
         }
 
-        public Vector2 GetWorldCoordinates(Vector3 worldPosition)
+        public Vector3 GetWorldCoordinates(Vector3 worldPosition)
         {
-            Vector2 worldCoords = new Vector2();
+            Vector3 worldCoords = new Vector3();
             worldCoords.x = Mathf.FloorToInt((worldPosition - originPosition).x / cellSize);
-            worldCoords.y = Mathf.FloorToInt((worldPosition - originPosition).x / cellSize);
+            worldCoords.y = Mathf.FloorToInt((worldPosition - originPosition).y / cellSize);
             return worldCoords;
         }
 
         private void SetGridObject(int x, int y, TGridObject value)
         {
-            if (x < originPosition.x || y < originPosition.y || x > width || y > height)
+            if (x < 0 || y < 0 || x > width || y > height)
             {
                 return;
             }
@@ -61,7 +61,7 @@ namespace RobotGame
 
         public TGridObject GetGridObject(int x, int y)
         {
-            if (x < originPosition.x || y < originPosition.y || x > width || y > height)
+            if (x < 0 || y < 0 || x > width || y > height)
             {
                 return default;
             }
@@ -92,6 +92,10 @@ namespace RobotGame
             return cellSize;
         }
 
+        public Vector2 GetOrigin()
+        {
+            return originPosition;
+        }
         public void DrawDebug()
         {
             for (int x = 0; x < gridArray.GetLength(0); x++)
