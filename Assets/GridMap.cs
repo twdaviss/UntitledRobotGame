@@ -12,9 +12,9 @@ public class GridMap : MonoBehaviour
 
     private Grid<PathNode> grid;
 
-    private void Start()
+    private void Awake()
     {
-        grid = new Grid<PathNode>(width, height, cellSize, Vector3.zero, (Grid<PathNode> g, int x, int y) => new PathNode(g, x, y));
+        grid = new Grid<PathNode>(width, height, cellSize, transform.position, (Grid<PathNode> g, int x, int y) => new PathNode(g, x, y));
         InitializeGrid();
     }
 
@@ -35,6 +35,8 @@ public class GridMap : MonoBehaviour
         }
     }
 
+    public Grid<PathNode> GetGrid() { return grid; }
+
     private void OnDrawGizmos()
     {
         if (grid == null)
@@ -44,7 +46,7 @@ public class GridMap : MonoBehaviour
         foreach (PathNode node in grid.GetAllGridObjects())
         {
             Vector3 pos = node.GetCoords();
-            pos.x += cellSize/2;
+            pos.x += cellSize / 2;
             pos.y += cellSize / 2;
 
             if (enableDebug && node.isWalkable)

@@ -25,7 +25,7 @@ namespace RobotGame
             {
                 for (int y = 0; y < gridArray.GetLength(1); y++)
                 {
-                    gridArray[x, y] = createGridObject(this, x, y);
+                    gridArray[x, y] = createGridObject(this, x + (int)originPosition.x, y + (int)originPosition.y);
                 }
             }
         }
@@ -45,7 +45,7 @@ namespace RobotGame
 
         private void SetGridObject(int x, int y, TGridObject value)
         {
-            if (x < 0 || y < 0 || x > width || y > height)
+            if (x < originPosition.x || y < originPosition.y || x > width || y > height)
             {
                 return;
             }
@@ -61,7 +61,7 @@ namespace RobotGame
 
         public TGridObject GetGridObject(int x, int y)
         {
-            if (x < 0 || y < 0 || x > width || y > height)
+            if (x < originPosition.x || y < originPosition.y || x > width || y > height)
             {
                 return default;
             }
