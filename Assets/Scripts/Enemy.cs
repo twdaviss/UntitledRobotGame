@@ -7,27 +7,19 @@ public class Enemy : EnemyStateMachine
 {
     [SerializeField] public int moveSpeed;
     [SerializeField] public Transform targetLocation;
-    private Transform m_targetLocation;
+    private Vector3 m_targetLocation;
 
     private List<Vector3> path;
-    [HideInInspector] public int CurrentPathIndex { get; set; }
 
     private void Awake()
     {
-        if (m_targetLocation == null)
-        {
-            m_targetLocation = targetLocation;
-        }
+        m_targetLocation = targetLocation.position;
         
         SetState(new EnemyIdle(this));
     }
     
     void Update()
     {
-        if (targetLocation != m_targetLocation)
-        {
-            GetPath();
-        }
         if (Input.GetKeyDown(KeyCode.Space) && State.name == "EnemyIdle")
         {
             TransitionState(new EnemyStunned(this.gameObject));
@@ -53,12 +45,42 @@ public class Enemy : EnemyStateMachine
         {
             path = new List<Vector3>();
         }
-        path = Pathfinding.Instance.FindPath(this.transform.position, m_targetLocation.position);
-        CurrentPathIndex = 0;
+        path = Pathfinding.Instance.FindPath(this.transform.position, m_targetLocation);
+        Debug.Log("Target path calculated");
+        return;
+    }
+    public IEnumerator CheckForTarget()
+    {
+        if (path == null || TargetMoved())
+        {
+            GetPath();
+        }
+        yield return new WaitForSeconds(1.0f);
+    }
+    public bool TargetMoved()
+    {
+        if (m_targetLocation != targetLocation.position)
+        {
+            m_targetLocation = targetLocation.position;
+            Debug.Log("Target location changed");
+            return true;
+        }
+        return false;
     }
     
     public void ClearPath()
     {
         path = null;
     }
+
+    private void OnDrawGizmos()
+    {
+        if(path == null) { return; }
+        for (int i = 0; i < path.Count - 1; i++)
+        {
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawLine(path[i], path[i + 1]);
+        }
+    }
+
 }

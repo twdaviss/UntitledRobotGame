@@ -39,7 +39,7 @@ public class GridMap : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if (grid == null)
+        if (grid == null || !enableDebug)
         {
             return;
         }
@@ -49,7 +49,7 @@ public class GridMap : MonoBehaviour
             pos.x += cellSize / 2;
             pos.y += cellSize / 2;
 
-            if (enableDebug && node.isWalkable)
+            if (node.isWalkable)
             {
                 Gizmos.color = new Color(0, 1, 0, 0.5f);
                 Gizmos.DrawCube(pos, new Vector3(grid.GetCellSize(), grid.GetCellSize(), grid.GetCellSize()));

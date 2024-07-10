@@ -20,21 +20,20 @@ namespace RobotGame.States
 
         private void MovementHandler()
         {
-            if(enemy.GetActivePath() != null) {
-                Vector3 moveTarget = enemy.GetActivePath()[enemy.CurrentPathIndex];
-                if (Vector3.Distance(enemy.transform.position, moveTarget) > 0.5f)
-                {
-                    Vector3 moveDirection = (moveTarget - enemy.transform.position).normalized;
+            enemy.StartCoroutine(enemy.CheckForTarget());
+            Vector3 moveTarget = enemy.GetActivePath()[0];
+            if (Vector3.Distance(enemy.transform.position, moveTarget) > 0.5f)
+            {
+                Vector3 moveDirection = (moveTarget - enemy.transform.position).normalized;
 
-                    enemy.transform.position = enemy.transform.position + moveDirection * enemy.moveSpeed * Time.deltaTime;
-                }
-                else
+                enemy.transform.position = enemy.transform.position + moveDirection * enemy.moveSpeed * Time.deltaTime;
+            }
+            else
+            {
+                enemy.GetActivePath().RemoveAt(0);
+                if(enemy.GetActivePath().Count <= 0)
                 {
-                    enemy.CurrentPathIndex++;
-                    if(enemy.CurrentPathIndex >= enemy.GetActivePath().Count)
-                    {
-                        StopMoving();
-                    }
+                    StopMoving();
                 }
             }
         }
