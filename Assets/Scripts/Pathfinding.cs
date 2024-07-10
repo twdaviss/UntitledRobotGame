@@ -33,7 +33,7 @@ public class Pathfinding
             List<Vector3> vectorPath = new List<Vector3>();
             foreach(PathNode pathNode in path)
             {
-                Vector2 pathVector = new Vector2(pathNode.x, pathNode.y) * (int)grid.GetCellSize() + Vector2.one * (int)grid.GetCellSize() * 0.5f + grid.GetOrigin();
+                Vector2 pathVector = new Vector2(pathNode.x, pathNode.y) * grid.GetCellSize() + Vector2.one * grid.GetCellSize() * 0.5f + grid.GetOrigin();
                 pathVector.x = Mathf.FloorToInt(pathVector.x);
                 pathVector.y = Mathf.FloorToInt(pathVector.y);
 

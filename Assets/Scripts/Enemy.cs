@@ -53,9 +53,9 @@ public class Enemy : EnemyStateMachine
     {
         if (path == null || TargetMoved())
         {
+            yield return new WaitForSeconds(1f);
             GetPath();
         }
-        yield return new WaitForSeconds(1.0f);
     }
     public bool TargetMoved()
     {
