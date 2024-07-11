@@ -28,7 +28,7 @@ public class GridMap : MonoBehaviour
         int layerMask = LayerMask.GetMask("Obstacles");
         foreach (PathNode node in grid.GetAllGridObjects())
         {
-            if (Physics2D.OverlapCircle(node.GetCoords(), grid.GetCellSize() / 2,layerMask))
+            if (Physics2D.OverlapCircle(node.GetWorldCoords(), grid.GetCellSize() / 2,layerMask))
             {
                 node.isWalkable = false;
             }
@@ -45,7 +45,7 @@ public class GridMap : MonoBehaviour
         }
         foreach (PathNode node in grid.GetAllGridObjects())
         {
-            Vector3 pos = node.GetCoords() + transform.position;
+            Vector3 pos = node.GetWorldCoords();
             pos.x += cellSize / 2;
             pos.y += cellSize / 2;
 

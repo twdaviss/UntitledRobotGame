@@ -27,5 +27,9 @@ public class PathNode
         fCost = gCost + hCost;
     }
 
-    public Vector3 GetCoords() { return new Vector3(x, y,0); }
+    public Vector3 GetWorldCoords() 
+    { 
+        Vector3 worldCoords = grid.GetWorldPosition(x,y);
+        return worldCoords; 
+    }
 }

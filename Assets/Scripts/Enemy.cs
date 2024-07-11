@@ -45,17 +45,24 @@ public class Enemy : EnemyStateMachine
         {
             path = new List<Vector3>();
         }
-        path = Pathfinding.Instance.FindPath(this.transform.position, m_targetLocation);
+        if(path.Count > 0)
+        {
+            path = Pathfinding.Instance.FindPath(path[0], m_targetLocation);
+        }
+        else
+        {
+            path = Pathfinding.Instance.FindPath(this.transform.position, m_targetLocation);
+        }
         Debug.Log("Target path calculated");
         return;
     }
-    public IEnumerator CheckForTarget()
+    public void CheckForTarget()
     {
         if (path == null || TargetMoved())
         {
-            yield return new WaitForSeconds(1f);
             GetPath();
         }
+        return;
     }
     public bool TargetMoved()
     {

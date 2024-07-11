@@ -30,17 +30,17 @@ namespace RobotGame
             }
         }
 
-        private Vector3 GetWorldPosition(int x, int y)
+        public Vector3 GetWorldPosition(int x, int y)
         {
             return new Vector3(x, y, 0) * cellSize + originPosition;
         }
 
-        public Vector3 GetWorldCoordinates(Vector3 worldPosition)
+        public Vector3 GetGridCoordinates(Vector3 worldPosition)
         {
-            Vector3 worldCoords = new Vector3();
-            worldCoords.x = Mathf.FloorToInt((worldPosition - originPosition).x / cellSize);
-            worldCoords.y = Mathf.FloorToInt((worldPosition - originPosition).y / cellSize);
-            return worldCoords;
+            Vector3 gridCoords = new Vector3();
+            gridCoords.x = Mathf.FloorToInt((worldPosition - originPosition).x / cellSize);
+            gridCoords.y = Mathf.FloorToInt((worldPosition - originPosition).y / cellSize);
+            return gridCoords;
         }
 
         private void SetGridObject(int x, int y, TGridObject value)
@@ -55,14 +55,15 @@ namespace RobotGame
 
         public void SetGridObject(Vector3 worldPosition, TGridObject value)
         {
-            Vector2 worldCoords = GetWorldCoordinates(worldPosition);
-            SetGridObject((int)worldCoords.x, (int)worldCoords.y, value);
+            Vector2 gridCoords = GetGridCoordinates(worldPosition);
+            SetGridObject((int)gridCoords.x, (int)gridCoords.y, value);
         }
 
         public TGridObject GetGridObject(int x, int y)
         {
-            if (x < 0 || y < 0 || x > width || y > height)
+            if (x < 0 || y < 0 || x >= width || y >= height)
             {
+                Debug.Log("Target is outside bounds of grid map");
                 return default;
             }
             return gridArray[x, y];
@@ -75,8 +76,8 @@ namespace RobotGame
 
         public TGridObject GetGridObject(Vector3 worldPosition)
         {
-            Vector2 worldCoords = GetWorldCoordinates(worldPosition);
-            return GetGridObject((int)worldCoords.x, (int)worldCoords.y);
+            Vector2 gridCoords = GetGridCoordinates(worldPosition);
+            return GetGridObject((int)gridCoords.x, (int)gridCoords.y);
         }
 
         public int GetWidth()
@@ -100,14 +101,22 @@ namespace RobotGame
         {
             for (int x = 0; x < gridArray.GetLength(0); x++)
             {
-                for (int y = 0; y < gridArray.GetLength(1); y++)
-                {
-                    Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x, y + 1), Color.white, 100.0f);
-                    Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x + 1, y), Color.white, 100.0f);
-                }
-                Debug.DrawLine(GetWorldPosition(0, height), GetWorldPosition(width, height), Color.white, 100.0f);
-                Debug.DrawLine(GetWorldPosition(width, 0), GetWorldPosition(width, height), Color.white, 100.0f);
+                Debug.DrawLine(GetWorldPosition(x, 0), GetWorldPosition(x, height), Color.white, 100.0f);
+
+                //for (int y = 0; y < gridArray.GetLength(1); y++)
+                //{
+                //    Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x, y + 1), Color.white, 100.0f);
+                //    Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x + 1, y), Color.white, 100.0f);
+                //}
+                //Debug.DrawLine(GetWorldPosition(0, height), GetWorldPosition(width, height), Color.white, 100.0f);
+                //Debug.DrawLine(GetWorldPosition(width, 0), GetWorldPosition(width, height), Color.white, 100.0f);
             }
+            for (int y = 0; y < gridArray.GetLength(1); y++)
+            {
+                Debug.DrawLine(GetWorldPosition(0, y), GetWorldPosition(width, y), Color.white, 100.0f);
+            }
+            Debug.DrawLine(GetWorldPosition(0, height), GetWorldPosition(width, height), Color.white, 100.0f);
+            Debug.DrawLine(GetWorldPosition(width, 0), GetWorldPosition(width, height), Color.white, 100.0f);
         }
     }
 }

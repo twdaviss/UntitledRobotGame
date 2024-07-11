@@ -20,10 +20,10 @@ public class Pathfinding
 
     public List<Vector3> FindPath(Vector3 startWorldPosition, Vector3 endWorldPosition)
     {
-        Vector2 startWorldCoords = grid.GetWorldCoordinates(startWorldPosition);
-        Vector2 endWorldCoords = grid.GetWorldCoordinates(endWorldPosition);
+        Vector2 startGridCoords = grid.GetGridCoordinates(startWorldPosition);
+        Vector2 endWorldCoords = grid.GetGridCoordinates(endWorldPosition);
 
-        List<PathNode> path = FindPath((int)startWorldCoords.x, (int)startWorldCoords.y, (int)endWorldCoords.x, (int)endWorldCoords.y);
+        List<PathNode> path = FindPath((int)startGridCoords.x, (int)startGridCoords.y, (int)endWorldCoords.x, (int)endWorldCoords.y);
         if(path == null)
         {
             return null;
@@ -51,9 +51,9 @@ public class Pathfinding
         openList = new List<PathNode>{startNode};
         closedList = new List<PathNode>();
 
-        for (int x = 0; x < grid.GetHeight(); x++)
+        for (int x = 0; x < grid.GetWidth(); x++)
         {
-            for(int y = 0; y < grid.GetWidth(); y++)
+            for(int y = 0; y < grid.GetHeight(); y++)
             {
                 PathNode pathNode = grid.GetGridObject(x, y);
                 pathNode.gCost = int.MaxValue;
