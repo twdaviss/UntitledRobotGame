@@ -1,0 +1,26 @@
+using System.Collections;
+using UnityEngine;
+
+namespace RobotGame.States
+{
+    public class #SCRIPTNAME# : EnemyState
+    {
+        readonly EnemyController enemy;
+        public #SCRIPTNAME#(EnemyController enemy) { this.enemy = enemy; name = "NewEnemyState"; }
+        #NOTRIM#
+        public override IEnumerator Start()
+        {
+            yield break;
+        }
+
+        public override IEnumerator Update()
+        {
+            yield break;
+        }
+
+        public override IEnumerator FixedUpdate()
+        {
+            yield break;
+        }
+    }
+}

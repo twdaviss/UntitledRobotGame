@@ -3,13 +3,11 @@ using UnityEngine;
 
 namespace RobotGame.States
 {
-    public class EnemyIdle : EnemyState
+    public class EnemyFollow : EnemyState
     {
-        readonly Enemy enemy;
-        public EnemyIdle(Enemy enemy) { this.enemy = enemy; name = "EnemyIdle"; }
+        readonly EnemyController enemy;
+        public EnemyFollow(EnemyController enemy) { this.enemy = enemy; name = "EnemyIdle"; }
         private Vector3 moveTarget;
-        private float checkTargetTimer = 0f;
-        private float checkTargetCooldown = 0.5f;
         public override IEnumerator Start()
         {
             yield break;
@@ -21,19 +19,18 @@ namespace RobotGame.States
             yield break;
         }
 
-        private void MovementHandler()
+        public override IEnumerator FixedUpdate()
         {
-            if(checkTargetTimer >= checkTargetCooldown)
+            if(enemy.GetActivePath().Count > 0)
             {
-                checkTargetTimer = 0;
                 enemy.CheckForTarget();
             }
-            else
-            {
-                checkTargetTimer += Time.deltaTime;
-            }
+            yield break;
+        }
 
-            Vector3 moveTarget = enemy.GetActivePath()[0];
+        private void MovementHandler()
+        {
+            moveTarget = enemy.GetActivePath()[0];
             if (Vector3.Distance(enemy.transform.position, moveTarget) < 1.4f)
             {
                 enemy.GetActivePath().RemoveAt(0);
@@ -41,7 +38,6 @@ namespace RobotGame.States
                 if (enemy.GetActivePath().Count <= 0)
                 {
                     StopMoving();
-                    enemy.CheckForTarget();
                     Debug.Log("Reached target");
                 }
             }

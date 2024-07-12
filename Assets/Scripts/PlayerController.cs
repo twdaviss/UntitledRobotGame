@@ -1,7 +1,8 @@
+using RobotGame.States;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : PlayerStateMachine
 {
     [SerializeField] private float defaultMoveSpeed;
     [SerializeField] private PlayerControls playerControls;
@@ -19,11 +20,13 @@ public class PlayerController : MonoBehaviour
         playerSprite = GetComponent<SpriteRenderer>();
         playerAnimator = GetComponent<Animator>();
         playerControls = new PlayerControls();
+
+        SetState(new PlayerDefault(this));
     }
 
     void Update()
     {
-        InputHandler();
+        StartCoroutine(State.Update());
         playerAnimator.SetFloat("Horizontal", moveDirection.x);
         playerAnimator.SetFloat("Vertical", moveDirection.y);
         playerAnimator.SetFloat("Speed", moveDirection.SqrMagnitude());
@@ -31,10 +34,11 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        playerRigidbody.velocity = new Vector2(moveDirection.x * moveSpeed, moveDirection.y * moveSpeed);  
+        playerRigidbody.velocity = new Vector2(moveDirection.x * moveSpeed, moveDirection.y * moveSpeed);
+        StartCoroutine(State.FixedUpdate());
     }
 
-    private void InputHandler()
+    public void InputHandler()
     {
         playerControls.Gameplay.Move.performed += ctx => moveDirection = ctx.ReadValue<Vector2>();
         playerControls.Gameplay.Move.canceled += ctx => moveDirection = Vector2.zero;
