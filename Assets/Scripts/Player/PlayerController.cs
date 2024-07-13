@@ -10,9 +10,11 @@ public class PlayerController : PlayerStateMachine
     private Vector2 moveDirection;
     private SpriteRenderer playerSprite;
     private Animator playerAnimator;
+    private ScrapShot scrapShot;
 
     private bool isSprinting = false;
     private float moveSpeed;
+    private Vector2 mousePosition;
 
     private void Awake()
     {
@@ -20,6 +22,7 @@ public class PlayerController : PlayerStateMachine
         playerSprite = GetComponent<SpriteRenderer>();
         playerAnimator = GetComponent<Animator>();
         playerControls = new PlayerControls();
+        scrapShot = GetComponentInChildren<ScrapShot>();
 
         SetState(new PlayerDefault(this));
     }
@@ -41,7 +44,12 @@ public class PlayerController : PlayerStateMachine
     public void InputHandler()
     {
         playerControls.Gameplay.Move.performed += ctx => moveDirection = ctx.ReadValue<Vector2>();
+        playerControls.Gameplay.Mouse.performed += ctx => mousePosition = ctx.ReadValue<Vector2>();
         playerControls.Gameplay.Move.canceled += ctx => moveDirection = Vector2.zero;
+        playerControls.Gameplay.Fire.performed += ctx =>
+        {
+            scrapShot.ShootScrap();
+        };
 
         if (moveDirection.x < 0) { playerSprite.flipX = true; }
         else { playerSprite.flipX = false; }
@@ -52,6 +60,12 @@ public class PlayerController : PlayerStateMachine
         if(moveDirection.magnitude == 0) { isSprinting = false; }
         if (isSprinting) { moveSpeed = 2 * defaultMoveSpeed; }
         else { moveSpeed = defaultMoveSpeed; }
+    }
+
+    public Vector2 GetMouseDirection()
+    {
+        Vector2 mouseDirection = mousePosition - (Vector2)transform.parent.position; // not working
+        return mouseDirection;
     }
 
     private void OnEnable()
