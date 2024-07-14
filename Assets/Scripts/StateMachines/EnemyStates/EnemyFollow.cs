@@ -21,6 +21,11 @@ namespace RobotGame.States
 
         public override IEnumerator FixedUpdate()
         {
+            if(enemy.GetActivePath() == null)
+            {
+                Debug.Log("No Available Path");
+                yield break;
+            }
             if(enemy.GetActivePath().Count > 0)
             {
                 enemy.CheckForTarget();
@@ -30,6 +35,11 @@ namespace RobotGame.States
 
         private void MovementHandler()
         {
+            if(enemy.GetActivePath() == null)
+            {
+                Debug.Log("No Available Path");
+                return;
+            }
             moveTarget = enemy.GetActivePath()[0];
             if (Vector3.Distance(enemy.transform.position, moveTarget) < 1.4f)
             {

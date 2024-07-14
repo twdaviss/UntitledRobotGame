@@ -5,13 +5,13 @@ using UnityEngine.Pool;
 
 public class ScrapShot : MonoBehaviour
 {
-    [SerializeField] private GameObject scrapPrefab;
+    [SerializeField] private Scrap scrapPrefab;
     [SerializeField] private int maxAmmo;
     [SerializeField] private float scrapSpeed;
     [SerializeField] private float scrapDamage;
     [SerializeField] private float scrapRange;
 
-    private ObjectPool<GameObject> scrapPool;
+    private ObjectPool<Scrap> scrapPool;
     private PlayerController playerController;
 
     private int currentAmmo; 
@@ -24,7 +24,7 @@ public class ScrapShot : MonoBehaviour
     }
     private void GeneratePool()
     {
-        scrapPool = new ObjectPool<GameObject>(OnCreateScrap,OnPullFromPool, OnReturnToPool, OnDestroyPoolObject,true,maxAmmo, 10);
+        scrapPool = new ObjectPool<Scrap>(OnCreateScrap,OnPullFromPool, OnReturnToPool, OnDestroyPoolObject,true,maxAmmo, 10);
     }
 
     public void ShootScrap()
@@ -32,32 +32,32 @@ public class ScrapShot : MonoBehaviour
         scrapPool.Get();
     }
 
-    GameObject OnCreateScrap()
+    private Scrap OnCreateScrap()
     {
-        GameObject scrap = Instantiate(scrapPrefab);
-        scrap.GetComponent<Scrap>().SetPool(scrapPool);
-        scrap.GetComponent<Scrap>().moveSpeed = scrapSpeed;
-        scrap.GetComponent<Scrap>().damage = scrapDamage;
-        scrap.GetComponent<Scrap>().range = scrapRange;
-        //Implement
-        scrap.GetComponent<Scrap>().direction = playerController.GetMouseDirection();
-
+        Scrap scrap = Instantiate(scrapPrefab, this.transform);
+        scrap.SetPool(scrapPool);
+        
         return scrap;
     }
 
-    void OnPullFromPool(GameObject scrap)
+    private void OnPullFromPool(Scrap scrap)
     {
-        scrap.SetActive(true);
+        scrap.moveSpeed = scrapSpeed;
+        scrap.damage = scrapDamage;
+        scrap.range = scrapRange;
+        scrap.direction = playerController.GetMouseDirection();
+        scrap.transform.position = transform.position;
+        scrap.gameObject.SetActive(true);
         currentAmmo--;
     }
 
-    void OnReturnToPool(GameObject scrap)
+    private void OnReturnToPool(Scrap scrap)
     {
-        scrap.SetActive(false);
+        scrap.gameObject.SetActive(false);
         currentAmmo++;
     }
 
-    void OnDestroyPoolObject (GameObject scrap)
+    private void OnDestroyPoolObject (Scrap scrap)
     {
         Destroy(scrap);
     }

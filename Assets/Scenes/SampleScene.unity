@@ -511,7 +511,7 @@ GameObject:
   - component: {fileID: 810163326}
   m_Layer: 0
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -691,7 +691,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4caea682c9887ba448c9097bd44a58d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scrapPrefab: {fileID: 120052016876731455, guid: 5d7d1cb4dbdd508488cd5b2df08cd810, type: 3}
+  scrapPrefab: {fileID: 3162969577572220229, guid: 5d7d1cb4dbdd508488cd5b2df08cd810, type: 3}
   maxAmmo: 10
   scrapSpeed: 10
   scrapDamage: 2
@@ -801,7 +801,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &1236954400
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1119,6 +1119,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8141444744145044498, guid: e1ba6dadd6d10e249b115f4057bf955a, type: 3}
+      propertyPath: camera
+      value: 
+      objectReference: {fileID: 519420031}
     - target: {fileID: 8141444744145044498, guid: e1ba6dadd6d10e249b115f4057bf955a, type: 3}
       propertyPath: defaultMoveSpeed
       value: 5

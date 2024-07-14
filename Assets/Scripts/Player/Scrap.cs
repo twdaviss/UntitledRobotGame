@@ -5,7 +5,7 @@ using UnityEngine.Pool;
 
 public class Scrap : MonoBehaviour
 {
-    private ObjectPool<GameObject> scrapPool;
+    private ObjectPool<Scrap> scrapPool;
     public float moveSpeed;
     public float damage;
     public Vector2 direction;
@@ -23,20 +23,20 @@ public class Scrap : MonoBehaviour
         lifeTime -= Time.deltaTime;
         if(lifeTime <= 0)
         {
-            scrapPool.Release(this.gameObject);
+            scrapPool.Release(this);
         }
     }
 
-    public void SetPool(ObjectPool<GameObject> pool)
+    public void SetPool(ObjectPool<Scrap> pool)
     {
         scrapPool = pool;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.CompareTag("Player"))
+        if(collision.CompareTag("Enemy"))
         {
-            scrapPool.Release(this.gameObject);
+            scrapPool.Release(this);
         }
     }
 }

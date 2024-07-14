@@ -6,6 +6,7 @@ public class PlayerController : PlayerStateMachine
 {
     [SerializeField] private float defaultMoveSpeed;
     [SerializeField] private PlayerControls playerControls;
+    [SerializeField] public Camera camera;
     private Rigidbody2D playerRigidbody;
     private Vector2 moveDirection;
     private SpriteRenderer playerSprite;
@@ -14,7 +15,7 @@ public class PlayerController : PlayerStateMachine
 
     private bool isSprinting = false;
     private float moveSpeed;
-    private Vector2 mousePosition;
+    private Vector3 mousePosition;
 
     private void Awake()
     {
@@ -64,8 +65,8 @@ public class PlayerController : PlayerStateMachine
 
     public Vector2 GetMouseDirection()
     {
-        Vector2 mouseDirection = mousePosition - (Vector2)transform.parent.position; // not working
-        return mouseDirection;
+        Vector3 mouseDirection = (Vector2)camera.ScreenToWorldPoint(mousePosition) - (Vector2)transform.position; // not working
+        return mouseDirection.normalized;
     }
 
     private void OnEnable()
