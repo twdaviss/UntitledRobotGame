@@ -5,9 +5,9 @@ namespace RobotGame.States
 {
     public class EnemyFollow : EnemyState
     {
-        readonly EnemyController enemy;
-        public EnemyFollow(EnemyController enemy) { this.enemy = enemy; name = "EnemyIdle"; }
+        private readonly EnemyController enemy;
         private Vector3 moveTarget;
+        public EnemyFollow(EnemyController enemy) { this.enemy = enemy; name = "EnemyIdle"; }
         public override IEnumerator Start()
         {
             yield break;

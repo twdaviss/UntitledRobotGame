@@ -5,6 +5,7 @@ using UnityEngine.Pool;
 
 public class Scrap : MonoBehaviour
 {
+    private Rigidbody2D scrapRigidbody;
     private ObjectPool<Scrap> scrapPool;
     public float moveSpeed;
     public float damage;
@@ -13,13 +14,17 @@ public class Scrap : MonoBehaviour
 
     private float lifeTime;
 
+    private void Awake()
+    {
+        scrapRigidbody = GetComponent<Rigidbody2D>();
+    }
     private void OnEnable()
     {
         lifeTime = range;
     }
     void Update()
     {
-        transform.Translate(direction * moveSpeed * Time.deltaTime);
+        scrapRigidbody.velocity = direction * moveSpeed;
         lifeTime -= Time.deltaTime;
         if(lifeTime <= 0)
         {
