@@ -3,10 +3,10 @@ using UnityEngine;
 
 namespace RobotGame.States
 {
-    public class EnemyStunned : EnemyState
+    public class EnemyStaggered : EnemyState
     {
         readonly GameObject enemy;
-        public EnemyStunned(GameObject gameObject) { enemy = gameObject; name = "EnemyStunned"; }
+        public EnemyStaggered(GameObject gameObject) { enemy = gameObject; name = "EnemyStunned"; }
         public override IEnumerator Start()
         {
             yield break;

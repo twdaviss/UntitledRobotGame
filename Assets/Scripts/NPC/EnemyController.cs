@@ -7,14 +7,13 @@ public class EnemyController : EnemyStateMachine
 {
     [SerializeField] public int moveSpeed;
     [SerializeField] public Transform targetLocation;
+   
     private Vector3 m_targetLocation;
-
     private List<Vector3> path;
 
     private void Awake()
     {
         m_targetLocation = targetLocation.position;
-        
         SetState(new EnemyFollow(this));
     }
     
@@ -28,6 +27,12 @@ public class EnemyController : EnemyStateMachine
         StartCoroutine(State.FixedUpdate());
     }
 
+    public IEnumerator Despawn()
+    {
+        Destroy(gameObject);
+        yield return new WaitForSeconds(1.0f);
+    }
+    #region Pathfinding
     public List<Vector3> GetActivePath()
     {
         if(path == null)
@@ -79,6 +84,8 @@ public class EnemyController : EnemyStateMachine
     private void OnDrawGizmos()
     {
         if(path == null) { return; }
+        if (path.Count <= 0) { return; }
+
         Gizmos.color = Color.yellow;
         Gizmos.DrawLine(transform.position, path[0]);
         for (int i = 0; i < path.Count - 1; i++)
@@ -86,5 +93,6 @@ public class EnemyController : EnemyStateMachine
             Gizmos.DrawLine(path[i], path[i + 1]);
         }
     }
+    #endregion
 
 }

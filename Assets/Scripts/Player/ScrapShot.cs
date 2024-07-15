@@ -35,6 +35,7 @@ public class ScrapShot : MonoBehaviour
     private Scrap OnCreateScrap()
     {
         Scrap scrap = Instantiate(scrapPrefab, this.transform);
+        scrap.gameObject.SetActive(false);
         scrap.SetPool(scrapPool);
         
         return scrap;
@@ -42,10 +43,7 @@ public class ScrapShot : MonoBehaviour
 
     private void OnPullFromPool(Scrap scrap)
     {
-        scrap.moveSpeed = scrapSpeed;
-        scrap.damage = scrapDamage;
-        scrap.range = scrapRange;
-        scrap.direction = playerController.GetMouseDirection();
+        scrap.SetParameters(scrapSpeed, scrapDamage, scrapRange, playerController.GetMouseDirection());
         scrap.transform.position = transform.position;
         scrap.gameObject.SetActive(true);
         currentAmmo--;

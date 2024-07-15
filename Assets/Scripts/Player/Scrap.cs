@@ -7,11 +7,10 @@ public class Scrap : MonoBehaviour
 {
     private Rigidbody2D scrapRigidbody;
     private ObjectPool<Scrap> scrapPool;
-    public float moveSpeed;
-    public float damage;
-    public Vector2 direction;
-    public float range;
-
+    private float moveSpeed;
+    private float damage;
+    private Vector2 direction;
+    private float range;
     private float lifeTime;
 
     private void Awake()
@@ -21,10 +20,10 @@ public class Scrap : MonoBehaviour
     private void OnEnable()
     {
         lifeTime = range;
+        scrapRigidbody.AddForce(direction * moveSpeed, ForceMode2D.Force);
     }
     void Update()
     {
-        scrapRigidbody.velocity = direction * moveSpeed;
         lifeTime -= Time.deltaTime;
         if(lifeTime <= 0)
         {
@@ -32,16 +31,26 @@ public class Scrap : MonoBehaviour
         }
     }
 
+    public void SetParameters(float moveSpeed, float damage, float range, Vector2 direction)
+    {
+        this.moveSpeed = moveSpeed;
+        this.damage = damage;
+        this.range = range;
+        this.direction = direction;
+    }
+
     public void SetPool(ObjectPool<Scrap> pool)
     {
         scrapPool = pool;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void ClampVelocity()
     {
-        if(collision.CompareTag("Enemy"))
-        {
-            scrapPool.Release(this);
-        }
+        scrapRigidbody.velocity = Vector3.ClampMagnitude(scrapRigidbody.velocity, 5);
+    }
+
+    public float GetDamage()
+    {
+        return damage;
     }
 }
