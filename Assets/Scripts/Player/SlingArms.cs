@@ -58,8 +58,8 @@ public class SlingArms : MonoBehaviour
             }
         }
         Vector3 clampedMouseDistance = Vector3.ClampMagnitude((playerController.GetMousePosition() - transform.position), (playerController.GetMouseDirection() * range).magnitude);
-        Debug.Log(playerController.GetMouseDirection() * range + ", " + playerController.GetMouseDistance());
-        Debug.Log("endpoint: " + transform.position + "," + clampedMouseDistance);
+        //Debug.Log(playerController.GetMouseDirection() * range + ", " + playerController.GetMouseDistance());
+        //Debug.Log("endpoint: " + transform.position + "," + clampedMouseDistance);
         return transform.position + clampedMouseDistance;
     }
 }

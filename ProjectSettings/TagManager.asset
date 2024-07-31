@@ -17,8 +17,8 @@ TagManager:
   - PlayerProjectiles
   - Enemies
   - Systems
-  - 
-  - 
+  - Camera
+  - Grapple
   - 
   - 
   - 

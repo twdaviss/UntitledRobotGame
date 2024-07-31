@@ -7,6 +7,7 @@ namespace RobotGame.States
     {
         private readonly PlayerController player;
         private readonly Vector3 endPoint;
+        private Rigidbody2D playerRigidbody;
         private Vector2 direction;
         private float speed;
 
@@ -14,6 +15,7 @@ namespace RobotGame.States
         
         public override IEnumerator Start()
         {
+            playerRigidbody = player.GetComponent<Rigidbody2D>();
             direction = (endPoint - player.transform.position).normalized;
             yield break;
         }
@@ -24,7 +26,7 @@ namespace RobotGame.States
             {
                 player.SetState(new PlayerDefault(player));
             }
-            player.playerRigidbody.velocity = direction * speed;
+            playerRigidbody.velocity = direction * speed;
             yield break;
         }
 

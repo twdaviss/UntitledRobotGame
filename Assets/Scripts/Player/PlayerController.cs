@@ -8,6 +8,7 @@ public class PlayerController : PlayerStateMachine
     [SerializeField] private float defaultMoveSpeed;
     [SerializeField] private PlayerControls playerControls;
     [SerializeField] public Camera activeCamera;
+    [SerializeField] private GameObject mouseUI;
     private Vector2 moveDirection;
     private SpriteRenderer playerSprite;
     private Animator playerAnimator;
@@ -17,7 +18,9 @@ public class PlayerController : PlayerStateMachine
     private bool isSprinting = false;
     private float moveSpeed;
     private Vector3 mouseScreenPosition;
-    public Rigidbody2D playerRigidbody;
+    private bool lookingForTarget = false;
+
+    private Rigidbody2D playerRigidbody;
 
     private void Awake()
     {
@@ -27,7 +30,6 @@ public class PlayerController : PlayerStateMachine
         playerControls = new PlayerControls();
         scrapShot = GetComponentInChildren<ScrapShot>();
         slingArms = GetComponentInChildren<SlingArms>();
-
         SetState(new PlayerDefault(this));
     }
     void Update()
@@ -52,6 +54,11 @@ public class PlayerController : PlayerStateMachine
         if (isSprinting) { moveSpeed = 2 * defaultMoveSpeed; }
         else { moveSpeed = defaultMoveSpeed; }
 
+        if (lookingForTarget)
+        {
+            LookForSlingTarget();
+        }
+
         playerRigidbody.velocity = moveDirection * moveSpeed;
 
         playerAnimator.SetFloat("Horizontal", moveDirection.x);
@@ -61,7 +68,7 @@ public class PlayerController : PlayerStateMachine
 
     public Vector2 GetMouseDirection()
     {
-        Vector3 mouseDirection = (Vector2)activeCamera.ScreenToWorldPoint(mouseScreenPosition) - (Vector2)transform.position; // not working
+        Vector3 mouseDirection = (Vector2)activeCamera.ScreenToWorldPoint(mouseScreenPosition) - (Vector2)transform.position;
         return mouseDirection.normalized;
     }
 
@@ -76,6 +83,38 @@ public class PlayerController : PlayerStateMachine
         return Vector3.Distance(transform.position, GetMousePosition());
     }
 
+    public void LookForSlingTarget()
+    {
+        Vector2 mousePosition = GetMousePosition();
+        mouseUI.SetActive(true);
+        mouseUI.transform.position = mousePosition;
+
+        int layerMask = LayerMask.GetMask("Enemies");
+
+        Collider2D[] targets = Physics2D.OverlapCircleAll(mousePosition, 0.5f, layerMask);
+        if (targets.Length == 1)
+        {
+            mouseUI.GetComponent<SpriteRenderer>().color = Color.green;
+            return;
+        }
+        else if (targets.Length > 1)
+        {
+            mouseUI.GetComponent<SpriteRenderer>().color = Color.green;
+            return;
+        }
+        else
+        {
+            mouseUI.GetComponent<SpriteRenderer>().color = Color.red;
+            return;
+        }
+    }
+
+    public void StopLookingForSlingTarget()
+    { 
+        mouseUI.SetActive(false);
+        lookingForTarget = false;
+    }
+
     private void OnEnable()
     {
         playerControls.Gameplay.Enable();
@@ -88,7 +127,10 @@ public class PlayerController : PlayerStateMachine
             scrapShot.ShootScrap();
         };
         playerControls.Gameplay.Sling.performed += ctx => slingArms.SlingStart();
+        playerControls.Gameplay.Sling.performed += ctx => lookingForTarget = true;
+
         playerControls.Gameplay.Sling.canceled += ctx => slingArms.SlingReleased();
+        playerControls.Gameplay.Sling.canceled += ctx => StopLookingForSlingTarget();
 
     }
 
@@ -103,6 +145,11 @@ public class PlayerController : PlayerStateMachine
         {
             scrapShot.ShootScrap();
         };
-        //playerControls.Gameplay.Sling.performed -= ctx => slingArms.Sling();
+
+        playerControls.Gameplay.Sling.performed -= ctx => slingArms.SlingStart();
+        playerControls.Gameplay.Sling.performed -= ctx => lookingForTarget = true;
+
+        playerControls.Gameplay.Sling.canceled -= ctx => slingArms.SlingReleased();
+        playerControls.Gameplay.Sling.canceled -= ctx => StopLookingForSlingTarget();
     }
 }
