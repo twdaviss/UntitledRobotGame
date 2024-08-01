@@ -71,6 +71,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Melee"",
+                    ""type"": ""Button"",
+                    ""id"": ""864e5421-1349-4570-8ce8-9852c127086f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -194,6 +203,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""Sling"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b3d49e23-2005-404b-91d1-8ebe38d9c7fb"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Melee"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -230,6 +250,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Gameplay_Sprint = m_Gameplay.FindAction("Sprint", throwIfNotFound: true);
         m_Gameplay_Mouse = m_Gameplay.FindAction("Mouse", throwIfNotFound: true);
         m_Gameplay_Sling = m_Gameplay.FindAction("Sling", throwIfNotFound: true);
+        m_Gameplay_Melee = m_Gameplay.FindAction("Melee", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -296,6 +317,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_Sprint;
     private readonly InputAction m_Gameplay_Mouse;
     private readonly InputAction m_Gameplay_Sling;
+    private readonly InputAction m_Gameplay_Melee;
     public struct GameplayActions
     {
         private @PlayerControls m_Wrapper;
@@ -305,6 +327,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @Sprint => m_Wrapper.m_Gameplay_Sprint;
         public InputAction @Mouse => m_Wrapper.m_Gameplay_Mouse;
         public InputAction @Sling => m_Wrapper.m_Gameplay_Sling;
+        public InputAction @Melee => m_Wrapper.m_Gameplay_Melee;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -329,6 +352,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Sling.started += instance.OnSling;
             @Sling.performed += instance.OnSling;
             @Sling.canceled += instance.OnSling;
+            @Melee.started += instance.OnMelee;
+            @Melee.performed += instance.OnMelee;
+            @Melee.canceled += instance.OnMelee;
         }
 
         private void UnregisterCallbacks(IGameplayActions instance)
@@ -348,6 +374,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Sling.started -= instance.OnSling;
             @Sling.performed -= instance.OnSling;
             @Sling.canceled -= instance.OnSling;
+            @Melee.started -= instance.OnMelee;
+            @Melee.performed -= instance.OnMelee;
+            @Melee.canceled -= instance.OnMelee;
         }
 
         public void RemoveCallbacks(IGameplayActions instance)
@@ -390,5 +419,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnSprint(InputAction.CallbackContext context);
         void OnMouse(InputAction.CallbackContext context);
         void OnSling(InputAction.CallbackContext context);
+        void OnMelee(InputAction.CallbackContext context);
     }
 }

@@ -22,19 +22,18 @@ public class EnemyHealth : MonoBehaviour
             enemy.SetState(new EnemyDying(enemy));
         }
     }
-    public void UpdateHealthBar(float newHealth, float maxHealth)
+    public void UpdateHealthBar()
     {
-        healthBar.fillAmount = newHealth/maxHealth;
+        healthBar.fillAmount = currentHealth/maxHealth;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void DealDamage(float damage)
     {
-        if (collision.CompareTag("PlayerProjectiles") && collision.enabled)
+        if(enemy.invincibilityTime <= 0.0f)
         {
-            currentHealth -= collision.GetComponentInParent<Scrap>().GetDamage();
-            collision.GetComponentInParent<Scrap>().ClampVelocity();
-            collision.enabled = false;
-            UpdateHealthBar(currentHealth, maxHealth);
+            currentHealth -= damage;
+            UpdateHealthBar();
+            enemy.invincibilityTime = 0.1f;
         }
     }
 }

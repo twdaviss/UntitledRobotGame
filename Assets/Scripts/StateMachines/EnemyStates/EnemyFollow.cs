@@ -10,6 +10,7 @@ namespace RobotGame.States
         public EnemyFollow(EnemyController enemy) { this.enemy = enemy; name = "EnemyIdle"; }
         public override IEnumerator Start()
         {
+            enemy.StopMoving();
             yield break;
         }
 
@@ -41,7 +42,7 @@ namespace RobotGame.States
                 return;
             }
             moveTarget = enemy.GetActivePath()[0];
-            if (Vector3.Distance(enemy.transform.position, moveTarget) < 1.4f)
+            if (Vector3.Distance(enemy.transform.position, moveTarget) < 1.5f)
             {
                 enemy.GetActivePath().RemoveAt(0);
 
@@ -56,6 +57,11 @@ namespace RobotGame.States
                 Vector3 moveDirection = (moveTarget - enemy.transform.position).normalized;
                 enemy.transform.position = enemy.transform.position + (moveDirection * (enemy.moveSpeed * Time.deltaTime));
             }
+        }
+        public override IEnumerator End()
+        {
+            enemy.ClearPath();
+            yield break;
         }
 
         private void StopMoving()

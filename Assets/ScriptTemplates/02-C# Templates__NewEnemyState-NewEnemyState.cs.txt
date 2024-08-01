@@ -6,7 +6,7 @@ namespace RobotGame.States
     public class #SCRIPTNAME# : EnemyState
     {
         readonly EnemyController enemy;
-        public #SCRIPTNAME#(EnemyController enemy) { this.enemy = enemy; name = "NewEnemyState"; }
+        public #SCRIPTNAME#(EnemyController enemy) { this.enemy = enemy; this.name = "#SCRIPTNAME#"; }
         #NOTRIM#
         public override IEnumerator Start()
         {
@@ -19,6 +19,11 @@ namespace RobotGame.States
         }
 
         public override IEnumerator FixedUpdate()
+        {
+            yield break;
+        }
+
+        public override IEnumerator End()
         {
             yield break;
         }

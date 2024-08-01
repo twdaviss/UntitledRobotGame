@@ -6,7 +6,7 @@ namespace RobotGame.States
     public class #SCRIPTNAME# : PlayerState
     {
         readonly PlayerController player;
-        public #SCRIPTNAME#(PlayerController player) { this.player = player; name = "#SCRIPTNAME#"; }
+        public #SCRIPTNAME#(PlayerController player) { this.player = player; this.name = "#SCRIPTNAME#"; }
         #NOTRIM#
         public override IEnumerator Start()
         {
@@ -19,6 +19,11 @@ namespace RobotGame.States
         }
 
         public override IEnumerator FixedUpdate()
+        {
+            yield break;
+        }
+
+        public override IEnumerator End()
         {
             yield break;
         }

@@ -5,8 +5,10 @@ namespace RobotGame.States
 {
     public class EnemyStaggered : EnemyState
     {
-        readonly GameObject enemy;
-        public EnemyStaggered(GameObject gameObject) { enemy = gameObject; name = "EnemyStunned"; }
+        readonly private EnemyController enemy;
+        readonly private float duration = 0.3f;
+        private float currentTime = 0.0f;
+        public EnemyStaggered(EnemyController enemy) { this.enemy = enemy; this.name = "EnemyStaggered"; }
         public override IEnumerator Start()
         {
             yield break;
@@ -14,6 +16,15 @@ namespace RobotGame.States
 
         public override IEnumerator Update()
         {
+            if(currentTime < duration)
+            {
+                currentTime += Time.deltaTime;
+            }
+            else
+            {
+                enemy.TransitionState(new EnemyFollow(enemy));
+                yield break;
+            }
             enemy.GetComponent<SpriteRenderer>().color = Color.red;
             yield break;
         }

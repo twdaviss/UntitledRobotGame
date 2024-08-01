@@ -14,6 +14,7 @@ public class PlayerController : PlayerStateMachine
     private Animator playerAnimator;
     private ScrapShot scrapShot;
     private SlingArms slingArms;
+    private Melee melee;
 
     private bool isSprinting = false;
     private float moveSpeed;
@@ -30,6 +31,7 @@ public class PlayerController : PlayerStateMachine
         playerControls = new PlayerControls();
         scrapShot = GetComponentInChildren<ScrapShot>();
         slingArms = GetComponentInChildren<SlingArms>();
+        melee = GetComponentInChildren<Melee>();
         SetState(new PlayerDefault(this));
     }
     void Update()
@@ -126,6 +128,7 @@ public class PlayerController : PlayerStateMachine
         {
             scrapShot.ShootScrap();
         };
+        playerControls.Gameplay.Melee.performed += ctx => melee.Attack();
         playerControls.Gameplay.Sling.performed += ctx => slingArms.SlingStart();
         playerControls.Gameplay.Sling.performed += ctx => lookingForTarget = true;
 
@@ -145,7 +148,7 @@ public class PlayerController : PlayerStateMachine
         {
             scrapShot.ShootScrap();
         };
-
+        playerControls.Gameplay.Melee.performed -= ctx => melee.Attack();
         playerControls.Gameplay.Sling.performed -= ctx => slingArms.SlingStart();
         playerControls.Gameplay.Sling.performed -= ctx => lookingForTarget = true;
 
