@@ -8,7 +8,6 @@ public class PlayerController : PlayerStateMachine
     [SerializeField] private float defaultMoveSpeed;
     [SerializeField] private PlayerControls playerControls;
     [SerializeField] public Camera activeCamera;
-    [SerializeField] private GameObject mouseUI;
     private Vector2 moveDirection;
     private SpriteRenderer playerSprite;
     private Animator playerAnimator;
@@ -60,12 +59,20 @@ public class PlayerController : PlayerStateMachine
         {
             LookForSlingTarget();
         }
-
-        playerRigidbody.velocity = moveDirection * moveSpeed;
+        if (moveDirection.magnitude > 0)
+        {
+            Debug.Log("hi");
+        }
+        transform.position += ((Vector3)moveDirection.normalized * moveSpeed * Time.deltaTime);
 
         playerAnimator.SetFloat("Horizontal", moveDirection.x);
         playerAnimator.SetFloat("Vertical", moveDirection.y);
         playerAnimator.SetFloat("Speed", moveDirection.SqrMagnitude());
+    }
+
+    public void PauseGame()
+    {
+        GameManager.Instance.TogglePauseMenu();
     }
 
     public Vector2 GetMouseDirection()
@@ -88,32 +95,36 @@ public class PlayerController : PlayerStateMachine
     public void LookForSlingTarget()
     {
         Vector2 mousePosition = GetMousePosition();
-        mouseUI.SetActive(true);
-        mouseUI.transform.position = mousePosition;
 
-        int layerMask = LayerMask.GetMask("Enemies");
+        int layerMask = LayerMask.GetMask("Enemies") | LayerMask.GetMask("Grapple");
 
         Collider2D[] targets = Physics2D.OverlapCircleAll(mousePosition, 0.5f, layerMask);
+
+        if (targets.Length == 0) 
+        {
+            slingArms.SetTarget(null);
+        }
         if (targets.Length == 1)
         {
-            mouseUI.GetComponent<SpriteRenderer>().color = Color.green;
+            slingArms.SetTarget(targets[0].gameObject);
             return;
         }
-        else if (targets.Length > 1)
+
+        float closestDistance = 100f;
+        foreach (Collider2D target in targets)
         {
-            mouseUI.GetComponent<SpriteRenderer>().color = Color.green;
-            return;
-        }
-        else
-        {
-            mouseUI.GetComponent<SpriteRenderer>().color = Color.red;
-            return;
+            float distanceFromMouse = Vector2.Distance(target.transform.position, mousePosition);
+
+            if(distanceFromMouse < closestDistance)
+            {
+                closestDistance = distanceFromMouse;
+                slingArms.SetTarget(target.gameObject);
+            }
         }
     }
 
     public void StopLookingForSlingTarget()
     { 
-        mouseUI.SetActive(false);
         lookingForTarget = false;
     }
 
@@ -121,6 +132,7 @@ public class PlayerController : PlayerStateMachine
     {
         playerControls.Gameplay.Enable();
 
+        playerControls.Gameplay.Pause.performed += ctx => PauseGame();
         playerControls.Gameplay.Move.performed += ctx => moveDirection = ctx.ReadValue<Vector2>();
         playerControls.Gameplay.Mouse.performed += ctx => mouseScreenPosition = ctx.ReadValue<Vector2>();
         playerControls.Gameplay.Move.canceled += ctx => moveDirection = Vector2.zero;
@@ -134,7 +146,6 @@ public class PlayerController : PlayerStateMachine
 
         playerControls.Gameplay.Sling.canceled += ctx => slingArms.SlingReleased();
         playerControls.Gameplay.Sling.canceled += ctx => StopLookingForSlingTarget();
-
     }
 
     private void OnDisable()
@@ -154,5 +165,10 @@ public class PlayerController : PlayerStateMachine
 
         playerControls.Gameplay.Sling.canceled -= ctx => slingArms.SlingReleased();
         playerControls.Gameplay.Sling.canceled -= ctx => StopLookingForSlingTarget();
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        TransitionState(new PlayerDefault(this));
     }
 }

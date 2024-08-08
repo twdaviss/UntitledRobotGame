@@ -24,14 +24,20 @@ namespace RobotGame.States
         {
             if(Vector3.Distance(player.transform.position, endPoint) < 0.5f) 
             {
-                player.SetState(new PlayerDefault(player));
+                player.TransitionState(new PlayerDefault(player));
             }
-            playerRigidbody.velocity = direction * speed;
+            playerRigidbody.transform.position += (Vector3)direction * speed * Time.deltaTime;
             yield break;
         }
 
         public override IEnumerator FixedUpdate()
         {
+            yield break;
+        }
+
+        public override IEnumerator End()
+        {
+            playerRigidbody.velocity = Vector2.zero;
             yield break;
         }
     }

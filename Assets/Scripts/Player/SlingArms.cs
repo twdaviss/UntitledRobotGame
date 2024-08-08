@@ -3,13 +3,18 @@ using UnityEngine;
 
 public class SlingArms : MonoBehaviour
 {
+    [SerializeField]private GameObject targetUI;
     [SerializeField] float range;
     [SerializeField] float speed;
+    
 
     private LineRenderer lineRenderer;
     private PlayerController playerController;
+    private GameObject slingTarget;
+
     private Vector3 endPosition;
     private bool isAimingSling = false;
+    private bool targetValid = false;
     private void Awake()
     {
         playerController = GetComponentInParent<PlayerController>();
@@ -18,45 +23,81 @@ public class SlingArms : MonoBehaviour
 
     private void Update()
     {
-        if(isAimingSling)
+        if (!isAimingSling || slingTarget == null)
         {
-            endPosition = GetSlingEndPoint();
-            lineRenderer.enabled = true;
-            lineRenderer.positionCount = 2;
-            lineRenderer.SetPosition(0, transform.parent.position);
-            lineRenderer.SetPosition(1, endPosition);
-        }
-        else
-        {
+            targetUI.SetActive(false);
             lineRenderer.enabled = false;
+            return;
         }
+
+        CheckSlingTarget();
+
+        targetUI.SetActive(true);
+        targetUI.transform.position = slingTarget.transform.position;
+
+        //lineRenderer.enabled = true;
+        lineRenderer.positionCount = 2;
+        lineRenderer.SetPosition(0, transform.parent.position);
+        lineRenderer.SetPosition(1, slingTarget.transform.position);
     }
+
     public void SlingStart()
     {
+        GameManager.Instance.SetSlowMoTimeScale();
         isAimingSling = true;
     }
 
     public void SlingReleased()
     {
-        isAimingSling=false;
-        playerController.SetState(new PlayerSlinging(playerController,endPosition,speed));
+        GameManager.Instance.ResetTimeScale();
+
+        isAimingSling = false;
+        targetUI.SetActive(false);
+        lineRenderer.enabled = false;
+
+        CheckSlingTarget();
+
+        if (targetValid)
+        {
+            playerController.SetState(new PlayerSlinging(playerController, slingTarget.transform.position, speed));
+        }
     }
 
-    private Vector3 GetSlingEndPoint()
+    public void SetTarget(GameObject target)
     {
-        int layerMask = LayerMask.GetMask("Obstacles");
+        slingTarget = target;
+    }
 
-        RaycastHit2D raycast = Physics2D.Raycast(playerController.transform.position, playerController.GetMouseDirection(),range,layerMask);
+    private void CheckSlingTarget()
+    {
+        if(slingTarget == null) 
+        {
+            targetValid = false;
+            return; 
+        }
+        float targetDistance = Vector3.Distance(playerController.transform.position, slingTarget.transform.position);
+        if (targetDistance > range || targetDistance < 4.0f)
+        {
+            targetUI.GetComponent<SpriteRenderer>().color = Color.red;
+            targetValid = false;
+            return;
+        }
+        int layerMask = LayerMask.GetMask("Obstacles");
+        Vector2 targetDirection = (slingTarget.transform.position - transform.position).normalized;
+
+        RaycastHit2D raycast = Physics2D.Raycast(playerController.transform.position, targetDirection, range,layerMask);
         if(raycast.point != null && raycast.point != Vector2.zero)
         {
-            if (Vector3.Distance(playerController.transform.position,raycast.point) < Vector3.Distance(playerController.transform.position, playerController.GetMouseDirection() * range))
+            if (Vector3.Distance(playerController.transform.position,raycast.point) < Vector3.Distance(playerController.transform.position, targetDirection * range))
             {
-                return raycast.point;
+                targetUI.GetComponent<SpriteRenderer>().color = Color.red;
+                targetValid = false;
+                return;
             }
         }
-        Vector3 clampedMouseDistance = Vector3.ClampMagnitude((playerController.GetMousePosition() - transform.position), (playerController.GetMouseDirection() * range).magnitude);
-        //Debug.Log(playerController.GetMouseDirection() * range + ", " + playerController.GetMouseDistance());
-        //Debug.Log("endpoint: " + transform.position + "," + clampedMouseDistance);
-        return transform.position + clampedMouseDistance;
+        targetUI.GetComponent<SpriteRenderer>().color = Color.green;
+
+        targetValid = true;
+        return;
     }
 }
