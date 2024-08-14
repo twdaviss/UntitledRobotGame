@@ -15,7 +15,7 @@ public class Scrap : MonoBehaviour
 
     private GameObject player;
     private bool isMagnetized = false;
-    private float absorbDelay = 0.5f;
+    private float absorbDelay = 0.1f;
     private float absorbTime = 0.0f;
     private void Awake()
     {
