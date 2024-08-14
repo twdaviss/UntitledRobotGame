@@ -89,6 +89,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Magnetize"",
+                    ""type"": ""Button"",
+                    ""id"": ""f12b7034-d95a-403c-a145-0f88a2695fda"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -234,6 +243,45 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""268c1228-02c3-447e-9939-71ce855d41a9"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Magnetize"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Menu"",
+            ""id"": ""059a63cd-c204-4be0-a17e-1bf5b6c2db55"",
+            ""actions"": [
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""ef54dba2-ab2a-4057-ace7-5adddf0a0b44"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""cc07fbfc-6f09-4f64-a5e8-79bd628a7a53"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -272,6 +320,10 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Gameplay_Sling = m_Gameplay.FindAction("Sling", throwIfNotFound: true);
         m_Gameplay_Melee = m_Gameplay.FindAction("Melee", throwIfNotFound: true);
         m_Gameplay_Pause = m_Gameplay.FindAction("Pause", throwIfNotFound: true);
+        m_Gameplay_Magnetize = m_Gameplay.FindAction("Magnetize", throwIfNotFound: true);
+        // Menu
+        m_Menu = asset.FindActionMap("Menu", throwIfNotFound: true);
+        m_Menu_Pause = m_Menu.FindAction("Pause", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -340,6 +392,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_Sling;
     private readonly InputAction m_Gameplay_Melee;
     private readonly InputAction m_Gameplay_Pause;
+    private readonly InputAction m_Gameplay_Magnetize;
     public struct GameplayActions
     {
         private @PlayerControls m_Wrapper;
@@ -351,6 +404,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @Sling => m_Wrapper.m_Gameplay_Sling;
         public InputAction @Melee => m_Wrapper.m_Gameplay_Melee;
         public InputAction @Pause => m_Wrapper.m_Gameplay_Pause;
+        public InputAction @Magnetize => m_Wrapper.m_Gameplay_Magnetize;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -381,6 +435,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Pause.started += instance.OnPause;
             @Pause.performed += instance.OnPause;
             @Pause.canceled += instance.OnPause;
+            @Magnetize.started += instance.OnMagnetize;
+            @Magnetize.performed += instance.OnMagnetize;
+            @Magnetize.canceled += instance.OnMagnetize;
         }
 
         private void UnregisterCallbacks(IGameplayActions instance)
@@ -406,6 +463,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Pause.started -= instance.OnPause;
             @Pause.performed -= instance.OnPause;
             @Pause.canceled -= instance.OnPause;
+            @Magnetize.started -= instance.OnMagnetize;
+            @Magnetize.performed -= instance.OnMagnetize;
+            @Magnetize.canceled -= instance.OnMagnetize;
         }
 
         public void RemoveCallbacks(IGameplayActions instance)
@@ -423,6 +483,52 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         }
     }
     public GameplayActions @Gameplay => new GameplayActions(this);
+
+    // Menu
+    private readonly InputActionMap m_Menu;
+    private List<IMenuActions> m_MenuActionsCallbackInterfaces = new List<IMenuActions>();
+    private readonly InputAction m_Menu_Pause;
+    public struct MenuActions
+    {
+        private @PlayerControls m_Wrapper;
+        public MenuActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Pause => m_Wrapper.m_Menu_Pause;
+        public InputActionMap Get() { return m_Wrapper.m_Menu; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(MenuActions set) { return set.Get(); }
+        public void AddCallbacks(IMenuActions instance)
+        {
+            if (instance == null || m_Wrapper.m_MenuActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_MenuActionsCallbackInterfaces.Add(instance);
+            @Pause.started += instance.OnPause;
+            @Pause.performed += instance.OnPause;
+            @Pause.canceled += instance.OnPause;
+        }
+
+        private void UnregisterCallbacks(IMenuActions instance)
+        {
+            @Pause.started -= instance.OnPause;
+            @Pause.performed -= instance.OnPause;
+            @Pause.canceled -= instance.OnPause;
+        }
+
+        public void RemoveCallbacks(IMenuActions instance)
+        {
+            if (m_Wrapper.m_MenuActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IMenuActions instance)
+        {
+            foreach (var item in m_Wrapper.m_MenuActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_MenuActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public MenuActions @Menu => new MenuActions(this);
     private int m_KeyboardSchemeIndex = -1;
     public InputControlScheme KeyboardScheme
     {
@@ -449,6 +555,11 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnMouse(InputAction.CallbackContext context);
         void OnSling(InputAction.CallbackContext context);
         void OnMelee(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
+        void OnMagnetize(InputAction.CallbackContext context);
+    }
+    public interface IMenuActions
+    {
         void OnPause(InputAction.CallbackContext context);
     }
 }

@@ -67,6 +67,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Magnetize",
+                    "type": "Button",
+                    "id": "f12b7034-d95a-403c-a145-0f88a2695fda",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -205,6 +214,45 @@
                 {
                     "name": "",
                     "id": "bcea9df1-61c0-4053-9f09-a27fbf70ecbc",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "268c1228-02c3-447e-9939-71ce855d41a9",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Magnetize",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Menu",
+            "id": "059a63cd-c204-4be0-a17e-1bf5b6c2db55",
+            "actions": [
+                {
+                    "name": "Pause",
+                    "type": "Button",
+                    "id": "ef54dba2-ab2a-4057-ace7-5adddf0a0b44",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "cc07fbfc-6f09-4f64-a5e8-79bd628a7a53",
                     "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",

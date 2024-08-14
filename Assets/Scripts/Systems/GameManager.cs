@@ -19,6 +19,9 @@ public class GameManager : MonoBehaviour
     public Grid<PathNode> ActiveGrid { get { return currentGrid; } }
     private float _gameSpeed = 1.0f;
     public float GameSpeed { get { return _gameSpeed; } }
+
+    public delegate void UnPaused();
+    public static event UnPaused onUnPaused;
     private void Start()
     {
         DontDestroyOnLoad(this);
@@ -53,14 +56,8 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene((int)GameScene.MainMenu);
     }
 
-    public void TogglePauseMenu()
+    public void EnablePauseMenu()
     {
-        if(PauseMenu.activeSelf == true)
-        {
-            ResetTimeScale();
-            PauseMenu.SetActive(false);
-            return;
-        }
         FreezeTimeScale();
         PauseMenu.SetActive(true);
     }
@@ -69,6 +66,12 @@ public class GameManager : MonoBehaviour
     {
         ResetTimeScale();
         PauseMenu.SetActive(false);
+        onUnPaused();
+    }
+
+    public bool isPauseMenuEnabled()
+    {
+        return PauseMenu.activeSelf;
     }
 
     private void OnSceneChange(Scene scene, LoadSceneMode mode)

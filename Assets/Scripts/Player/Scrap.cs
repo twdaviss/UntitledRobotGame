@@ -13,6 +13,10 @@ public class Scrap : MonoBehaviour
     private float range;
     private float lifeTime;
 
+    private GameObject player;
+    private bool isMagnetized = false;
+    private float absorbDelay = 0.5f;
+    private float absorbTime = 0.0f;
     private void Awake()
     {
         scrapRigidbody = GetComponent<Rigidbody2D>();
@@ -24,6 +28,12 @@ public class Scrap : MonoBehaviour
     }
     void Update()
     {
+        if(isMagnetized)
+        {
+            Vector3 direction = (player.transform.position - transform.position).normalized;
+            transform.position += direction * 40f * Time.deltaTime;
+        }
+        if (absorbTime < absorbDelay) { absorbTime += Time.deltaTime;}
         lifeTime -= Time.deltaTime;
         if(lifeTime <= 0)
         {
@@ -52,5 +62,26 @@ public class Scrap : MonoBehaviour
     public float GetDamage()
     {
         return damage;
+    }
+
+    public void Magnetize(GameObject player)
+    {
+        isMagnetized = true;
+        this.player = player;
+        scrapRigidbody.velocity = Vector2.zero;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(absorbTime < absorbDelay)
+        {
+            return;
+        }
+        if(collision.CompareTag("Player"))
+        {
+            isMagnetized = false;
+            absorbTime = 0;
+            scrapPool.Release(this);
+        }
     }
 }

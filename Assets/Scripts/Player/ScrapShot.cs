@@ -8,6 +8,7 @@ public class ScrapShot : MonoBehaviour
     [SerializeField] private float scrapSpeed;
     [SerializeField] private float scrapDamage;
     [SerializeField] private float scrapRange;
+    [SerializeField] private float magnetizeRadius;
 
     private ObjectPool<Scrap> scrapPool;
     private PlayerController playerController;
@@ -32,7 +33,7 @@ public class ScrapShot : MonoBehaviour
 
     private Scrap OnCreateScrap()
     {
-        Scrap scrap = Instantiate(scrapPrefab, this.transform);
+        Scrap scrap = Instantiate(scrapPrefab);
         scrap.gameObject.SetActive(false);
         scrap.SetPool(scrapPool);
         
@@ -56,5 +57,16 @@ public class ScrapShot : MonoBehaviour
     private void OnDestroyPoolObject (Scrap scrap)
     {
         Destroy(scrap);
+    }
+
+    public void MagnetizeScrap()
+    {
+        LayerMask layerMask = LayerMask.GetMask("Magnetic");
+        Collider2D[] scraps = Physics2D.OverlapCircleAll(transform.position, magnetizeRadius, layerMask);
+
+        foreach(Collider2D scrap in scraps)
+        {
+            scrap.GetComponentInParent<Scrap>().Magnetize(playerController.gameObject);
+        }
     }
 }
