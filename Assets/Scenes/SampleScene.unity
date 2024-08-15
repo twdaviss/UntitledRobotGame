@@ -313,7 +313,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!61 &456231210
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1334,6 +1334,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 8132658211172884929, guid: a78062a03c946f847ad27e000bdb04fc, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4566995650986079, guid: a78062a03c946f847ad27e000bdb04fc, type: 3}
     m_RemovedGameObjects: []
@@ -1875,10 +1879,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 1340760282465729318, guid: e1ba6dadd6d10e249b115f4057bf955a, type: 3}
-      propertyPath: speed
-      value: 30
-      objectReference: {fileID: 0}
     - target: {fileID: 1672617182521118099, guid: e1ba6dadd6d10e249b115f4057bf955a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 107.25
@@ -2003,6 +2003,10 @@ PrefabInstance:
     - target: {fileID: 8132658211172884929, guid: a78062a03c946f847ad27e000bdb04fc, type: 3}
       propertyPath: m_Name
       value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 8132658211172884929, guid: a78062a03c946f847ad27e000bdb04fc, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4566995650986079, guid: a78062a03c946f847ad27e000bdb04fc, type: 3}
