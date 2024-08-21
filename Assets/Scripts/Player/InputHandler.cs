@@ -16,7 +16,7 @@ public class InputHandler : MonoBehaviour
 
     public void PauseGame()
     {
-        if (GameManager.Instance.isPauseMenuEnabled())
+        if (GameManager.Instance.IsPauseMenuEnabled())
         {
             playerControls.Menu.Disable();
             playerControls.Gameplay.Enable();

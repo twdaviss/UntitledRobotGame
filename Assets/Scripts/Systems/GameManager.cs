@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
 
     public delegate void UnPaused();
     public static event UnPaused onUnPaused;
+
     private void Start()
     {
         DontDestroyOnLoad(this);
@@ -64,12 +65,12 @@ public class GameManager : MonoBehaviour
 
     public void DisablePauseMenu()
     {
-        ResetTimeScale();
+        StartCoroutine(ResetTimeScale());
         PauseMenu.SetActive(false);
         onUnPaused();
     }
 
-    public bool isPauseMenuEnabled()
+    public bool IsPauseMenuEnabled()
     {
         return PauseMenu.activeSelf;
     }
@@ -98,14 +99,23 @@ public class GameManager : MonoBehaviour
         pathfinder = new Pathfinding(currentGrid);
     }
 
-    public void FreezeTimeScale()
+    public void FreezeTimeScale(float duration = 0.0f)
     {
+        if(_gameSpeed != 1.0f) { return; }
         _gameSpeed = 0.0f;
+        Debug.Log("Time Frozen");
+        StartCoroutine(ResetTimeScale(duration));
     }
 
-    public void ResetTimeScale()
+    public IEnumerator ResetTimeScale(float duration = 0.0f)
     {
+        if (duration > 0.0f)
+        {
+            yield return new WaitForSecondsRealtime(duration);
+        }
         _gameSpeed = 1.0f;
+        Debug.Log("Time Reset");
+        yield break;
     }
 
     public void SetSlowMoTimeScale(float timeScale = 0.1f)

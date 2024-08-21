@@ -1330,13 +1330,17 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 519420031}
+    - target: {fileID: 4890260915785115115, guid: a78062a03c946f847ad27e000bdb04fc, type: 3}
+      propertyPath: staggerHealthPercentage
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 8132658211172884929, guid: a78062a03c946f847ad27e000bdb04fc, type: 3}
       propertyPath: m_Name
       value: Enemy (1)
       objectReference: {fileID: 0}
     - target: {fileID: 8132658211172884929, guid: a78062a03c946f847ad27e000bdb04fc, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4566995650986079, guid: a78062a03c946f847ad27e000bdb04fc, type: 3}
@@ -1919,6 +1923,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3538124195781019106, guid: e1ba6dadd6d10e249b115f4057bf955a, type: 3}
+      propertyPath: staggerTime
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8052276281748958729, guid: e1ba6dadd6d10e249b115f4057bf955a, type: 3}
+      propertyPath: scrapDamage
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 8141444744145044498, guid: e1ba6dadd6d10e249b115f4057bf955a, type: 3}
       propertyPath: activeCamera
       value: 
@@ -2000,13 +2012,17 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 519420031}
+    - target: {fileID: 4890260915785115115, guid: a78062a03c946f847ad27e000bdb04fc, type: 3}
+      propertyPath: staggerHealthPercentage
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 8132658211172884929, guid: a78062a03c946f847ad27e000bdb04fc, type: 3}
       propertyPath: m_Name
       value: Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 8132658211172884929, guid: a78062a03c946f847ad27e000bdb04fc, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4566995650986079, guid: a78062a03c946f847ad27e000bdb04fc, type: 3}

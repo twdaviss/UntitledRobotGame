@@ -7,6 +7,7 @@ public class Melee : MonoBehaviour
     [SerializeField] private float damage;
     [SerializeField] private float knockBack;
     [SerializeField] private float duration;
+    [SerializeField] private float staggerTime;
 
     private PlayerController playerController;
 
@@ -17,6 +18,6 @@ public class Melee : MonoBehaviour
 
     public void Attack()
     {
-        playerController.SetState(new PlayerMelee(playerController, radius, damage, knockBack, duration));
+        playerController.SetState(new PlayerMelee(playerController, radius, damage, knockBack, duration, staggerTime));
     }
 }
