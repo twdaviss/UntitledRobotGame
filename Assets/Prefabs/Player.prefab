@@ -40,6 +40,7 @@ Transform:
   - {fileID: 8890249493269513668}
   - {fileID: 5749985486598369731}
   - {fileID: 7433597402615457616}
+  - {fileID: 7795543054514725795}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &7429379723091429669
@@ -370,6 +371,7 @@ MonoBehaviour:
   damage: 20
   knockBack: 10000
   duration: 0.1
+  staggerTime: 0
 --- !u!1 &3565628548010297144
 GameObject:
   m_ObjectHideFlags: 0
@@ -454,6 +456,58 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &3733621505374400973
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7795543054514725795}
+  - component: {fileID: 3682458532059373809}
+  m_Layer: 3
+  m_Name: Health
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7795543054514725795
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3733621505374400973}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1672617182521118099}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3682458532059373809
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3733621505374400973}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e07a5ab6d3d50774c947c7d01701fa17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  staggerHealthPercentage: 0
+  healthBar: {fileID: 0}
+  maxHealth: 100
+  pfOilSlick: {fileID: 8974461600461266386, guid: 3e626798e98ac1f41851d9a10d94db74, type: 3}
+  absorbRadius: 1
+  absorbTime: 0.75
+  currentHealth: 80
+  isHurt: 0
 --- !u!1 &6277820003063293971
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,9 +1,8 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using RobotGame;
 using UnityEngine.SceneManagement;
-using System;
+using UnityEngine.UI;
 public enum GameScene
 {
     MainMenu,
@@ -12,6 +11,7 @@ public enum GameScene
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private GameObject PauseMenu;
+    [SerializeField] private Image healthBar;
     public static GameManager Instance {  get; private set; }
     private Pathfinding pathfinder;
 
@@ -22,7 +22,6 @@ public class GameManager : MonoBehaviour
 
     public delegate void UnPaused();
     public static event UnPaused onUnPaused;
-
     private void Start()
     {
         DontDestroyOnLoad(this);
@@ -49,6 +48,11 @@ public class GameManager : MonoBehaviour
     private void OnDisable()
     {
         SceneManager.sceneLoaded -= OnSceneChange;
+    }
+
+    public void UpdateHealthBar(float healthRatio)
+    {
+        healthBar.fillAmount = healthRatio;
     }
 
     public void OpenMainMenu()

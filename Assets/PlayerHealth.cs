@@ -7,10 +7,10 @@ using UnityEngine.UI;
 public class PlayerHealth : MonoBehaviour
 {
     [SerializeField] private int staggerHealthPercentage;
-    [SerializeField] private Image healthBar;
     [SerializeField] private float maxHealth;
     [SerializeField] private GameObject pfOilSlick;
-    [SerializeField] private float absorbRadius;
+    [SerializeField] private float absorbShortRadius;
+    [SerializeField] private float absorbLongRadius;
     [SerializeField] private float absorbTime;
 
     private PlayerController playerController;
@@ -37,7 +37,7 @@ public class PlayerHealth : MonoBehaviour
         {
             if (oilSpillCooldown <= 0.0f)
             {
-                DropOil();
+                DealDamage(10);
                 oilSpillCooldown = oilSpillDuration / oilSpillRate;
             }
             oilSpillCooldown -= Time.deltaTime;
@@ -53,45 +53,13 @@ public class PlayerHealth : MonoBehaviour
 
     private void FixedUpdate()
     {
-        int layerMask = LayerMask.GetMask("Absorb");
-        Collider2D[] oilSlicks = Physics2D.OverlapCircleAll(transform.position, absorbRadius, layerMask);
-
-        if(oilSlicks.Length == 0) 
-        {
-            absorbTimer = 0.0f;
-            return; 
-        }
-
-        if (absorbTimer < absorbTime)
-        {
-            absorbTimer += Time.deltaTime;
-        }
-        else
-        {
-            GameObject oil = null;
-            for(int i = 0; i < oilSlicks.Length; i++)
-            {
-                if(oil == null)
-                {
-                    oil = oilSlicks[i].gameObject;
-                }
-                else if(Vector2.Distance(transform.position, oilSlicks[i].transform.position) < Vector2.Distance(transform.position, oil.transform.position))
-                {
-                    oil = oilSlicks[i].gameObject;
-                }
-            }
-            if(oil != null)
-            {
-                Destroy(oil);
-                AddHealth(10);
-                absorbTimer = 0.0f;
-            }
-        }
+        UpdateHealthBar();
+        AbsorbOil();
     }
 
     public void UpdateHealthBar()
     {
-        //healthBar.fillAmount = currentHealth / maxHealth;
+        GameManager.Instance.UpdateHealthBar(currentHealth / maxHealth);
     }
 
     public void DealDamage(float damage)
@@ -100,24 +68,68 @@ public class PlayerHealth : MonoBehaviour
         {
             currentHealth -= damage;
             currentStaggerHealth -= damage;
+            if (currentHealth < 0)
+            {
+                currentHealth = 0;
+            }
             if (currentStaggerHealth < 0.0f)
             {
                 //playerController.TransitionState(new PlayerStaggered(playerController));
                 currentStaggerHealth = staggerHealth;
             }
-            UpdateHealthBar();
-            invincibilityTime = 0.1f;
+            DropOil();
+            //invincibilityTime = 0.1f;
         }
     }
 
     public void AddHealth(float health)
     {
         currentHealth += health;
-        UpdateHealthBar(); 
+        if(currentHealth > maxHealth)
+        {
+            currentHealth = maxHealth;
+        }
     }
 
+    private void AbsorbOil()
+    {
+        if(maxHealth - currentHealth <= 0) { return; }
+        int layerMask = LayerMask.GetMask("Absorb");
+        Vector3 position = transform.position;
+        position.y -= 1.0f;
+        Collider2D[] oilSlicks = Physics2D.OverlapCircleAll(position, absorbLongRadius, layerMask);
+
+        if (oilSlicks.Length == 0)
+        {
+            absorbTimer = 0.0f;
+            return;
+        }
+        GameObject oil = oilSlicks[0].gameObject;
+
+        for (int i = 0; i < oilSlicks.Length; i++)
+        {
+            float distToPlayer = Vector2.Distance(position, oilSlicks[i].transform.position);
+            float closestDistance = Vector2.Distance(position, oil.transform.position);
+            if (distToPlayer < closestDistance)
+            {
+                oil = oilSlicks[i].gameObject;
+            }
+            if (absorbTimer > absorbTime && oil != null)
+            {
+                Destroy(oil.transform.parent.gameObject);
+                AddHealth(10);
+                absorbTimer = 0.0f;
+                continue;
+            }
+            absorbTimer += Time.deltaTime;
+        }
+        
+    }
     private void DropOil()
     {
-        Instantiate(pfOilSlick, transform.position, Quaternion.identity);
+        Vector3 spawnPos = transform.position;
+        spawnPos.x += Random.Range(-0.25f, 0.25f);
+        spawnPos.y += Random.Range(-1.25f, -0.25f);
+        Instantiate(pfOilSlick, spawnPos, Quaternion.identity);
     }
 }

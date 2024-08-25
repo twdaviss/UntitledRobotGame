@@ -49,8 +49,7 @@ public class SlingArms : MonoBehaviour
 
     public void SlingReleased()
     {
-        GameManager.Instance.ResetTimeScale();
-
+        StartCoroutine(GameManager.Instance.ResetTimeScale());
         isAimingSling = false;
         targetUI.SetActive(false);
         lineRenderer.enabled = false;
