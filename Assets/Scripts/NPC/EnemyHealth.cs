@@ -7,6 +7,7 @@ public class EnemyHealth : MonoBehaviour
     [SerializeField] private int staggerHealthPercentage;
     [SerializeField] private Image healthBar;
     [SerializeField] private float maxHealth;
+    [SerializeField] private GameObject pfOilSlick;
     private float currentHealth;
     private EnemyController enemy;
     private float staggerHealth;
@@ -36,6 +37,10 @@ public class EnemyHealth : MonoBehaviour
         {
             currentHealth -= damage;
             currentStaggerHealth -= damage;
+            if(damage > maxHealth/10)
+            {
+                DropOil();
+            }
             if(currentStaggerHealth < 0.0f)
             {
                 enemy.TransitionState(new EnemyStaggered(enemy));
@@ -44,5 +49,13 @@ public class EnemyHealth : MonoBehaviour
             UpdateHealthBar();
             enemy.invincibilityTime = 0.1f;
         }
+    }
+
+    private void DropOil()
+    {
+        Vector3 spawnPos = transform.position;
+        spawnPos.x += Random.Range(-0.25f, 0.25f);
+        spawnPos.y += Random.Range(-1.25f, -0.25f);
+        Instantiate(pfOilSlick, spawnPos, Quaternion.identity);
     }
 }

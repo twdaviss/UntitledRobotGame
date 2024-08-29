@@ -7,7 +7,7 @@ namespace RobotGame.States
     {
         private readonly EnemyController enemy;
         private Vector3 moveTarget;
-        public EnemyFollow(EnemyController enemy) { this.enemy = enemy; name = "EnemyIdle"; }
+        public EnemyFollow(EnemyController enemy) { this.enemy = enemy; name = "EnemyFollow"; }
         public override IEnumerator Start()
         {
             enemy.StopMoving();
@@ -27,9 +27,16 @@ namespace RobotGame.States
                 Debug.Log("No Available Path");
                 yield break;
             }
-            if(enemy.GetActivePath().Count > 0)
+            if(enemy.GetActivePath().Count <= 0)
             {
-                enemy.CheckForTarget();
+                yield break;
+            }
+            if(enemy.CheckForTarget())
+            {
+                if (enemy.meleeCooldownTimer <= 0)
+                {
+                    enemy.SetState(new EnemyMelee(enemy));
+                }
             }
             yield break;
         }

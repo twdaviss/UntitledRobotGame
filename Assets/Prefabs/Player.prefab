@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 8141444744145044498}
   - component: {fileID: 5002000231186038750}
   - component: {fileID: 7899832127833797893}
-  - component: {fileID: 1155101447321517918}
+  - component: {fileID: 5065928492457952887}
   - component: {fileID: 8548514017932842261}
   m_Layer: 3
   m_Name: Player
@@ -266,8 +266,8 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!61 &1155101447321517918
-BoxCollider2D:
+--- !u!58 &5065928492457952887
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -295,22 +295,12 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.875, y: 2.25}
-    newSize: {x: 0.16, y: 0.16}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
+  m_Offset: {x: 0, y: -0.7228966}
   serializedVersion: 2
-  m_Size: {x: 1.875, y: 2.25}
-  m_EdgeRadius: 0
+  m_Radius: 0.40210342
 --- !u!114 &8548514017932842261
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -501,10 +491,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   staggerHealthPercentage: 0
-  healthBar: {fileID: 0}
   maxHealth: 100
   pfOilSlick: {fileID: 8974461600461266386, guid: 3e626798e98ac1f41851d9a10d94db74, type: 3}
-  absorbRadius: 1
+  absorbShortRadius: 0
+  absorbLongRadius: 0
   absorbTime: 0.75
   currentHealth: 80
   isHurt: 0

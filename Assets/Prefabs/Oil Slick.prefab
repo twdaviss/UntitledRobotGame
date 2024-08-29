@@ -79,7 +79,7 @@ GameObject:
   - component: {fileID: 761874022043073263}
   - component: {fileID: 3711822384488594023}
   - component: {fileID: 7590217198103435661}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Oil Slick
   m_TagString: Untagged
   m_Icon: {fileID: 0}

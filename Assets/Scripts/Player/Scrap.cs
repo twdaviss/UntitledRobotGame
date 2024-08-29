@@ -17,6 +17,8 @@ public class Scrap : MonoBehaviour
     private bool isMagnetized = false;
     private float absorbDelay = 0.1f;
     private float absorbTime = 0.0f;
+    
+    public bool inert = false;
     private void Awake()
     {
         scrapRigidbody = GetComponent<Rigidbody2D>();
@@ -57,6 +59,7 @@ public class Scrap : MonoBehaviour
     public void ClampVelocity()
     {
         scrapRigidbody.velocity = Vector3.ClampMagnitude(scrapRigidbody.velocity, 5);
+        inert = true;
     }
 
     public float GetDamage()

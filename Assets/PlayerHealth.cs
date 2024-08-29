@@ -33,6 +33,7 @@ public class PlayerHealth : MonoBehaviour
 
     private void Update()
     {
+        if (invincibilityTime > 0.0f) { invincibilityTime -= Time.deltaTime; }
         if (isHurt)
         {
             if (oilSpillCooldown <= 0.0f)
@@ -78,7 +79,7 @@ public class PlayerHealth : MonoBehaviour
                 currentStaggerHealth = staggerHealth;
             }
             DropOil();
-            //invincibilityTime = 0.1f;
+            invincibilityTime = 0.1f;
         }
     }
 

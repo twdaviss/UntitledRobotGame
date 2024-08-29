@@ -7,12 +7,20 @@ public class EnemyController : EnemyStateMachine
     [SerializeField] public int moveSpeed;
     [SerializeField] public Transform targetLocation;
 
+    [SerializeField] public float meleeDamage;
+    [SerializeField] public float meleeRange;
+    [SerializeField] public float meleeBuildUpTime;
+    [SerializeField] public float meleeRecoveryTime;
+    [SerializeField] public float meleeDamageTime;
+    [SerializeField] public float meleeCooldown;
+
     private Rigidbody2D enemyRigidbody;
     private EnemyHealth enemyHealth;
     private Vector3 m_targetLocation;
     private List<Vector3> path;
 
     public float invincibilityTime = 0.0f;
+    public float meleeCooldownTimer = 0.0f;
 
     private void Awake()
     {
@@ -24,7 +32,8 @@ public class EnemyController : EnemyStateMachine
     
     void Update()
     {
-        if(invincibilityTime > 0.0f) { invincibilityTime -= Time.deltaTime; }
+        if (invincibilityTime > 0.0f) { invincibilityTime -= Time.deltaTime; }
+        if (meleeCooldownTimer > 0.0f) { meleeCooldownTimer -= Time.deltaTime; }
         StartCoroutine(State.Update());
     }
 
@@ -54,13 +63,16 @@ public class EnemyController : EnemyStateMachine
     {
         enemyRigidbody.velocity = Vector3.zero; 
     }
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.CompareTag("PlayerProjectiles") && collision.enabled)
+        if (collision.gameObject.CompareTag("PlayerProjectiles"))
         {
-            enemyHealth.DealDamage(collision.GetComponentInParent<Scrap>().GetDamage());
-            collision.GetComponentInParent<Scrap>().ClampVelocity();
-            collision.enabled = false;
+            if(collision.gameObject.GetComponent<Scrap>().inert)
+            {
+                return;
+            }
+            enemyHealth.DealDamage(collision.gameObject.GetComponentInParent<Scrap>().GetDamage());
+            collision.gameObject.GetComponentInParent<Scrap>().ClampVelocity();
         }
     }
 
@@ -90,13 +102,17 @@ public class EnemyController : EnemyStateMachine
             return;
         }
     }
-    public void CheckForTarget()
+    public bool CheckForTarget()
     {
         if (path == null || TargetMoved())
         {
             GetNewPath();
         }
-        return;
+        if (Vector3.Distance(m_targetLocation, transform.position) < meleeRange)
+        {
+            return true;
+        }
+        return false;
     }
     public bool TargetMoved()
     {

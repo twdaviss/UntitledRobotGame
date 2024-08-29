@@ -45,6 +45,7 @@ public class ScrapShot : MonoBehaviour
         scrap.SetParameters(scrapSpeed, scrapDamage, scrapRange, playerController.GetMouseDirection());
         scrap.transform.position = transform.position;
         scrap.gameObject.SetActive(true);
+        scrap.inert = false;
         currentAmmo--;
     }
 
