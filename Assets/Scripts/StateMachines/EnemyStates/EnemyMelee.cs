@@ -64,7 +64,7 @@ namespace RobotGame.States
         }
         private void Melee()
         {
-            int layerMask = LayerMask.GetMask("Player");
+            int layerMask = LayerMask.GetMask("PlayerHitBox");
             Collider2D player = Physics2D.OverlapCircle(enemy.transform.position, enemy.meleeRange, layerMask);
 
             if (player != null)
