@@ -18,6 +18,10 @@ public class Melee : MonoBehaviour
 
     public void Attack()
     {
-        playerController.SetState(new PlayerMelee(playerController, radius, damage, knockBack, duration, staggerTime));
+        if(playerController.meleeCooldownTimer >= playerController.meleeCooldownTime)
+        {
+            playerController.SetState(new PlayerMelee(playerController, radius, damage, knockBack, duration, staggerTime));
+            playerController.meleeCooldownTimer = 0.0f;
+        }
     }
 }

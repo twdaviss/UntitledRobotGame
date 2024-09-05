@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class InputHandler : MonoBehaviour
 {
@@ -12,10 +13,16 @@ public class InputHandler : MonoBehaviour
     {
         playerController = GetComponent<PlayerController>();
         playerControls = new PlayerControls();
+        playerControls.Menu.Disable();
+        playerControls.Gameplay.Enable();
     }
 
-    public void PauseGame()
+    public void PauseGame(InputAction.CallbackContext context)
     {
+        if (!gameObject.scene.IsValid())
+        {
+            return;
+        }
         if (GameManager.Instance.IsPauseMenuEnabled())
         {
             playerControls.Menu.Disable();
@@ -61,8 +68,8 @@ public class InputHandler : MonoBehaviour
             playerController.isSprinting = !playerController.isSprinting;
         };
         GameManager.onUnPaused += UnPauseGame;
-        playerControls.Gameplay.Pause.performed += ctx => PauseGame();
-        playerControls.Menu.Pause.performed += ctx => PauseGame();
+        playerControls.Gameplay.Pause.performed += PauseGame;
+        playerControls.Menu.Pause.performed += PauseGame;
 
         playerControls.Gameplay.Move.performed += ctx => playerController.moveDirection = ctx.ReadValue<Vector2>();
         playerControls.Gameplay.Mouse.performed += ctx => mouseScreenPosition = ctx.ReadValue<Vector2>();
@@ -76,19 +83,23 @@ public class InputHandler : MonoBehaviour
             playerController.scrapShot.MagnetizeScrap();
         };
         playerControls.Gameplay.Melee.performed += ctx => playerController.melee.Attack();
-        playerControls.Gameplay.Sling.performed += ctx => playerController.slingArms.SlingStart();
+        playerControls.Gameplay.Sling.performed += ctx => playerController.grapple.GrappleStart();
         playerControls.Gameplay.Sling.performed += ctx => playerController.lookingForTarget = true;
 
-        playerControls.Gameplay.Sling.canceled += ctx => playerController.slingArms.SlingReleased();
+        playerControls.Gameplay.Sling.canceled += ctx => playerController.grapple.GrappleReleased();
         playerControls.Gameplay.Sling.canceled += ctx => playerController.StopLookingForSlingTarget();
     }
 
-    private void OnDisable()
+    private void OnDestroy()
     {
         GameManager.onUnPaused -= UnPauseGame;
 
-        playerControls.Gameplay.Pause.performed -= ctx => PauseGame();
-        playerControls.Menu.Pause.performed -= ctx => PauseGame();
+        playerControls.Gameplay.Sprint.performed -= ctx => {
+            playerController.isSprinting = !playerController.isSprinting;
+        };
+        playerControls.Gameplay.Pause.performed -= PauseGame;
+        playerControls.Menu.Pause.performed -= PauseGame;
+        GameManager.onUnPaused -= UnPauseGame;
 
         playerControls.Gameplay.Move.performed -= ctx => playerController.moveDirection = ctx.ReadValue<Vector2>();
         playerControls.Gameplay.Mouse.performed -= ctx => mouseScreenPosition = ctx.ReadValue<Vector2>();
@@ -102,11 +113,10 @@ public class InputHandler : MonoBehaviour
             playerController.scrapShot.MagnetizeScrap();
         };
         playerControls.Gameplay.Melee.performed -= ctx => playerController.melee.Attack();
-        playerControls.Gameplay.Sling.performed -= ctx => playerController.slingArms.SlingStart();
+        playerControls.Gameplay.Sling.performed -= ctx => playerController.grapple.GrappleStart();
         playerControls.Gameplay.Sling.performed -= ctx => playerController.lookingForTarget = true;
 
-        playerControls.Gameplay.Sling.canceled -= ctx => playerController.slingArms.SlingReleased();
+        playerControls.Gameplay.Sling.canceled -= ctx => playerController.grapple.GrappleReleased();
         playerControls.Gameplay.Sling.canceled -= ctx => playerController.StopLookingForSlingTarget();
     }
-
 }

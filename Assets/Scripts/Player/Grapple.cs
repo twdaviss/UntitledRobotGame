@@ -1,7 +1,7 @@
 using RobotGame.States;
 using UnityEngine;
 
-public class SlingArms : MonoBehaviour
+public class Grapple : MonoBehaviour
 {
     [SerializeField]private GameObject targetUI;
     [SerializeField] float range;
@@ -10,11 +10,14 @@ public class SlingArms : MonoBehaviour
 
     private LineRenderer lineRenderer;
     private PlayerController playerController;
-    private GameObject slingTarget;
+    private GameObject grappleTarget;
 
     private Vector3 endPosition;
-    private bool isAimingSling = false;
+    private bool isAimingGrapple = false;
     private bool targetValid = false;
+
+    private float grappleAimMaxTime = 0.5f;
+    private float grapplAimTimer = 0.0f;
     private void Awake()
     {
         playerController = GetComponentInParent<PlayerController>();
@@ -23,58 +26,81 @@ public class SlingArms : MonoBehaviour
 
     private void Update()
     {
-        if (!isAimingSling || slingTarget == null)
+        if (!isAimingGrapple || grappleTarget == null)
         {
             targetUI.SetActive(false);
             lineRenderer.enabled = false;
             return;
         }
 
-        CheckSlingTarget();
+        grapplAimTimer += Time.deltaTime;
+        if (grapplAimTimer >= grappleAimMaxTime)
+        {
+            CancelGrapple();
+            grapplAimTimer = 0.0f;
+            return;
+        }
 
+        CheckGrappleTarget();
+        
         targetUI.SetActive(true);
-        targetUI.transform.position = slingTarget.transform.position;
+        targetUI.transform.position = grappleTarget.transform.position;
 
         //lineRenderer.enabled = true;
         lineRenderer.positionCount = 2;
         lineRenderer.SetPosition(0, transform.parent.position);
-        lineRenderer.SetPosition(1, slingTarget.transform.position);
+        lineRenderer.SetPosition(1, grappleTarget.transform.position);
     }
 
-    public void SlingStart()
+    public void GrappleStart()
     {
+        if (playerController.grappleCooldownTimer < playerController.grappleCooldownTime) 
+        {
+            return;
+        }
         GameManager.Instance.SetSlowMoTimeScale();
-        isAimingSling = true;
+        isAimingGrapple = true;
     }
 
-    public void SlingReleased()
+    public void GrappleReleased()
     {
+        if (!isAimingGrapple) { return; }
+
         StartCoroutine(GameManager.Instance.ResetTimeScale());
-        isAimingSling = false;
+        isAimingGrapple = false;
         targetUI.SetActive(false);
         lineRenderer.enabled = false;
 
-        CheckSlingTarget();
+        CheckGrappleTarget();
 
-        if (targetValid)
+        if (targetValid && playerController.grappleCooldownTimer >= playerController.grappleCooldownTime)
         {
-            playerController.SetState(new PlayerSlinging(playerController, slingTarget.transform.position, speed));
+            playerController.SetState(new PlayerGrappling(playerController, grappleTarget.transform.position, speed));
+            playerController.grappleCooldownTimer = 0.0f;
         }
+    }
+
+    public void CancelGrapple()
+    {
+        StartCoroutine(GameManager.Instance.ResetTimeScale());
+        isAimingGrapple = false;
+        targetUI.SetActive(false);
+        lineRenderer.enabled = false;
     }
 
     public void SetTarget(GameObject target)
     {
-        slingTarget = target;
+        grappleTarget = target;
     }
 
-    private void CheckSlingTarget()
+    private void CheckGrappleTarget()
     {
-        if(slingTarget == null) 
+        if(grappleTarget == null) 
         {
             targetValid = false;
             return; 
         }
-        float targetDistance = Vector3.Distance(playerController.transform.position, slingTarget.transform.position);
+        float targetDistance = Vector3.Distance(playerController.transform.position, grappleTarget.transform.position);
         if (targetDistance > range || targetDistance < 4.0f)
         {
             targetUI.GetComponent<SpriteRenderer>().color = Color.red;
@@ -82,7 +108,7 @@ public class SlingArms : MonoBehaviour
             return;
         }
         int layerMask = LayerMask.GetMask("Obstacles");
-        Vector2 targetDirection = (slingTarget.transform.position - transform.position).normalized;
+        Vector2 targetDirection = (grappleTarget.transform.position - transform.position).normalized;
 
         RaycastHit2D raycast = Physics2D.Raycast(playerController.transform.position, targetDirection, range,layerMask);
         if(raycast.point != null && raycast.point != Vector2.zero)

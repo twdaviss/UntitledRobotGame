@@ -2,6 +2,7 @@ using RobotGame.States;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
@@ -72,6 +73,7 @@ public class PlayerHealth : MonoBehaviour
             if (currentHealth < 0)
             {
                 currentHealth = 0;
+                PlayerDeath();
             }
             if (currentStaggerHealth < 0.0f)
             {
@@ -124,13 +126,17 @@ public class PlayerHealth : MonoBehaviour
             }
             absorbTimer += Time.deltaTime;
         }
-        
     }
     private void DropOil()
     {
         Vector3 spawnPos = transform.position;
-        spawnPos.x += Random.Range(-0.25f, 0.25f);
-        spawnPos.y += Random.Range(-1.25f, -0.25f);
+        spawnPos.x += Random.Range(-1.75f, 1.75f);
+        spawnPos.y += Random.Range(-2.75f, -2.25f);
         Instantiate(pfOilSlick, spawnPos, Quaternion.identity);
+    }
+
+    private void PlayerDeath()
+    {
+        SceneManager.LoadScene(0);
     }
 }

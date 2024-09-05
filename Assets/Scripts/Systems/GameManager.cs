@@ -3,6 +3,7 @@ using UnityEngine;
 using RobotGame;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
 public enum GameScene
 {
     MainMenu,
@@ -12,6 +13,10 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] private GameObject PauseMenu;
     [SerializeField] private Image healthBar;
+    [SerializeField] private Image meleeCooldownIcon;
+    [SerializeField] private Image grappleCooldownIcon;
+    [SerializeField] private TextMeshProUGUI ammoCount;
+
     public static GameManager Instance {  get; private set; }
     private Pathfinding pathfinder;
 
@@ -57,7 +62,8 @@ public class GameManager : MonoBehaviour
 
     public void OpenMainMenu()
     {
-        DisablePauseMenu();
+        StartCoroutine(ResetTimeScale());
+        PauseMenu.SetActive(false);
         SceneManager.LoadScene((int)GameScene.MainMenu);
     }
 
@@ -122,8 +128,19 @@ public class GameManager : MonoBehaviour
         yield break;
     }
 
-    public void SetSlowMoTimeScale(float timeScale = 0.1f)
+    public void SetSlowMoTimeScale(float timeScale = 0.3f)
     {
         _gameSpeed = timeScale;
+    }
+
+    public void SetCoolDownIconsUI(float meleeTime, float grappleTime)
+    {
+        meleeCooldownIcon.fillAmount = 1 - meleeTime;
+        grappleCooldownIcon.fillAmount = 1 - grappleTime;
+    }
+
+    public void SetAmmoCountUI(int count, int max)
+    {
+        ammoCount.text = count + " / " + max;
     }
 }

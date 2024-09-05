@@ -34,7 +34,10 @@ public class EnemyController : EnemyStateMachine
     {
         if (invincibilityTime > 0.0f) { invincibilityTime -= Time.deltaTime; }
         if (meleeCooldownTimer > 0.0f) { meleeCooldownTimer -= Time.deltaTime; }
-        StartCoroutine(State.Update());
+        if (!GameManager.Instance.IsPauseMenuEnabled())
+        {
+            StartCoroutine(State.Update());
+        }
     }
 
     private void FixedUpdate()

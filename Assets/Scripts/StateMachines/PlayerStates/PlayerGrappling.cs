@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace RobotGame.States
 {
-    public class PlayerSlinging : PlayerState
+    public class PlayerGrappling : PlayerState
     {
         private readonly PlayerController player;
         private readonly Vector3 endPoint;
@@ -11,7 +11,7 @@ namespace RobotGame.States
         private Vector2 direction;
         private float speed;
 
-        public PlayerSlinging(PlayerController player, Vector3 slingEndPoint, float speed) { this.player = player; name = "PlayerSlinging"; this.endPoint = slingEndPoint; this.speed = speed; }
+        public PlayerGrappling(PlayerController player, Vector3 grappleEndPoint, float speed) { this.player = player; name = "PlayerSlinging"; this.endPoint = grappleEndPoint; this.speed = speed; }
         
         public override IEnumerator Start()
         {
@@ -25,6 +25,7 @@ namespace RobotGame.States
             if(Vector3.Distance(player.transform.position, endPoint) < 0.5f) 
             {
                 player.TransitionState(new PlayerDefault(player));
+                player.grappleCooldownTimer = 0.0f;
             }
             playerRigidbody.transform.position += (Vector3)direction * speed * Time.deltaTime;
             yield break;

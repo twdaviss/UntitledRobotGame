@@ -39,7 +39,7 @@ public class EnemyHealth : MonoBehaviour
             currentStaggerHealth -= damage;
             if(damage > maxHealth/10)
             {
-                DropOil();
+                //DropOil();
             }
             if(currentStaggerHealth < 0.0f)
             {

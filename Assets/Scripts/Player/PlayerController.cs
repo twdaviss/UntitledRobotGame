@@ -5,24 +5,30 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : PlayerStateMachine
 {
-    [SerializeField] private float defaultMoveSpeed;
-    
-    private Rigidbody2D playerRigidbody;
-    private InputHandler inputHandler;
-    private float moveSpeed;
-    
     public SpriteRenderer playerSprite;
     public Animator playerAnimator;
    
     public Vector2 moveDirection;
 
     public ScrapShot scrapShot;
-    public SlingArms slingArms;
+    public Grapple grapple;
     public Melee melee;
 
     public Camera activeCamera;
     public bool isSprinting = false;
     public bool lookingForTarget = false;
+    
+    public float meleeCooldownTime = 1.0f;
+    public float grappleCooldownTime = 3.0f;
+    public float grappleCooldownTimer;
+    public float meleeCooldownTimer;
+
+    [SerializeField] private float defaultMoveSpeed;
+    
+    private Rigidbody2D playerRigidbody;
+    private InputHandler inputHandler;
+    private float moveSpeed;
+
 
     private void Awake()
     {
@@ -31,8 +37,11 @@ public class PlayerController : PlayerStateMachine
         playerSprite = GetComponent<SpriteRenderer>();
         playerAnimator = GetComponent<Animator>();
         scrapShot = GetComponentInChildren<ScrapShot>();
-        slingArms = GetComponentInChildren<SlingArms>();
+        grapple = GetComponentInChildren<Grapple>();
         melee = GetComponentInChildren<Melee>();
+
+        grappleCooldownTimer = grappleCooldownTime;
+        meleeCooldownTimer = meleeCooldownTime;
         SetState(new PlayerDefault(this));
     }
     void Update()
@@ -43,6 +52,11 @@ public class PlayerController : PlayerStateMachine
     private void FixedUpdate()
     {
         StartCoroutine(State.FixedUpdate());
+        meleeCooldownTimer += Time.deltaTime;
+        grappleCooldownTimer += Time.deltaTime;
+
+        GameManager.Instance.SetCoolDownIconsUI(meleeCooldownTimer/meleeCooldownTime, grappleCooldownTimer/grappleCooldownTime);
+        GameManager.Instance.SetAmmoCountUI(scrapShot.currentAmmo, scrapShot.maxAmmo);
     }
 
     public void InputHandler()
@@ -75,11 +89,11 @@ public class PlayerController : PlayerStateMachine
 
         if (targets.Length == 0) 
         {
-            slingArms.SetTarget(null);
+            grapple.SetTarget(null);
         }
         if (targets.Length == 1)
         {
-            slingArms.SetTarget(targets[0].gameObject);
+            grapple.SetTarget(targets[0].gameObject);
             return;
         }
 
@@ -91,7 +105,7 @@ public class PlayerController : PlayerStateMachine
             if(distanceFromMouse < closestDistance)
             {
                 closestDistance = distanceFromMouse;
-                slingArms.SetTarget(target.gameObject);
+                grapple.SetTarget(target.gameObject);
             }
         }
     }
@@ -113,6 +127,10 @@ public class PlayerController : PlayerStateMachine
     
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        TransitionState(new PlayerDefault(this));
+        if(State.GetType() == typeof(PlayerGrappling))
+        {
+            TransitionState(new PlayerDefault(this));
+            grappleCooldownTimer = 0.0f;
+        }
     }
 }
