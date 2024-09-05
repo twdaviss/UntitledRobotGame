@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -25,8 +26,14 @@ public class Scrap : MonoBehaviour
     }
     private void OnEnable()
     {
+        InputManager.onMagnetize += Magnetize;
         lifeTime = range;
         scrapRigidbody.AddForce(direction * moveSpeed, ForceMode2D.Force);
+    }
+
+    private void OnDestroy()
+    {
+        InputManager.onMagnetize -= Magnetize;
     }
     void Update()
     {
@@ -43,12 +50,13 @@ public class Scrap : MonoBehaviour
         }
     }
 
-    public void SetParameters(float moveSpeed, float damage, float range, Vector2 direction)
+    public void SetParameters(float moveSpeed, float damage, float range, Vector2 direction, GameObject player)
     {
         this.moveSpeed = moveSpeed;
         this.damage = damage;
         this.range = range;
         this.direction = direction;
+        this.player = player;
     }
 
     public void SetPool(ObjectPool<Scrap> pool)
@@ -67,10 +75,9 @@ public class Scrap : MonoBehaviour
         return damage;
     }
 
-    public void Magnetize(GameObject player)
+    public void Magnetize()
     {
         isMagnetized = true;
-        this.player = player;
         scrapRigidbody.velocity = Vector2.zero;
     }
 
@@ -87,4 +94,5 @@ public class Scrap : MonoBehaviour
             scrapPool.Release(this);
         }
     }
+
 }

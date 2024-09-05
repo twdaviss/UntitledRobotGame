@@ -3,81 +3,88 @@ using UnityEngine;
 
 public class Grapple : MonoBehaviour
 {
-    [SerializeField]private GameObject targetUI;
-    [SerializeField] float range;
-    [SerializeField] float speed;
-    
+    [SerializeField] private GameObject targetUI;
+    [SerializeField] private float range;
+    [SerializeField] private float speed;
+    [SerializeField] private float grappleCooldownTime;
+    [SerializeField] private float grappleAimMaxTime;
 
-    private LineRenderer lineRenderer;
     private PlayerController playerController;
-    private GameObject grappleTarget;
+    private PlayerControls playerControls;
+    private GameObject targetObject;
 
-    private Vector3 endPosition;
     private bool isAimingGrapple = false;
     private bool targetValid = false;
 
-    private float grappleAimMaxTime = 0.5f;
-    private float grapplAimTimer = 0.0f;
+    private float grappleCooldownTimer;
+    private float grappleAimTimer = 0.0f;
+    private bool canGrapple = true;
+
     private void Awake()
     {
+        grappleCooldownTimer = grappleCooldownTime;
         playerController = GetComponentInParent<PlayerController>();
-        lineRenderer = GetComponentInParent<LineRenderer>();
+        playerControls = InputManager.Instance.GetPlayerControls();
     }
 
     private void Update()
     {
-        if (!isAimingGrapple || grappleTarget == null)
+        grappleCooldownTimer += Time.deltaTime;
+        if (playerControls.Gameplay.Sling.inProgress)
         {
-            targetUI.SetActive(false);
-            lineRenderer.enabled = false;
-            return;
+            grappleAimTimer += Time.deltaTime;
+            canGrapple = true;
+        }
+        else
+        {
+            grappleAimTimer = 0.0f;
+            canGrapple = false;
         }
 
-        grapplAimTimer += Time.deltaTime;
-        if (grapplAimTimer >= grappleAimMaxTime)
+        if (grappleAimTimer >= grappleAimMaxTime)
         {
             CancelGrapple();
-            grapplAimTimer = 0.0f;
             return;
         }
 
-        CheckGrappleTarget();
-        
-        targetUI.SetActive(true);
-        targetUI.transform.position = grappleTarget.transform.position;
-
-        //lineRenderer.enabled = true;
-        lineRenderer.positionCount = 2;
-        lineRenderer.SetPosition(0, transform.parent.position);
-        lineRenderer.SetPosition(1, grappleTarget.transform.position);
-    }
-
-    public void GrappleStart()
-    {
-        if (playerController.grappleCooldownTimer < playerController.grappleCooldownTime) 
+        if (canGrapple)
         {
-            return;
+            LookForTarget();
         }
-        GameManager.Instance.SetSlowMoTimeScale();
-        isAimingGrapple = true;
+        else
+        {
+            GrappleTarget();
+        }
+        if (isAimingGrapple && targetObject != null)
+        {
+            targetUI.SetActive(true);
+            targetUI.transform.position = targetObject.transform.position;
+        }
+        else
+        {
+            targetUI.SetActive(false);
+        }
     }
 
-    public void GrappleReleased()
+    private void FixedUpdate()
     {
-        if (!isAimingGrapple) { return; }
+        GameManager.Instance.SetGrappleCooldownUI(grappleCooldownTimer/ grappleCooldownTime);
+    }
 
+    public void GrappleTarget()
+    {
+        if (grappleCooldownTimer < grappleCooldownTime){return;}
+        if(isAimingGrapple == false) { return; }
+        
+        isAimingGrapple = false;
+        if (targetValid)
+        {
+            playerController.SetState(new PlayerGrappling(playerController, targetObject.transform.position, speed));
+            grappleCooldownTimer = 0.0f;
+        }
+        
         StartCoroutine(GameManager.Instance.ResetTimeScale());
         isAimingGrapple = false;
-        targetUI.SetActive(false);
-        lineRenderer.enabled = false;
-
-        CheckGrappleTarget();
-
-        if (targetValid && playerController.grappleCooldownTimer >= playerController.grappleCooldownTime)
-        {
-            playerController.SetState(new PlayerGrappling(playerController, grappleTarget.transform.position, speed));
-            playerController.grappleCooldownTimer = 0.0f;
-        }
     }
 
     public void CancelGrapple()
@@ -85,35 +92,60 @@ public class Grapple : MonoBehaviour
         StartCoroutine(GameManager.Instance.ResetTimeScale());
         isAimingGrapple = false;
         targetUI.SetActive(false);
-        lineRenderer.enabled = false;
     }
 
-    public void SetTarget(GameObject target)
+    public void LookForTarget()
     {
-        grappleTarget = target;
-    }
-
-    private void CheckGrappleTarget()
-    {
-        if(grappleTarget == null) 
+        if (grappleCooldownTimer < grappleCooldownTime)
         {
-            targetValid = false;
-            return; 
+            return;
         }
-        float targetDistance = Vector3.Distance(playerController.transform.position, grappleTarget.transform.position);
+        GameManager.Instance.SetSlowMoTimeScale();
+        isAimingGrapple = true;
+        Vector2 mousePosition = InputManager.Instance.GetMousePosition();
+
+        int layerMask = LayerMask.GetMask("Enemies") | LayerMask.GetMask("Grapple");
+
+        Collider2D[] targets = Physics2D.OverlapCircleAll(mousePosition, 0.5f, layerMask);
+
+        if (targets.Length == 0)
+        {
+            targetObject = null;
+            return;
+        }
+        else if (targets.Length == 1)
+        {
+            targetObject = targets[0].gameObject;
+        }
+        else
+        {
+            float closestDistance = 100f;
+            foreach (Collider2D target in targets)
+            {
+                float distanceFromMouse = Vector2.Distance(target.transform.position, mousePosition);
+
+                if (distanceFromMouse < closestDistance)
+                {
+                    closestDistance = distanceFromMouse;
+                    targetObject = target.gameObject;
+                }
+            }
+        }
+        float targetDistance = Vector3.Distance(playerController.transform.position, targetObject.transform.position);
         if (targetDistance > range || targetDistance < 4.0f)
         {
             targetUI.GetComponent<SpriteRenderer>().color = Color.red;
             targetValid = false;
             return;
         }
-        int layerMask = LayerMask.GetMask("Obstacles");
-        Vector2 targetDirection = (grappleTarget.transform.position - transform.position).normalized;
 
-        RaycastHit2D raycast = Physics2D.Raycast(playerController.transform.position, targetDirection, range,layerMask);
-        if(raycast.point != null && raycast.point != Vector2.zero)
+        layerMask = LayerMask.GetMask("Obstacles");
+        Vector2 targetDirection = (targetObject.transform.position - transform.position).normalized;
+
+        RaycastHit2D raycast = Physics2D.Raycast(playerController.transform.position, targetDirection, range, layerMask);
+        if (raycast.point != null && raycast.point != Vector2.zero)
         {
-            if (Vector3.Distance(playerController.transform.position,raycast.point) < Vector3.Distance(playerController.transform.position, targetDirection * range))
+            if (Vector3.Distance(playerController.transform.position, raycast.point) < Vector3.Distance(playerController.transform.position, targetDirection * range))
             {
                 targetUI.GetComponent<SpriteRenderer>().color = Color.red;
                 targetValid = false;
@@ -123,6 +155,5 @@ public class Grapple : MonoBehaviour
         targetUI.GetComponent<SpriteRenderer>().color = Color.green;
 
         targetValid = true;
-        return;
     }
 }

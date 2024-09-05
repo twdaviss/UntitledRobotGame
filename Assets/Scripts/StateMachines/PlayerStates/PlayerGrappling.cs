@@ -22,10 +22,9 @@ namespace RobotGame.States
 
         public override IEnumerator Update()
         {
-            if(Vector3.Distance(player.transform.position, endPoint) < 0.5f) 
+            if(Vector3.Distance(player.transform.position, endPoint) < 0.75f) 
             {
                 player.TransitionState(new PlayerDefault(player));
-                player.grappleCooldownTimer = 0.0f;
             }
             playerRigidbody.transform.position += (Vector3)direction * speed * Time.deltaTime;
             yield break;
@@ -39,6 +38,15 @@ namespace RobotGame.States
         public override IEnumerator End()
         {
             playerRigidbody.velocity = Vector2.zero;
+            yield break;
+        }
+
+        public override IEnumerator OnCollisionEnter2D(Collision2D collision)
+        {
+            if (this.GetType() == typeof(PlayerGrappling))
+            {
+                player.TransitionState(new PlayerDefault(player));
+            }
             yield break;
         }
     }

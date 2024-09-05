@@ -684,12 +684,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 107.25, y: 100.71, z: -10}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -852.75, y: -439.29, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1724175788}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &519420033
 MonoBehaviour:
@@ -851,6 +851,15 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6763769826408755335, guid: 4ea5991f72aa36c428d2eff7ee330935, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1897885392}
+    - targetCorrespondingSourceObject: {fileID: 6763769826408755335, guid: 4ea5991f72aa36c428d2eff7ee330935, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3526292276635244909}
+    - targetCorrespondingSourceObject: {fileID: 6763769826408755335, guid: 4ea5991f72aa36c428d2eff7ee330935, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 519420032}
+    - targetCorrespondingSourceObject: {fileID: 6763769826408755335, guid: 4ea5991f72aa36c428d2eff7ee330935, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1974754365}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ea5991f72aa36c428d2eff7ee330935, type: 3}
 --- !u!1 &807770077
@@ -2597,13 +2606,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1974754363}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 107.25, y: 100.71, z: -10}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -852.75, y: -439.29, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1141463604}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1724175788}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1974754366
 MonoBehaviour:
@@ -2726,6 +2735,14 @@ PrefabInstance:
     - target: {fileID: 1326478117698346847, guid: e1ba6dadd6d10e249b115f4057bf955a, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 1340760282465729318, guid: e1ba6dadd6d10e249b115f4057bf955a, type: 3}
+      propertyPath: grappleAimMaxTime
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1340760282465729318, guid: e1ba6dadd6d10e249b115f4057bf955a, type: 3}
+      propertyPath: grappleCooldownTime
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1672617182521118099, guid: e1ba6dadd6d10e249b115f4057bf955a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2855,6 +2872,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Grapple
       objectReference: {fileID: 0}
+    - target: {fileID: 8942368240564326941, guid: e1ba6dadd6d10e249b115f4057bf955a, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2863,6 +2884,118 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 945606029}
   m_SourcePrefab: {fileID: 100100000, guid: e1ba6dadd6d10e249b115f4057bf955a, type: 3}
+--- !u!4 &3526292276635244909
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3868913698434436001}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -852.75, y: -439.29, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1724175788}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3868913698434436001
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3526292276635244909}
+  - component: {fileID: 7112046817250716448}
+  - component: {fileID: 5871515677293756907}
+  m_Layer: 3
+  m_Name: InputManager
+  m_TagString: Player
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &5871515677293756907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3868913698434436001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04c5d39b472bc804d936cb975220a28b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activeCamera: {fileID: 519420031}
+--- !u!114 &7112046817250716448
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3868913698434436001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 8efdc5a13f68b834d93c0616abb6e178, type: 3}
+  m_NotificationBehavior: 2
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 47615e18-3ee0-4fe1-a982-5859a51a9d58
+    m_ActionName: Gameplay/Fire[/Keyboard/f]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 1a60f903-dfab-4b10-97da-d0b875a774f8
+    m_ActionName: Gameplay/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d,/DualShock4GamepadHID/leftStick/up,/DualShock4GamepadHID/leftStick/down,/DualShock4GamepadHID/leftStick/left,/DualShock4GamepadHID/leftStick/right]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 78e9321e-02c8-471d-acb1-2cba80f7f3b0
+    m_ActionName: Gameplay/Sprint[/Keyboard/shift,/DualShock4GamepadHID/leftStickPress]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: f2573fb6-f2db-4849-aebb-bfb8c8a8d3ca
+    m_ActionName: Gameplay/Mouse[/Mouse/position]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 9265d270-befd-4b25-ac6e-4861944459ac
+    m_ActionName: Gameplay/Sling[/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 864e5421-1349-4570-8ce8-9852c127086f
+    m_ActionName: Gameplay/Melee[/Keyboard/f]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 4bb22c07-cdff-456d-a969-31ae927e5838
+    m_ActionName: Gameplay/Pause[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: f12b7034-d95a-403c-a145-0f88a2695fda
+    m_ActionName: Gameplay/Magnetize[/Keyboard/q]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ef54dba2-ab2a-4057-ace7-5adddf0a0b44
+    m_ActionName: Menu/Pause[/Keyboard/escape]
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: Keyboard
+  m_DefaultActionMap: Gameplay
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1001 &7207374159963171478
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2940,8 +3073,6 @@ PrefabInstance:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 519420032}
-  - {fileID: 1974754365}
   - {fileID: 781011507}
   - {fileID: 2295980367565140459}
   - {fileID: 1236954401}

@@ -10,18 +10,43 @@ public class Melee : MonoBehaviour
     [SerializeField] private float staggerTime;
 
     private PlayerController playerController;
+    private float meleeCooldownTime = 1.0f;
+    private float meleeCooldownTimer;
 
+    private void Awake()
+    {
+        meleeCooldownTimer = meleeCooldownTime;
+    }
     void Start()
     {
         playerController = GetComponentInParent<PlayerController>();
     }
 
+    private void Update()
+    {
+        meleeCooldownTimer += Time.deltaTime;
+    }
+    private void FixedUpdate()
+    {
+        GameManager.Instance.SetMeleeCooldownUI(meleeCooldownTimer/ meleeCooldownTime);
+    }
+
     public void Attack()
     {
-        if(playerController.meleeCooldownTimer >= playerController.meleeCooldownTime)
+        if(meleeCooldownTimer >= meleeCooldownTime)
         {
             playerController.SetState(new PlayerMelee(playerController, radius, damage, knockBack, duration, staggerTime));
-            playerController.meleeCooldownTimer = 0.0f;
+            meleeCooldownTimer = 0.0f;
         }
+    }
+
+    private void OnEnable()
+    {
+        InputManager.onMelee += Attack;
+    }
+
+    private void OnDestroy()
+    {
+        InputManager.onMelee -= Attack;
     }
 }

@@ -133,9 +133,13 @@ public class GameManager : MonoBehaviour
         _gameSpeed = timeScale;
     }
 
-    public void SetCoolDownIconsUI(float meleeTime, float grappleTime)
+    public void SetMeleeCooldownUI(float meleeTime)
     {
         meleeCooldownIcon.fillAmount = 1 - meleeTime;
+    }
+
+    public void SetGrappleCooldownUI(float grappleTime)
+    {
         grappleCooldownIcon.fillAmount = 1 - grappleTime;
     }
 
