@@ -24,13 +24,12 @@ public class Grapple : MonoBehaviour
     {
         grappleCooldownTimer = grappleCooldownTime;
         playerController = GetComponentInParent<PlayerController>();
-        playerControls = InputManager.Instance.GetPlayerControls();
     }
 
     private void Update()
     {
         grappleCooldownTimer += Time.deltaTime;
-        if (playerControls.Gameplay.Sling.inProgress)
+        if (InputManager.playerControls.Gameplay.Grapple.inProgress)
         {
             grappleAimTimer += Time.deltaTime;
             canGrapple = true;

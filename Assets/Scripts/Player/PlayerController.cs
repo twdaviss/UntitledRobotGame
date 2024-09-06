@@ -41,7 +41,7 @@ public class PlayerController : PlayerStateMachine
         if (moveDirection.x < 0) { playerSprite.flipX = true; }
         else { playerSprite.flipX = false; }
         
-        if(InputManager.Instance.GetPlayerControls().Gameplay.Sprint.inProgress) { moveSpeed = 2 * defaultMoveSpeed; }
+        if(InputManager.playerControls.Gameplay.Sprint.inProgress) { moveSpeed = 2 * defaultMoveSpeed; }
         else { moveSpeed = defaultMoveSpeed; }
 
         transform.position += (Vector3)moveDirection.normalized * moveSpeed * Time.deltaTime;

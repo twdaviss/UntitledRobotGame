@@ -28,7 +28,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             ""id"": ""e9cef225-7e6d-4a5c-be27-89be2ee6236b"",
             ""actions"": [
                 {
-                    ""name"": ""Fire"",
+                    ""name"": ""Scrap"",
                     ""type"": ""Button"",
                     ""id"": ""47615e18-3ee0-4fe1-a982-5859a51a9d58"",
                     ""expectedControlType"": ""Button"",
@@ -64,7 +64,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Sling"",
+                    ""name"": ""Grapple"",
                     ""type"": ""Button"",
                     ""id"": ""9265d270-befd-4b25-ac6e-4861944459ac"",
                     ""expectedControlType"": ""Button"",
@@ -108,7 +108,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
-                    ""action"": ""Fire"",
+                    ""action"": ""Scrap"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -218,7 +218,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
-                    ""action"": ""Sling"",
+                    ""action"": ""Grapple"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -313,11 +313,11 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
 }");
         // Gameplay
         m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
-        m_Gameplay_Fire = m_Gameplay.FindAction("Fire", throwIfNotFound: true);
+        m_Gameplay_Scrap = m_Gameplay.FindAction("Scrap", throwIfNotFound: true);
         m_Gameplay_Move = m_Gameplay.FindAction("Move", throwIfNotFound: true);
         m_Gameplay_Sprint = m_Gameplay.FindAction("Sprint", throwIfNotFound: true);
         m_Gameplay_Mouse = m_Gameplay.FindAction("Mouse", throwIfNotFound: true);
-        m_Gameplay_Sling = m_Gameplay.FindAction("Sling", throwIfNotFound: true);
+        m_Gameplay_Grapple = m_Gameplay.FindAction("Grapple", throwIfNotFound: true);
         m_Gameplay_Melee = m_Gameplay.FindAction("Melee", throwIfNotFound: true);
         m_Gameplay_Pause = m_Gameplay.FindAction("Pause", throwIfNotFound: true);
         m_Gameplay_Magnetize = m_Gameplay.FindAction("Magnetize", throwIfNotFound: true);
@@ -385,11 +385,11 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     // Gameplay
     private readonly InputActionMap m_Gameplay;
     private List<IGameplayActions> m_GameplayActionsCallbackInterfaces = new List<IGameplayActions>();
-    private readonly InputAction m_Gameplay_Fire;
+    private readonly InputAction m_Gameplay_Scrap;
     private readonly InputAction m_Gameplay_Move;
     private readonly InputAction m_Gameplay_Sprint;
     private readonly InputAction m_Gameplay_Mouse;
-    private readonly InputAction m_Gameplay_Sling;
+    private readonly InputAction m_Gameplay_Grapple;
     private readonly InputAction m_Gameplay_Melee;
     private readonly InputAction m_Gameplay_Pause;
     private readonly InputAction m_Gameplay_Magnetize;
@@ -397,11 +397,11 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     {
         private @PlayerControls m_Wrapper;
         public GameplayActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Fire => m_Wrapper.m_Gameplay_Fire;
+        public InputAction @Scrap => m_Wrapper.m_Gameplay_Scrap;
         public InputAction @Move => m_Wrapper.m_Gameplay_Move;
         public InputAction @Sprint => m_Wrapper.m_Gameplay_Sprint;
         public InputAction @Mouse => m_Wrapper.m_Gameplay_Mouse;
-        public InputAction @Sling => m_Wrapper.m_Gameplay_Sling;
+        public InputAction @Grapple => m_Wrapper.m_Gameplay_Grapple;
         public InputAction @Melee => m_Wrapper.m_Gameplay_Melee;
         public InputAction @Pause => m_Wrapper.m_Gameplay_Pause;
         public InputAction @Magnetize => m_Wrapper.m_Gameplay_Magnetize;
@@ -414,9 +414,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_GameplayActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_GameplayActionsCallbackInterfaces.Add(instance);
-            @Fire.started += instance.OnFire;
-            @Fire.performed += instance.OnFire;
-            @Fire.canceled += instance.OnFire;
+            @Scrap.started += instance.OnScrap;
+            @Scrap.performed += instance.OnScrap;
+            @Scrap.canceled += instance.OnScrap;
             @Move.started += instance.OnMove;
             @Move.performed += instance.OnMove;
             @Move.canceled += instance.OnMove;
@@ -426,9 +426,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Mouse.started += instance.OnMouse;
             @Mouse.performed += instance.OnMouse;
             @Mouse.canceled += instance.OnMouse;
-            @Sling.started += instance.OnSling;
-            @Sling.performed += instance.OnSling;
-            @Sling.canceled += instance.OnSling;
+            @Grapple.started += instance.OnGrapple;
+            @Grapple.performed += instance.OnGrapple;
+            @Grapple.canceled += instance.OnGrapple;
             @Melee.started += instance.OnMelee;
             @Melee.performed += instance.OnMelee;
             @Melee.canceled += instance.OnMelee;
@@ -442,9 +442,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
 
         private void UnregisterCallbacks(IGameplayActions instance)
         {
-            @Fire.started -= instance.OnFire;
-            @Fire.performed -= instance.OnFire;
-            @Fire.canceled -= instance.OnFire;
+            @Scrap.started -= instance.OnScrap;
+            @Scrap.performed -= instance.OnScrap;
+            @Scrap.canceled -= instance.OnScrap;
             @Move.started -= instance.OnMove;
             @Move.performed -= instance.OnMove;
             @Move.canceled -= instance.OnMove;
@@ -454,9 +454,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Mouse.started -= instance.OnMouse;
             @Mouse.performed -= instance.OnMouse;
             @Mouse.canceled -= instance.OnMouse;
-            @Sling.started -= instance.OnSling;
-            @Sling.performed -= instance.OnSling;
-            @Sling.canceled -= instance.OnSling;
+            @Grapple.started -= instance.OnGrapple;
+            @Grapple.performed -= instance.OnGrapple;
+            @Grapple.canceled -= instance.OnGrapple;
             @Melee.started -= instance.OnMelee;
             @Melee.performed -= instance.OnMelee;
             @Melee.canceled -= instance.OnMelee;
@@ -549,11 +549,11 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     }
     public interface IGameplayActions
     {
-        void OnFire(InputAction.CallbackContext context);
+        void OnScrap(InputAction.CallbackContext context);
         void OnMove(InputAction.CallbackContext context);
         void OnSprint(InputAction.CallbackContext context);
         void OnMouse(InputAction.CallbackContext context);
-        void OnSling(InputAction.CallbackContext context);
+        void OnGrapple(InputAction.CallbackContext context);
         void OnMelee(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
         void OnMagnetize(InputAction.CallbackContext context);

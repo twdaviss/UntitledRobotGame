@@ -6,7 +6,7 @@
             "id": "e9cef225-7e6d-4a5c-be27-89be2ee6236b",
             "actions": [
                 {
-                    "name": "Fire",
+                    "name": "Scrap",
                     "type": "Button",
                     "id": "47615e18-3ee0-4fe1-a982-5859a51a9d58",
                     "expectedControlType": "Button",
@@ -42,7 +42,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Sling",
+                    "name": "Grapple",
                     "type": "Button",
                     "id": "9265d270-befd-4b25-ac6e-4861944459ac",
                     "expectedControlType": "Button",
@@ -86,7 +86,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "Fire",
+                    "action": "Scrap",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -196,7 +196,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "Sling",
+                    "action": "Grapple",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

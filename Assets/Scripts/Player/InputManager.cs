@@ -1,13 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
+using System;
+using TMPro;
+using System.Linq;
 
 public class InputManager : MonoBehaviour
 {
     public static InputManager Instance { get; private set; }
 
-    [SerializeField] private PlayerControls playerControls;
+    public static PlayerControls playerControls;
+
+    public static event Action rebindCompleted;
+    public static event Action rebindCanceled;
+    public static event Action<InputAction, int> rebindStarted;
+    public static event Action<bool, string, string> compositeBeingRebound;
+
     [SerializeField] private Camera activeCamera;
     private Vector3 mouseScreenPosition;
     private Vector3 moveDirection;
@@ -29,11 +37,6 @@ public class InputManager : MonoBehaviour
 
     public delegate void OnMagnetize();
     public static event OnMagnetize onMagnetize;
-    private void Start()
-    {
-        playerControls.Menu.Disable();
-        playerControls.Gameplay.Enable();
-    }
 
     void Awake()
     {
@@ -51,18 +54,19 @@ public class InputManager : MonoBehaviour
             playerControls = new PlayerControls();
         }
     }
-
-    public PlayerControls GetPlayerControls()
+    private void Start()
     {
-        if(playerControls == null)
-        {
-            playerControls = new PlayerControls();
-        }
-        return playerControls;
+        playerControls.Menu.Disable();
+        playerControls.Gameplay.Enable();
     }
 
     public void PauseGame(InputAction.CallbackContext context)
     {
+        if (GameManager.Instance.IsOptionsMenuEnabled())
+        {
+            GameManager.Instance.DisableOptionsMenu();
+            return;
+        }
         if (GameManager.Instance.IsPauseMenuEnabled())
         {
             playerControls.Menu.Disable();
@@ -137,6 +141,157 @@ public class InputManager : MonoBehaviour
             onMagnetize();
         }
     }
+
+    public static void StartRebind(string actionName, int bindingIndex, TextMeshProUGUI statusText, bool excludeMouse)
+    {
+        InputAction action = playerControls.asset.FindAction(actionName);
+        if(action == null || action.bindings.Count <= bindingIndex)
+        {
+            Debug.Log("Couldn't find action or binding");
+            return;
+        }
+
+        if (action.bindings[bindingIndex].isComposite)
+        {
+            var firstPartIndex = bindingIndex + 1;
+            if(firstPartIndex < action.bindings.Count && action.bindings[firstPartIndex].isPartOfComposite)
+            {
+                DoRebind(action, firstPartIndex, statusText, true, excludeMouse);
+            }
+        }
+        else
+        {
+            DoRebind(action, bindingIndex, statusText, false, excludeMouse);
+        }
+    }
+
+    private static void DoRebind(InputAction actionToRebind, int bindingIndex, TextMeshProUGUI statusText, bool allCompositeParts, bool excludeMouse)
+    {
+        if(actionToRebind == null || bindingIndex < 0)
+        {
+            return;
+        }
+
+        if (actionToRebind.bindings[bindingIndex].isPartOfComposite)
+        {
+            statusText.text = $"Binding '{actionToRebind.bindings[bindingIndex].name}'. ";
+            compositeBeingRebound?.Invoke(true, statusText.text, actionToRebind.name);
+
+        }
+        else
+        {
+            statusText.text = "Press a " + actionToRebind.expectedControlType;
+            compositeBeingRebound?.Invoke(false, "", actionToRebind.name);
+        }
+
+        actionToRebind.Disable();
+
+        var rebind = actionToRebind.PerformInteractiveRebinding(bindingIndex);
+
+        rebind.OnComplete(operation =>
+        {
+            actionToRebind.Enable();
+            operation.Dispose();
+            if (allCompositeParts)
+            {
+                var nextBindingIndex = bindingIndex + 1;
+                if (nextBindingIndex < actionToRebind.bindings.Count && actionToRebind.bindings[nextBindingIndex].isPartOfComposite)
+                { 
+                    DoRebind(actionToRebind, nextBindingIndex, statusText, allCompositeParts, excludeMouse); 
+                }
+                else
+                {
+                    compositeBeingRebound?.Invoke(false, "", actionToRebind.name);
+                }
+            }
+
+            SaveBindingOverride(actionToRebind);
+            rebindCompleted?.Invoke();
+        });
+
+        rebind.OnCancel(operation =>
+        {
+            actionToRebind.Enable();
+            operation.Dispose();
+
+            rebindCanceled?.Invoke();
+        });
+
+        rebind.WithCancelingThrough("<Keyboard>/escape");
+
+        if (excludeMouse)
+        {
+            rebind.WithControlsExcluding("Mouse");
+        }
+
+        rebindStarted?.Invoke(actionToRebind, bindingIndex);
+        rebind.Start(); //actually starts the rebinding
+    }
+
+    public static string GetBindingName(string actionName, int bindingIndex)
+    {
+        if(playerControls == null)
+        {
+            playerControls = new PlayerControls();
+        }
+
+        InputAction action = playerControls.asset.FindAction(actionName);
+        return action.GetBindingDisplayString(bindingIndex);
+    }
+
+    private static void SaveBindingOverride(InputAction action)
+    {
+        for(int i = 0; i < action.bindings.Count; i++)
+        {
+            PlayerPrefs.SetString(action.actionMap + action.name + i, action.bindings[i].overridePath);
+        }
+    }
+
+    public static void LoadBindingOverride(string actionName)
+    {
+        if (playerControls == null)
+        {
+            playerControls = new PlayerControls();
+        }
+
+        InputAction action = playerControls.asset.FindAction(actionName);
+
+        for(int i = 0; i < action.bindings.Count; i++)
+        {
+            string path = PlayerPrefs.GetString(action.actionMap + action.name + i);
+
+            if (!string.IsNullOrEmpty(path))
+            {
+                action.ApplyBindingOverride(i, path);
+            }
+        }
+    }
+
+    public static void ResetBinding(string actionName, int bindingIndex)
+    {
+        InputAction action = playerControls.asset.FindAction(actionName);
+
+        if(action == null || action.bindings.Count <= bindingIndex)
+        {
+            Debug.Log("Could not find action or binding");
+            return;
+        }
+
+        if (action.bindings[bindingIndex].isComposite)
+        {
+            for (int i = bindingIndex + 1; i < action.bindings.Count && action.bindings[i].isPartOfComposite; i++)
+            {
+                action.RemoveBindingOverride(i);
+            }
+        }
+        else
+        {
+            action.RemoveBindingOverride(bindingIndex);
+        }
+
+        SaveBindingOverride(action);
+    }
+
     private void OnEnable()
     {
         playerControls.Gameplay.Enable();
@@ -147,11 +302,11 @@ public class InputManager : MonoBehaviour
         playerControls.Gameplay.Mouse.performed += ctx => mouseScreenPosition = ctx.ReadValue<Vector2>();
         playerControls.Gameplay.Move.performed += ctx => moveDirection = ctx.ReadValue<Vector2>();
         playerControls.Gameplay.Sprint.performed += ctx => Sprint();
-        playerControls.Gameplay.Fire.performed += ctx => ScrapShot();
+        playerControls.Gameplay.Scrap.performed += ctx => ScrapShot();
         playerControls.Gameplay.Magnetize.performed += ctx => Magnetize();
         playerControls.Gameplay.Melee.performed += ctx => Melee();
-        playerControls.Gameplay.Sling.performed += ctx => GrappleStart();
-        playerControls.Gameplay.Sling.canceled += ctx => GrappleStop();
+        playerControls.Gameplay.Grapple.performed += ctx => GrappleStart();
+        playerControls.Gameplay.Grapple.canceled += ctx => GrappleStop();
     }
 
     private void OnDestroy()
@@ -163,10 +318,10 @@ public class InputManager : MonoBehaviour
         playerControls.Gameplay.Mouse.performed -= ctx => mouseScreenPosition = ctx.ReadValue<Vector2>();
         playerControls.Gameplay.Move.performed -= ctx => moveDirection = ctx.ReadValue<Vector2>();
         playerControls.Gameplay.Sprint.performed -= ctx => Sprint();
-        playerControls.Gameplay.Fire.performed -= ctx => ScrapShot();
+        playerControls.Gameplay.Scrap.performed -= ctx => ScrapShot();
         playerControls.Gameplay.Magnetize.performed -= ctx => Magnetize();
         playerControls.Gameplay.Melee.performed -= ctx => Melee();
-        playerControls.Gameplay.Sling.performed -= ctx => GrappleStart();
-        playerControls.Gameplay.Sling.canceled -= ctx => GrappleStop();
+        playerControls.Gameplay.Grapple.performed -= ctx => GrappleStart();
+        playerControls.Gameplay.Grapple.canceled -= ctx => GrappleStop();
     }
 }
