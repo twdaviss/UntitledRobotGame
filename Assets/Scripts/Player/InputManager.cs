@@ -13,10 +13,13 @@ public class InputManager : MonoBehaviour
 
     public static event Action rebindCompleted;
     public static event Action rebindCanceled;
+    public static event Action enableOverlay;
+    public static event Action disableOverlay;
     public static event Action<InputAction, int> rebindStarted;
     public static event Action<bool, string, string> compositeBeingRebound;
 
     [SerializeField] private Camera activeCamera;
+
     private Vector3 mouseScreenPosition;
     private Vector3 moveDirection;
 
@@ -187,11 +190,11 @@ public class InputManager : MonoBehaviour
         actionToRebind.Disable();
 
         var rebind = actionToRebind.PerformInteractiveRebinding(bindingIndex);
-
         rebind.OnComplete(operation =>
         {
             actionToRebind.Enable();
             operation.Dispose();
+            disableOverlay?.Invoke();
             if (allCompositeParts)
             {
                 var nextBindingIndex = bindingIndex + 1;
@@ -211,8 +214,9 @@ public class InputManager : MonoBehaviour
 
         rebind.OnCancel(operation =>
         {
-            actionToRebind.Enable();
+            //actionToRebind.Enable();
             operation.Dispose();
+            disableOverlay?.Invoke();
 
             rebindCanceled?.Invoke();
         });

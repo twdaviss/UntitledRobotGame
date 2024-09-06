@@ -6,7 +6,6 @@ using TMPro;
 public class RebindUI : MonoBehaviour
 {
     [SerializeField] private InputActionReference inputActionReference; //from scriptable object
-
     [SerializeField] private bool excludeMouse = true;
     
     [Range(0, 10)]
@@ -24,6 +23,9 @@ public class RebindUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI rebindText;
     [SerializeField] private Button resetButton;
 
+    [SerializeField] private GameObject rebindOverlay;
+    [SerializeField] private TextMeshProUGUI rebindOverlayText;
+
     private bool compositeRebinding;
     private string compositeKeyName;
     private void OnEnable()
@@ -35,21 +37,27 @@ public class RebindUI : MonoBehaviour
         {
             LoadBinding();
         }
-        InputManager.rebindCompleted += UpdateUI;
+        InputManager.rebindStarted += EnableOverlay;
+        InputManager.disableOverlay += DisableOverlay;
+        InputManager.rebindCanceled += UpdateUI;
         InputManager.rebindCompleted += UpdateUI;
         InputManager.compositeBeingRebound += SetIfCompositeAndName;
     }
 
     private void OnDisable()
     {
-        InputManager.rebindCompleted -= UpdateUI;
+        InputManager.rebindStarted -= EnableOverlay;
+        InputManager.disableOverlay -= DisableOverlay;
+        InputManager.rebindCanceled -= UpdateUI;
         InputManager.rebindCompleted -= UpdateUI;
         InputManager.compositeBeingRebound -= SetIfCompositeAndName;
     }
 
     private void OnDestroy()
     {
-        InputManager.rebindCompleted -= UpdateUI;
+        InputManager.rebindStarted -= EnableOverlay;
+        InputManager.disableOverlay -= DisableOverlay;
+        InputManager.rebindCanceled -= UpdateUI;
         InputManager.rebindCompleted -= UpdateUI;
         InputManager.compositeBeingRebound -= SetIfCompositeAndName;
     }
@@ -101,6 +109,17 @@ public class RebindUI : MonoBehaviour
                 rebindText.text = inputActionReference.action.GetBindingDisplayString(bindingIndex);
             }
         }
+    }
+
+    private void EnableOverlay(InputAction actionToRebind, int binding)
+    {
+        rebindOverlay?.SetActive(true);
+        rebindOverlayText.text = "Press a " + actionToRebind.expectedControlType;
+    }
+
+    private void DisableOverlay()
+    {
+        rebindOverlay?.SetActive(false);
     }
 
     private void DoRebind()
