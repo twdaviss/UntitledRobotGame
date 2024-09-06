@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -20,6 +21,11 @@ public class ScrapShot : MonoBehaviour
         playerController = GetComponentInParent<PlayerController>();
         currentAmmo = maxAmmo;
         GeneratePool();
+    }
+
+    private void FixedUpdate()
+    {
+        GameManager.Instance.SetAmmoCountUI(currentAmmo, maxAmmo);
     }
     private void GeneratePool()
     {
@@ -45,7 +51,7 @@ public class ScrapShot : MonoBehaviour
 
     private void OnPullFromPool(Scrap scrap)
     {
-        scrap.SetParameters(scrapSpeed, scrapDamage, scrapRange, playerController.GetMouseDirection());
+        scrap.SetParameters(scrapSpeed, scrapDamage, scrapRange, playerController.GetMouseDirection(), playerController.gameObject);
         scrap.transform.position = transform.position;
         scrap.gameObject.SetActive(true);
         scrap.inert = false;
@@ -63,19 +69,14 @@ public class ScrapShot : MonoBehaviour
         Destroy(scrap);
     }
 
-    public void MagnetizeScrap()
+    private void OnEnable()
     {
-        if(playerController.grappleCooldownTimer < playerController.grappleCooldownTime)
-        {
-            return;
-        }
-        playerController.grappleCooldownTimer = 0.0f;
-        LayerMask layerMask = LayerMask.GetMask("Magnetic");
-        Collider2D[] scraps = Physics2D.OverlapCircleAll(transform.position, magnetizeRadius, layerMask);
+        InputManager.onScrapShot += ShootScrap;
+    }
 
-        foreach(Collider2D scrap in scraps)
-        {
-            scrap.GetComponentInParent<Scrap>().Magnetize(playerController.gameObject);
-        }
+    private void OnDestroy()
+    {
+        InputManager.onScrapShot -= ShootScrap;
+
     }
 }

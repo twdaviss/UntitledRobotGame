@@ -12,6 +12,7 @@ public enum GameScene
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private GameObject PauseMenu;
+    [SerializeField] private GameObject OptionsMenu;
     [SerializeField] private Image healthBar;
     [SerializeField] private Image meleeCooldownIcon;
     [SerializeField] private Image grappleCooldownIcon;
@@ -39,6 +40,8 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        DisablePauseMenu();
         return;
     }
 
@@ -77,12 +80,27 @@ public class GameManager : MonoBehaviour
     {
         StartCoroutine(ResetTimeScale());
         PauseMenu.SetActive(false);
+        OptionsMenu.SetActive(false);
         onUnPaused();
     }
 
     public bool IsPauseMenuEnabled()
     {
         return PauseMenu.activeSelf;
+    }
+
+    public bool IsOptionsMenuEnabled()
+    {
+        return OptionsMenu.activeSelf;
+    }
+
+    public void EnableOptionsMenu()
+    {
+        OptionsMenu.SetActive(true);
+    }
+    public void DisableOptionsMenu()
+    {
+        OptionsMenu.SetActive(false);
     }
 
     private void OnSceneChange(Scene scene, LoadSceneMode mode)
@@ -133,9 +151,13 @@ public class GameManager : MonoBehaviour
         _gameSpeed = timeScale;
     }
 
-    public void SetCoolDownIconsUI(float meleeTime, float grappleTime)
+    public void SetMeleeCooldownUI(float meleeTime)
     {
         meleeCooldownIcon.fillAmount = 1 - meleeTime;
+    }
+
+    public void SetGrappleCooldownUI(float grappleTime)
+    {
         grappleCooldownIcon.fillAmount = 1 - grappleTime;
     }
 

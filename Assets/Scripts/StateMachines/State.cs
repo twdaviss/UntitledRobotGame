@@ -1,4 +1,5 @@
 using System.Collections;
+using UnityEngine;
 
 namespace RobotGame.States
 {
@@ -40,6 +41,11 @@ namespace RobotGame.States
         }
 
         public virtual IEnumerator FixedUpdate()
+        {
+            yield break;
+        }
+
+        public virtual IEnumerator OnCollisionEnter2D(Collision2D collision)
         {
             yield break;
         }

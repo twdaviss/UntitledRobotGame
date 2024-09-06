@@ -13,10 +13,8 @@ GameObject:
   - component: {fileID: 6617785460701865480}
   - component: {fileID: 6252904405241380721}
   - component: {fileID: 8141444744145044498}
-  - component: {fileID: 5002000231186038750}
   - component: {fileID: 7899832127833797893}
   - component: {fileID: 5065928492457952887}
-  - component: {fileID: 8548514017932842261}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -83,7 +81,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: 2123501046, guid: 59e16590182e70e40bfb92d27ac42f0c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -124,11 +122,11 @@ CapsuleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.009531379, y: -0.057187676}
-  m_Size: {x: 1.2459352, y: 2.1356246}
+  m_Offset: {x: 0.009531379, y: -0.5020324}
+  m_Size: {x: 1.2459352, y: 1.2459352}
   m_Direction: 0
 --- !u!50 &6252904405241380721
 Rigidbody2D:
@@ -169,82 +167,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7932e20a6058c04e878a19bbc2d1c5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultMoveSpeed: 5
-  playerSprite: {fileID: 0}
-  playerAnimator: {fileID: 0}
+  playerSprite: {fileID: 7429379723091429669}
+  playerAnimator: {fileID: 7899832127833797893}
   moveDirection: {x: 0, y: 0}
-  scrapShot: {fileID: 0}
-  slingArms: {fileID: 0}
-  melee: {fileID: 0}
-  activeCamera: {fileID: 0}
-  isSprinting: 0
-  lookingForTarget: 0
---- !u!114 &5002000231186038750
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1326478117698346847}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: 8efdc5a13f68b834d93c0616abb6e178, type: 3}
-  m_NotificationBehavior: 2
-  m_UIInputModule: {fileID: 0}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ControlsChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ActionEvents:
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 47615e18-3ee0-4fe1-a982-5859a51a9d58
-    m_ActionName: Gameplay/Fire[/Keyboard/f]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 1a60f903-dfab-4b10-97da-d0b875a774f8
-    m_ActionName: Gameplay/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d,/DualShock4GamepadHID/leftStick/up,/DualShock4GamepadHID/leftStick/down,/DualShock4GamepadHID/leftStick/left,/DualShock4GamepadHID/leftStick/right]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 78e9321e-02c8-471d-acb1-2cba80f7f3b0
-    m_ActionName: Gameplay/Sprint[/Keyboard/shift,/DualShock4GamepadHID/leftStickPress]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: f2573fb6-f2db-4849-aebb-bfb8c8a8d3ca
-    m_ActionName: Gameplay/Mouse[/Mouse/position]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 9265d270-befd-4b25-ac6e-4861944459ac
-    m_ActionName: Gameplay/Sling[/Mouse/rightButton]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 864e5421-1349-4570-8ce8-9852c127086f
-    m_ActionName: Gameplay/Melee[/Keyboard/f]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 4bb22c07-cdff-456d-a969-31ae927e5838
-    m_ActionName: Gameplay/Pause[/Keyboard/escape]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: f12b7034-d95a-403c-a145-0f88a2695fda
-    m_ActionName: Gameplay/Magnetize[/Keyboard/q]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: ef54dba2-ab2a-4057-ace7-5adddf0a0b44
-    m_ActionName: Menu/Pause[/Keyboard/escape]
-  m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: Keyboard
-  m_DefaultActionMap: Gameplay
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
+  defaultMoveSpeed: 5
 --- !u!95 &7899832127833797893
 Animator:
   serializedVersion: 5
@@ -301,18 +227,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: -0.7228966}
   serializedVersion: 2
   m_Radius: 0.40210342
---- !u!114 &8548514017932842261
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1326478117698346847}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 04c5d39b472bc804d936cb975220a28b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2769608768575799508
 GameObject:
   m_ObjectHideFlags: 0
@@ -357,11 +271,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f746da12126cdc24ab1698da8a785ae9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 5
+  radius: 2
   damage: 20
   knockBack: 10000
   duration: 0.1
-  staggerTime: 0
+  staggerTime: 0.1
 --- !u!1 &3565628548010297144
 GameObject:
   m_ObjectHideFlags: 0
@@ -456,7 +370,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7795543054514725795}
   - component: {fileID: 3682458532059373809}
-  m_Layer: 3
+  - component: {fileID: 5829717358442260822}
+  m_Layer: 14
   m_Name: Health
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -493,11 +408,46 @@ MonoBehaviour:
   staggerHealthPercentage: 0
   maxHealth: 100
   pfOilSlick: {fileID: 8974461600461266386, guid: 3e626798e98ac1f41851d9a10d94db74, type: 3}
-  absorbShortRadius: 0
-  absorbLongRadius: 0
-  absorbTime: 0.75
+  absorbShortRadius: 0.5
+  absorbLongRadius: 1
+  absorbTime: 1
   currentHealth: 80
   isHurt: 0
+--- !u!70 &5829717358442260822
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3733621505374400973}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.04531479, y: -0.09475708}
+  m_Size: {x: 1.1838608, y: 2.1123047}
+  m_Direction: 0
 --- !u!1 &6277820003063293971
 GameObject:
   m_ObjectHideFlags: 0
@@ -509,7 +459,7 @@ GameObject:
   - component: {fileID: 8890249493269513668}
   - component: {fileID: 8052276281748958729}
   m_Layer: 0
-  m_Name: Scrap Shot
+  m_Name: ScrapShot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -542,10 +492,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4caea682c9887ba448c9097bd44a58d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentAmmo: 0
+  maxAmmo: 3
   scrapPrefab: {fileID: 3162969577572220229, guid: 5d7d1cb4dbdd508488cd5b2df08cd810, type: 3}
-  maxAmmo: 10
   scrapSpeed: 200
-  scrapDamage: 25
+  scrapDamage: 20
   scrapRange: 10
   magnetizeRadius: 20
 --- !u!1 &8177045860364016428
@@ -560,7 +511,7 @@ GameObject:
   - component: {fileID: 8942368240564326941}
   - component: {fileID: 1340760282465729318}
   m_Layer: 0
-  m_Name: SlingArms
+  m_Name: Grapple
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -590,7 +541,7 @@ LineRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8177045860364016428}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -701,3 +652,5 @@ MonoBehaviour:
   targetUI: {fileID: 3565628548010297144}
   range: 10
   speed: 30
+  grappleCooldownTime: 3
+  grappleAimMaxTime: 0.4
