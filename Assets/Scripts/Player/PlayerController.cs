@@ -77,7 +77,12 @@ public class PlayerController : PlayerStateMachine
 
     public Vector2 GetMouseDirection()
     {
-        Vector3 mouseDirection = (Vector2)activeCamera.ScreenToWorldPoint(mouseScreenPosition) - (Vector2)transform.position;
+        Vector3 mousePosition = mouseScreenPosition;
+        Vector3 mouseDirection = mousePosition - activeCamera.WorldToScreenPoint(transform.position);
+        
+        Debug.Log("Mouse Position: " + mousePosition);
+        Debug.Log("Mouse Direction: " + mouseDirection);
+
         return mouseDirection.normalized;
     }
 
