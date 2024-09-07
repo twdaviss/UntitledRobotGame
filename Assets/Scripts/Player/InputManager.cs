@@ -59,6 +59,7 @@ public class InputManager : MonoBehaviour
     }
     private void Start()
     {
+        
         playerControls.Menu.Disable();
         playerControls.Gameplay.Enable();
     }

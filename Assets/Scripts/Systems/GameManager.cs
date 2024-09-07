@@ -58,18 +58,28 @@ public class GameManager : MonoBehaviour
         SceneManager.sceneLoaded -= OnSceneChange;
     }
 
-    public void UpdateHealthBar(float healthRatio)
-    {
-        healthBar.fillAmount = healthRatio;
-    }
+    #region Initialize
 
-    public void OpenMainMenu()
+    private void SetGrid()
     {
-        StartCoroutine(ResetTimeScale());
-        PauseMenu.SetActive(false);
-        SceneManager.LoadScene((int)GameScene.MainMenu);
+        GridMap[] gridMaps = FindObjectsByType<GridMap>(FindObjectsSortMode.None);
+        if (gridMaps.Length == 0)
+        {
+            Debug.Assert(gridMaps.Length > 0, "No gridmaps in scene");
+        }
+        if (gridMaps.Length > 1)
+        {
+            Debug.Assert(gridMaps.Length > 0, "Too many gridmaps in scene");
+        }
+        else
+        {
+            currentGrid = gridMaps[0].GetGrid();
+        }
+        pathfinder = new Pathfinding(currentGrid);
     }
+    #endregion
 
+    #region UI
     public void EnablePauseMenu()
     {
         FreezeTimeScale();
@@ -103,30 +113,28 @@ public class GameManager : MonoBehaviour
         OptionsMenu.SetActive(false);
     }
 
-    private void OnSceneChange(Scene scene, LoadSceneMode mode)
+    public void UpdateHealthBar(float healthRatio)
     {
-        if(scene.buildIndex == 0) { return;}
-        SetGrid();
+        healthBar.fillAmount = healthRatio;
     }
 
-    private void SetGrid()
+    public void SetMeleeCooldownUI(float meleeTime)
     {
-        GridMap[] gridMaps = FindObjectsByType<GridMap>(FindObjectsSortMode.None);
-        if (gridMaps.Length == 0)
-        {
-            Debug.Assert(gridMaps.Length > 0, "No gridmaps in scene");
-        }
-        if (gridMaps.Length > 1)
-        {
-            Debug.Assert(gridMaps.Length > 0, "Too many gridmaps in scene");
-        }
-        else
-        {
-            currentGrid = gridMaps[0].GetGrid();
-        }
-        pathfinder = new Pathfinding(currentGrid);
+        meleeCooldownIcon.fillAmount = 1 - meleeTime;
     }
 
+    public void SetGrappleCooldownUI(float grappleTime)
+    {
+        grappleCooldownIcon.fillAmount = 1 - grappleTime;
+    }
+
+    public void SetAmmoCountUI(int count, int max)
+    {
+        ammoCount.text = count + " / " + max;
+    }
+    #endregion
+
+    #region TimeScale
     public void FreezeTimeScale(float duration = 0.0f)
     {
         if(_gameSpeed != 1.0f) { return; }
@@ -145,24 +153,25 @@ public class GameManager : MonoBehaviour
         Debug.Log("Time Reset");
         yield break;
     }
-
     public void SetSlowMoTimeScale(float timeScale = 0.3f)
     {
         _gameSpeed = timeScale;
     }
+    #endregion
 
-    public void SetMeleeCooldownUI(float meleeTime)
-    {
-        meleeCooldownIcon.fillAmount = 1 - meleeTime;
-    }
+    #region SceneManagement
 
-    public void SetGrappleCooldownUI(float grappleTime)
+    public void OpenMainMenu()
     {
-        grappleCooldownIcon.fillAmount = 1 - grappleTime;
+        StartCoroutine(ResetTimeScale());
+        PauseMenu.SetActive(false);
+        SceneManager.LoadScene((int)GameScene.MainMenu);
     }
-
-    public void SetAmmoCountUI(int count, int max)
+  
+    private void OnSceneChange(Scene scene, LoadSceneMode mode)
     {
-        ammoCount.text = count + " / " + max;
+        if(scene.buildIndex == 0) { return;}
+        SetGrid();
     }
+    #endregion
 }
