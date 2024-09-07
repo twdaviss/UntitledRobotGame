@@ -587,6 +587,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activeCamera: {fileID: 519420031}
+--- !u!1 &691161270 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5341209688469837773, guid: 4ea5991f72aa36c428d2eff7ee330935, type: 3}
+  m_PrefabInstance: {fileID: 781011507}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &781011507
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1556,7 +1561,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 0}
+  m_FirstSelected: {fileID: 691161270}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
 --- !u!4 &1558418395

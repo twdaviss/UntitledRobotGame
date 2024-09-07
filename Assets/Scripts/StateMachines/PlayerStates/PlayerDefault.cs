@@ -7,7 +7,7 @@ namespace RobotGame.States
     public class PlayerDefault : PlayerState
     {
         readonly PlayerController player;
-        public PlayerDefault(PlayerController player) { this.player = player; name = "NewPlayerState"; }
+        public PlayerDefault(PlayerController player) { this.player = player; name = "PlayerDefault"; }
         
         public override IEnumerator Start()
         {
