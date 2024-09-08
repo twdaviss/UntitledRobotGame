@@ -53,7 +53,7 @@ public class PlayerController : PlayerStateMachine
 
     public Vector2 GetMouseDirection()
     {
-        return InputManager.Instance.GetMouseDirection(transform.position);
+        return InputManager.Instance.GetAimDirection(transform.position);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

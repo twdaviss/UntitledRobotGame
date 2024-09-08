@@ -84,12 +84,14 @@ public class Grapple : MonoBehaviour
         
         StartCoroutine(GameManager.Instance.ResetTimeScale());
         isAimingGrapple = false;
+        targetObject = null;
     }
 
     public void CancelGrapple()
     {
         StartCoroutine(GameManager.Instance.ResetTimeScale());
         isAimingGrapple = false;
+        targetObject = null;
         targetUI.SetActive(false);
     }
 
@@ -102,15 +104,13 @@ public class Grapple : MonoBehaviour
         GameManager.Instance.SetSlowMoTimeScale();
         isAimingGrapple = true;
         Vector2 mousePosition = InputManager.Instance.GetMousePosition();
-        Vector3 mouseDirection = InputManager.Instance.GetMouseDirection(playerController.transform.position);
-
+        Vector3 aimDirection = InputManager.Instance.GetAimDirection(playerController.transform.position);
         int layerMask = LayerMask.GetMask("Enemies") | LayerMask.GetMask("Grapple");
 
-        RaycastHit2D raycast = Physics2D.Raycast(playerController.transform.position, mouseDirection, Screen.width, layerMask);
-        Debug.DrawRay(playerController.transform.position, mouseDirection * Screen.width, Color.red);
+        RaycastHit2D raycast = Physics2D.Raycast(playerController.transform.position, aimDirection, Screen.width, layerMask);
+        Debug.DrawRay(playerController.transform.position, aimDirection * Screen.width, Color.red);
         if (raycast.point == null || raycast.point == Vector2.zero)
         {
-            targetObject = null;
             targetValid = false;
             return;
         }
@@ -128,59 +128,5 @@ public class Grapple : MonoBehaviour
             targetValid = false;
             targetUI.GetComponent<SpriteRenderer>().color = Color.red;
         }
-
-
-
-
-
-        //Collider2D[] targets = Physics2D.OverlapCircleAll(mousePosition, 0.5f, layerMask);
-
-        //if (targets.Length == 0)
-        //{
-        //    targetObject = null;
-        //    return;
-        //}
-        //else if (targets.Length == 1)
-        //{
-        //    targetObject = targets[0].gameObject;
-        //}
-        //else
-        //{
-        //    float closestDistance = 100f;
-        //    foreach (Collider2D target in targets)
-        //    {
-        //        float distanceFromMouse = Vector2.Distance(target.transform.position, mousePosition);
-
-        //        if (distanceFromMouse < closestDistance)
-        //        {
-        //            closestDistance = distanceFromMouse;
-        //            targetObject = target.gameObject;
-        //        }
-        //    }
-        //}
-        //float targetDistance = Vector3.Distance(playerController.transform.position, targetObject.transform.position);
-        //if (targetDistance > range || targetDistance < 4.0f)
-        //{
-        //    targetUI.GetComponent<SpriteRenderer>().color = Color.red;
-        //    targetValid = false;
-        //    return;
-        //}
-
-        //layerMask = LayerMask.GetMask("Obstacles");
-        //Vector2 targetDirection = (targetObject.transform.position - transform.position).normalized;
-
-        //RaycastHit2D raycast = Physics2D.Raycast(playerController.transform.position, targetDirection, range, layerMask);
-        //if (raycast.point != null && raycast.point != Vector2.zero)
-        //{
-        //    if (Vector3.Distance(playerController.transform.position, raycast.point) < Vector3.Distance(playerController.transform.position, targetDirection * range))
-        //    {
-        //        targetUI.GetComponent<SpriteRenderer>().color = Color.red;
-        //        targetValid = false;
-        //        return;
-        //    }
-        //}
-        //targetUI.GetComponent<SpriteRenderer>().color = Color.green;
-
-        //targetValid = true;
     }
 }
