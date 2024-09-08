@@ -93,8 +93,13 @@ public class InputManager : MonoBehaviour
 
     public Vector3 GetMousePosition()
     {
-        Vector3 mouseWorldPosition = (Vector2)activeCamera.ScreenToWorldPoint(mouseScreenPosition);
-        return mouseWorldPosition;
+        return mouseScreenPosition;
+    }
+
+    public Vector3 GetMouseDirection(Vector3 position)
+    {
+        Vector3 mouseDirection = (mouseScreenPosition - activeCamera.WorldToScreenPoint(position)).normalized;
+        return mouseDirection;
     }
 
     public Vector2 GetMoveDirection()
