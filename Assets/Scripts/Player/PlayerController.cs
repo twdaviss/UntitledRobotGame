@@ -51,11 +51,6 @@ public class PlayerController : PlayerStateMachine
         playerAnimator.SetFloat("Speed", moveDirection.SqrMagnitude());
     }
 
-    public Vector2 GetMousePosition()
-    {
-        return InputManager.Instance.GetMousePosition();
-    }
-
     public Vector2 GetMouseDirection()
     {
         return InputManager.Instance.GetMouseDirection(transform.position);

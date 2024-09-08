@@ -13,7 +13,6 @@ public class InputManager : MonoBehaviour
 
     public static event Action rebindCompleted;
     public static event Action rebindCanceled;
-    public static event Action enableOverlay;
     public static event Action disableOverlay;
     public static event Action<InputAction, int> rebindStarted;
     public static event Action<bool, string, string> compositeBeingRebound;
