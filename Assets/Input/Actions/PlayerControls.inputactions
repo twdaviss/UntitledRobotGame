@@ -21,7 +21,7 @@
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Sprint",
@@ -111,7 +111,7 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "Keyboard",
+                    "name": "Direction",
                     "id": "e1077754-019c-4fae-a408-7bed9fe7ffda",
                     "path": "2DVector",
                     "interactions": "",
@@ -395,7 +395,7 @@
             "devices": [
                 {
                     "devicePath": "<Gamepad>",
-                    "isOptional": true,
+                    "isOptional": false,
                     "isOR": false
                 }
             ]

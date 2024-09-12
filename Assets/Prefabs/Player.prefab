@@ -495,7 +495,7 @@ MonoBehaviour:
   currentAmmo: 0
   maxAmmo: 3
   scrapPrefab: {fileID: 3162969577572220229, guid: 5d7d1cb4dbdd508488cd5b2df08cd810, type: 3}
-  scrapSpeed: 200
+  scrapSpeed: 400
   scrapDamage: 20
   scrapRange: 10
   magnetizeRadius: 20
@@ -548,4 +548,4 @@ MonoBehaviour:
   range: 10
   speed: 30
   grappleCooldownTime: 3
-  grappleAimMaxTime: 0.4
+  grappleAimMaxTime: 1

@@ -103,7 +103,7 @@ public class InputManager : MonoBehaviour
 
     public Vector2 GetAimDirection(Vector3 position)
     {
-        if(aimDirection != null || aimDirection != Vector2.zero)
+        if(aimDirection != null && aimDirection != Vector2.zero)
         {
             Debug.Log("Stick Direction: " + aimDirection.ToString());
             return aimDirection.normalized;
