@@ -7,15 +7,16 @@ using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
 {
-    [SerializeField] private int staggerHealthPercentage;
     [SerializeField] private float maxHealth;
+    [SerializeField] private int staggerHealthPercentage;
+    [SerializeField] private float staggerTime;
     [SerializeField] private GameObject pfOilSlick;
     [SerializeField] private float absorbShortRadius;
     [SerializeField] private float absorbLongRadius;
     [SerializeField] private float absorbTime;
 
     private PlayerController playerController;
-    public float currentHealth;
+    private float currentHealth;
     private EnemyController enemy;
     private float staggerHealth;
     private float currentStaggerHealth;
@@ -25,16 +26,25 @@ public class PlayerHealth : MonoBehaviour
     private float oilSpillCooldown = 0.0f;
     private float oilSpillTimer = 0.0f;
     private float absorbTimer = 0.0f;
+    private float staggerCooldown = 5.0f;
+    private float staggerTimer = 0.0f;
 
     public bool isHurt = false;
     private void Awake()
     {
-        playerController = GetComponent<PlayerController>();
+        playerController = GetComponentInParent<PlayerController>();
+        currentHealth = maxHealth;
+        staggerHealth = maxHealth * ((float)staggerHealthPercentage/100);
+        currentStaggerHealth = staggerHealth;
     }
 
     private void Update()
     {
         if (invincibilityTime > 0.0f) { invincibilityTime -= Time.deltaTime; }
+        else
+        {
+            invincibilityTime = 0.0f;
+        }
         if (isHurt)
         {
             if (oilSpillCooldown <= 0.0f)
@@ -50,6 +60,12 @@ public class PlayerHealth : MonoBehaviour
                 oilSpillTimer = 0;
                 isHurt = false;
             }
+
+            if(staggerTimer <= 0.0f)
+            {
+                currentStaggerHealth = staggerHealth;
+            }
+            staggerTimer -= Time.deltaTime;
         }
     }
 
@@ -70,6 +86,8 @@ public class PlayerHealth : MonoBehaviour
         {
             currentHealth -= damage;
             currentStaggerHealth -= damage;
+            staggerTimer = staggerCooldown;
+            Debug.Log("Stagger Health: " + currentStaggerHealth);
             if (currentHealth < 0)
             {
                 currentHealth = 0;
@@ -77,11 +95,12 @@ public class PlayerHealth : MonoBehaviour
             }
             if (currentStaggerHealth < 0.0f)
             {
-                //playerController.TransitionState(new PlayerStaggered(playerController));
+                playerController.TransitionState(new PlayerStaggered(playerController, staggerTime));
                 currentStaggerHealth = staggerHealth;
+                staggerTimer = 0.0f;
             }
             DropOil();
-            invincibilityTime = 0.1f;
+            invincibilityTime = 0.2f;
         }
     }
 

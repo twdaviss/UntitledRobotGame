@@ -13,7 +13,6 @@ public class InputManager : MonoBehaviour
 
     public static event Action rebindCompleted;
     public static event Action rebindCanceled;
-    public static event Action enableOverlay;
     public static event Action disableOverlay;
     public static event Action<InputAction, int> rebindStarted;
     public static event Action<bool, string, string> compositeBeingRebound;
@@ -22,6 +21,11 @@ public class InputManager : MonoBehaviour
 
     private Vector3 mouseScreenPosition;
     private Vector3 moveDirection;
+
+    private Vector2 aimDirection;
+
+    public delegate void OnPaused();
+    public static event OnPaused onPaused;
 
     public delegate void OnScrapShot();
     public static event OnScrapShot onScrapShot;
@@ -59,13 +63,13 @@ public class InputManager : MonoBehaviour
     }
     private void Start()
     {
-        
         playerControls.Menu.Disable();
         playerControls.Gameplay.Enable();
     }
 
     public void PauseGame(InputAction.CallbackContext context)
     {
+        onPaused?.Invoke();
         if (GameManager.Instance.IsOptionsMenuEnabled())
         {
             GameManager.Instance.DisableOptionsMenu();
@@ -81,6 +85,7 @@ public class InputManager : MonoBehaviour
         {
             playerControls.Menu.Enable();
             playerControls.Gameplay.Disable();
+            moveDirection = Vector2.zero;
             GameManager.Instance.EnablePauseMenu();
         }
     }
@@ -93,8 +98,19 @@ public class InputManager : MonoBehaviour
 
     public Vector3 GetMousePosition()
     {
-        Vector3 mouseWorldPosition = (Vector2)activeCamera.ScreenToWorldPoint(mouseScreenPosition);
-        return mouseWorldPosition;
+        return mouseScreenPosition;
+    }
+
+    public Vector2 GetAimDirection(Vector3 position)
+    {
+        if(aimDirection != null && aimDirection != Vector2.zero)
+        {
+            Debug.Log("Stick Direction: " + aimDirection.ToString());
+            return aimDirection.normalized;
+        }
+
+        Vector2 mouseDirection = ((Vector2)mouseScreenPosition - (Vector2)activeCamera.WorldToScreenPoint(position)).normalized;
+        return mouseDirection;
     }
 
     public Vector2 GetMoveDirection()
@@ -103,47 +119,29 @@ public class InputManager : MonoBehaviour
     }
     private void Sprint()
     {
-        if (onSprint != null)
-        {
-            onSprint();
-        }
+        onSprint?.Invoke();
     }
 
     private void ScrapShot()
     {
-        if(onScrapShot != null)
-        {
-            onScrapShot();
-        }
+        onScrapShot?.Invoke();
     }
 
     private void GrappleStart()
     {
-        if (onGrappleStart != null)
-        {
-            onGrappleStart();
-        }
+        onGrappleStart?.Invoke();
     }
     private void GrappleStop()
     {
-        if (onGrappleStop != null)
-        {
-            onGrappleStop();
-        }
+        onGrappleStop?.Invoke();
     }
     private void Melee()
     {
-        if (onMelee != null)
-        {
-            onMelee();
-        }
+        onMelee?.Invoke();
     }
     private void Magnetize()
     {
-        if (onMagnetize != null)
-        {
-            onMagnetize();
-        }
+        onMagnetize?.Invoke();
     }
 
     public static void StartRebind(string actionName, int bindingIndex, TextMeshProUGUI statusText, bool excludeMouse)
@@ -312,6 +310,7 @@ public class InputManager : MonoBehaviour
         playerControls.Gameplay.Melee.performed += ctx => Melee();
         playerControls.Gameplay.Grapple.performed += ctx => GrappleStart();
         playerControls.Gameplay.Grapple.canceled += ctx => GrappleStop();
+        playerControls.Gameplay.Aim.performed += ctx => aimDirection = ctx.ReadValue<Vector2>();
     }
 
     private void OnDestroy()
@@ -319,7 +318,6 @@ public class InputManager : MonoBehaviour
         GameManager.onUnPaused -= UnPauseGame;
         playerControls.Gameplay.Pause.performed -= PauseGame;
         playerControls.Menu.Pause.performed -= PauseGame;
-
         playerControls.Gameplay.Mouse.performed -= ctx => mouseScreenPosition = ctx.ReadValue<Vector2>();
         playerControls.Gameplay.Move.performed -= ctx => moveDirection = ctx.ReadValue<Vector2>();
         playerControls.Gameplay.Sprint.performed -= ctx => Sprint();
@@ -328,5 +326,6 @@ public class InputManager : MonoBehaviour
         playerControls.Gameplay.Melee.performed -= ctx => Melee();
         playerControls.Gameplay.Grapple.performed -= ctx => GrappleStart();
         playerControls.Gameplay.Grapple.canceled -= ctx => GrappleStop();
+        playerControls.Gameplay.Aim.performed -= ctx => aimDirection = ctx.ReadValue<Vector2>();
     }
 }

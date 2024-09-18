@@ -51,7 +51,8 @@ public class ScrapShot : MonoBehaviour
 
     private void OnPullFromPool(Scrap scrap)
     {
-        scrap.SetParameters(scrapSpeed, scrapDamage, scrapRange, playerController.GetMouseDirection(), playerController.gameObject);
+        Vector2 aimDirection = InputManager.Instance.GetAimDirection(transform.position); 
+        scrap.SetParameters(scrapSpeed, scrapDamage, scrapRange, aimDirection, playerController.gameObject);
         scrap.transform.position = transform.position;
         scrap.gameObject.SetActive(true);
         scrap.inert = false;
