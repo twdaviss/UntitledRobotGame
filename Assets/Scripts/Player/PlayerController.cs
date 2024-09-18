@@ -35,6 +35,11 @@ public class PlayerController : PlayerStateMachine
         StartCoroutine(State.FixedUpdate());
     }
 
+    public void ToggleAnimator(bool toggle)
+    {
+        playerAnimator.enabled = toggle;
+    }
+
     public void InputHandler()
     {
         moveDirection = InputManager.Instance.GetMoveDirection();
@@ -51,10 +56,6 @@ public class PlayerController : PlayerStateMachine
         playerAnimator.SetFloat("Speed", moveDirection.SqrMagnitude());
     }
 
-    public Vector2 GetMouseDirection()
-    {
-        return InputManager.Instance.GetAimDirection(transform.position);
-    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
