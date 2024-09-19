@@ -43,12 +43,17 @@ public class EnemyHealth : MonoBehaviour
             }
             if(currentStaggerHealth < 0.0f)
             {
-                enemy.TransitionState(new EnemyStaggered(enemy));
+                Stagger();
                 currentStaggerHealth = staggerHealth;
             }
             UpdateHealthBar();
             enemy.invincibilityTime = 0.1f;
         }
+    }
+
+    public void Stagger()
+    {
+        enemy.TransitionState(new EnemyStaggered(enemy));
     }
 
     private void DropOil()

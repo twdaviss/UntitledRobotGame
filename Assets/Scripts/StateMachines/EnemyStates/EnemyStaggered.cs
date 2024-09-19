@@ -6,11 +6,12 @@ namespace RobotGame.States
     public class EnemyStaggered : EnemyState
     {
         readonly private EnemyController enemy;
-        readonly private float duration = 0.3f;
+        readonly private float duration = 0.5f;
         private float currentTime = 0.0f;
         public EnemyStaggered(EnemyController enemy) { this.enemy = enemy; this.name = "EnemyStaggered"; }
         public override IEnumerator Start()
         {
+            enemy.GetComponent<SpriteRenderer>().color = Color.red;
             yield break;
         }
 
@@ -25,7 +26,6 @@ namespace RobotGame.States
                 enemy.TransitionState(new EnemyFollow(enemy));
                 yield break;
             }
-            enemy.GetComponent<SpriteRenderer>().color = Color.red;
             yield break;
         }
         public override IEnumerator End()
