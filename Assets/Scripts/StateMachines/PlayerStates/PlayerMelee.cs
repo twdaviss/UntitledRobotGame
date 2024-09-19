@@ -14,7 +14,7 @@ namespace RobotGame.States
         private float duration;
         private float currentTime = 0.0f;
         private float staggerTime;
-        private bool staggerTriggered = false;
+        //private bool staggerTriggered = false;
 
         int layerMask = LayerMask.GetMask("Enemies");
 
