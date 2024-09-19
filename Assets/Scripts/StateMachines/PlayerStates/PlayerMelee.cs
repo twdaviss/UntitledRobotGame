@@ -35,11 +35,11 @@ namespace RobotGame.States
                     if (target.gameObject.GetComponent<EnemyController>() != null)
                     {
                         target.gameObject.GetComponent<EnemyController>().KnockBack(knockBack, damage, (target.transform.position - player.transform.position).normalized);
-                        if(!staggerTriggered)
-                        {
-                            GameManager.Instance.FreezeTimeScale(staggerTime);
-                            staggerTriggered = true;
-                        }
+                        //if(!staggerTriggered)
+                        //{
+                        //    GameManager.Instance.FreezeTimeScale(staggerTime);
+                        //    staggerTriggered = true;
+                        //}
                     }
                 }
                 currentTime += Time.deltaTime;

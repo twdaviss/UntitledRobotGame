@@ -50,8 +50,11 @@ public class EnemyController : EnemyStateMachine
         if (invincibilityTime <= 0.0f)
         {
             enemyHealth.DealDamage(damage);
-            enemyRigidbody.AddForce(knockBack * direction);
-            TransitionState(new EnemyStaggered(this));
+            if (State.GetType() == typeof(EnemyStaggered))
+            {
+                TransitionState(new EnemyKnockback(this, knockBack, direction));
+                GameManager.Instance.FreezeTimeScale(0.1f);
+            }
             invincibilityTime = 0.1f;
         }
     }
