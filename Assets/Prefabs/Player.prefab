@@ -273,7 +273,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   radius: 2
   damage: 20
-  knockBack: 10000
+  knockBack: 10
   duration: 0.1
   staggerTime: 0.1
 --- !u!1 &3565628548010297144
@@ -405,13 +405,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e07a5ab6d3d50774c947c7d01701fa17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  staggerHealthPercentage: 0
   maxHealth: 100
+  staggerHealthPercentage: 0
+  staggerTime: 0
   pfOilSlick: {fileID: 8974461600461266386, guid: 3e626798e98ac1f41851d9a10d94db74, type: 3}
   absorbShortRadius: 0.5
   absorbLongRadius: 1
   absorbTime: 1
-  currentHealth: 80
   isHurt: 0
 --- !u!70 &5829717358442260822
 CapsuleCollider2D:
