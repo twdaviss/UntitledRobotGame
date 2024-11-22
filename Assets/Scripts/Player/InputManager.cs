@@ -109,7 +109,17 @@ public class InputManager : MonoBehaviour
             return aimDirection.normalized;
         }
 
-        Vector2 mouseDirection = ((Vector2)mouseScreenPosition - (Vector2)activeCamera.WorldToScreenPoint(position)).normalized;
+        Plane plane = new Plane(Vector3.back, 0.0f);
+        Ray mouseRay = Camera.main.ScreenPointToRay(InputManager.Instance.GetMousePosition());
+        Vector3 hitPoint = Vector3.zero;
+        float enter;
+        if (plane.Raycast(mouseRay, out enter))
+        {
+            //Get the point that is clicked
+            hitPoint = mouseRay.GetPoint(enter);
+        }
+
+        Vector2 mouseDirection = ((Vector2)hitPoint - (Vector2)position).normalized;
         return mouseDirection;
     }
 
@@ -293,6 +303,13 @@ public class InputManager : MonoBehaviour
         }
 
         SaveBindingOverride(action);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Ray mouseRay = Camera.main.ScreenPointToRay(mouseScreenPosition);
+        Gizmos.DrawLine(mouseRay.origin, mouseRay.origin + mouseRay.direction * 30);
     }
 
     private void OnEnable()

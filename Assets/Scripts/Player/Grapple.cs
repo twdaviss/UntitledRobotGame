@@ -79,7 +79,7 @@ public class Grapple : MonoBehaviour
         if (targetValid)
         {
             playerController.SetState(new PlayerGrappling(playerController, targetObject.transform.position, speed));
-            targetObject.gameObject.GetComponentInChildren<EnemyHealth>().Stagger();
+            targetObject.gameObject.transform.parent.GetComponentInChildren<EnemyHealth>().Stagger();
             grappleCooldownTimer = 0.0f;
         }
         
@@ -108,10 +108,14 @@ public class Grapple : MonoBehaviour
         Vector3 aimDirection = InputManager.Instance.GetAimDirection(playerController.transform.position);
         int layerMask = LayerMask.GetMask("Enemies") | LayerMask.GetMask("Grapple");
 
-        RaycastHit2D raycast = Physics2D.Raycast(playerController.transform.position, aimDirection, Screen.width, layerMask);
-        Debug.DrawRay(playerController.transform.position, aimDirection * Screen.width, Color.red);
-        if (raycast.point == null || raycast.point == Vector2.zero)
+        Ray mouseRay = Camera.main.ScreenPointToRay(InputManager.Instance.GetMousePosition());
+        RaycastHit raycast = new RaycastHit();
+        Physics.Raycast(mouseRay, out raycast, 30, layerMask);
+        //Debug.DrawLine(mouseRay.origin, mouseRay.origin + mouseRay.direction * 30, Color.red);
+
+        if (raycast.point == null || raycast.point == Vector3.zero)
         {
+            targetObject = null;
             targetValid = false;
             return;
         }
