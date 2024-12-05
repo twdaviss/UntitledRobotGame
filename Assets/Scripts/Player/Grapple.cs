@@ -114,7 +114,7 @@ public class Grapple : MonoBehaviour
 
         Ray mouseRay = Camera.main.ScreenPointToRay(InputManager.Instance.GetMousePosition());
         RaycastHit raycast = new RaycastHit();
-        Physics.Raycast(mouseRay, out raycast, 30, layerMask);
+        Physics.Raycast(mouseRay, out raycast, 120, layerMask);
         //Debug.DrawLine(mouseRay.origin, mouseRay.origin + mouseRay.direction * 30, Color.red);
 
         if (raycast.point == null || raycast.point == Vector3.zero)

@@ -16,6 +16,7 @@ public class EnemyController : EnemyStateMachine
 
     private Rigidbody2D enemyRigidbody;
     private EnemyHealth enemyHealth;
+    private EnemyStun enemyStun;
     private Vector3 m_targetLocation;
     private List<Vector3> path;
 
@@ -26,6 +27,7 @@ public class EnemyController : EnemyStateMachine
     {
         enemyRigidbody = GetComponent<Rigidbody2D>();   
         enemyHealth = GetComponentInChildren<EnemyHealth>();
+        enemyStun = GetComponentInChildren<EnemyStun>();
         m_targetLocation = targetLocation.position;
         SetState(new EnemyFollow(this));
     }
