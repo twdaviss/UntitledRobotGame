@@ -81,9 +81,9 @@ public class Grapple : MonoBehaviour
             if (targetObject.GetComponentInParent<EnemyController>() != null)
             {
                 targetObject.gameObject.transform.parent.GetComponentInChildren<EnemyHealth>().Stagger();
-                grappleCooldownTimer = 0.0f;
             }
 
+            grappleCooldownTimer = 0.0f;
             playerController.SetState(new PlayerGrappling(playerController, targetObject.transform.position, speed));
         }
         

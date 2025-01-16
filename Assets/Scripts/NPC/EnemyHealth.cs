@@ -44,6 +44,7 @@ public class EnemyHealth : MonoBehaviour
             Stagger();
             currentStaggerHealth = staggerHealth;
         }
+        enemy.ReleaseSparks();
         UpdateHealthBar();
     }
 

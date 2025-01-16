@@ -5,7 +5,7 @@ using RobotGame.States;
 public class EnemyController : EnemyStateMachine
 {
     [SerializeField] public int moveSpeed;
-    [SerializeField] public Transform targetLocation;
+    [SerializeField] public Transform target;
 
     [SerializeField] public float meleeDamage;
     [SerializeField] public float meleeRange;
@@ -14,10 +14,12 @@ public class EnemyController : EnemyStateMachine
     [SerializeField] public float meleeDamageTime;
     [SerializeField] public float meleeCooldown;
 
+    ParticleSystem particleSystem;
     private Rigidbody2D enemyRigidbody;
     private EnemyHealth enemyHealth;
     private EnemyStun enemyStun;
-    private Vector3 m_targetLocation;
+    private Vector3 prevTargetPosition;
+    private Vector3 destination;
     private List<Vector3> path;
 
     public float invincibilityTime = 0.0f;
@@ -28,7 +30,9 @@ public class EnemyController : EnemyStateMachine
         enemyRigidbody = GetComponent<Rigidbody2D>();   
         enemyHealth = GetComponentInChildren<EnemyHealth>();
         enemyStun = GetComponentInChildren<EnemyStun>();
-        m_targetLocation = targetLocation.position;
+        particleSystem = GetComponentInChildren<ParticleSystem>();
+        destination = target.position;
+        prevTargetPosition = target.position;
         SetState(new EnemyFollow(this));
     }
     
@@ -115,12 +119,12 @@ public class EnemyController : EnemyStateMachine
         }
         if(path.Count > 0)
         {
-            path = Pathfinding.Instance.FindPath(path[0], m_targetLocation);
+            path = Pathfinding.Instance.FindPath(path[0], destination);
             return;
         }
         else
         {
-            path = Pathfinding.Instance.FindPath(this.transform.position, m_targetLocation);
+            path = Pathfinding.Instance.FindPath(this.transform.position, destination);
             return;
         }
     }
@@ -130,7 +134,7 @@ public class EnemyController : EnemyStateMachine
         {
             GetNewPath();
         }
-        if (Vector3.Distance(m_targetLocation, transform.position) < meleeRange)
+        if (Vector3.Distance(destination, transform.position) < meleeRange)
         {
             return true;
         }
@@ -138,9 +142,10 @@ public class EnemyController : EnemyStateMachine
     }
     public bool TargetMoved()
     {
-        if (m_targetLocation != targetLocation.position)
+        if (target.position != prevTargetPosition)
         {
-            m_targetLocation = targetLocation.position;
+            destination = target.position;
+            prevTargetPosition = target.position;
             return true;
         }
         return false;
@@ -149,6 +154,11 @@ public class EnemyController : EnemyStateMachine
     public void ClearPath()
     {
         path = null;
+    }
+
+    public void ReleaseSparks()
+    {
+        particleSystem.Play();
     }
 
     private void OnDrawGizmos()
