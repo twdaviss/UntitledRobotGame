@@ -33,22 +33,18 @@ public class EnemyHealth : MonoBehaviour
 
     public void DealDamage(float damage)
     {
-        if(enemy.invincibilityTime <= 0.0f)
+        currentHealth -= damage;
+        currentStaggerHealth -= damage;
+        if(damage > maxHealth/10)
         {
-            currentHealth -= damage;
-            currentStaggerHealth -= damage;
-            if(damage > maxHealth/10)
-            {
-                //DropOil();
-            }
-            if(currentStaggerHealth < 0.0f)
-            {
-                Stagger();
-                currentStaggerHealth = staggerHealth;
-            }
-            UpdateHealthBar();
-            enemy.invincibilityTime = 0.1f;
+            //DropOil();
         }
+        if(currentStaggerHealth < 0.0f)
+        {
+            Stagger();
+            currentStaggerHealth = staggerHealth;
+        }
+        UpdateHealthBar();
     }
 
     public void Stagger()

@@ -47,23 +47,31 @@ public class EnemyController : EnemyStateMachine
         StartCoroutine(State.FixedUpdate());
     }
 
-    public void KnockBack(float knockBack, float damage, Vector2 direction)
+    public void Damage(float damage = 0, float stun = 0, float knockBack = 0, Vector2 direction = default)
     {
-        if (invincibilityTime <= 0.0f)
+        if(invincibilityTime > 0.0f){ return; }
+
+        if(damage > 0) 
         {
             if (State.GetType() == typeof(EnemyStaggered))
             {
                 enemyHealth.DealDamage(2 * damage);
-                TransitionState(new EnemyKnockback(this, knockBack, direction));
-                GameManager.Instance.FreezeTimeScale(0.1f);
             }
             else
             {
-                enemyHealth.DealDamage(damage);
+                enemyHealth.DealDamage(damage); 
             }
-
-            invincibilityTime = 0.1f;
         }
+
+        if (stun > 0) { enemyStun.DealDamage(stun); }
+
+        if(knockBack > 0)
+        {
+            TransitionState(new EnemyKnockback(this, knockBack, direction));
+            GameManager.Instance.FreezeTimeScale(0.1f);
+        }
+
+        invincibilityTime = 0.1f;
     }
 
     public IEnumerator Despawn()
@@ -84,8 +92,9 @@ public class EnemyController : EnemyStateMachine
             {
                 return;
             }
-            enemyHealth.DealDamage(collision.gameObject.GetComponentInParent<Scrap>().GetDamage());
-            collision.gameObject.GetComponentInParent<Scrap>().ClampVelocity();
+            Scrap scrap = collision.gameObject.GetComponent<Scrap>();
+            Damage(scrap.GetDamage(), scrap.GetStun());
+            scrap.ClampVelocity();
         }
     }
 

@@ -7,7 +7,10 @@ public class EnemyStun : MonoBehaviour
     [SerializeField] private GameObject stunBarBack;
     [SerializeField] private Image stunBar;
     [SerializeField] private float maxStun;
+    [SerializeField] private float stunDecayRate;
+    [SerializeField] private float stunDecayDelay;
     private float currentStun;
+    private float stunDecayTimer = 0;
     private EnemyController enemy;
     private void Awake()
     {
@@ -23,6 +26,14 @@ public class EnemyStun : MonoBehaviour
         else if (currentStun > 0)
         {
             stunBarBack.SetActive(true);
+            if(stunDecayTimer >= stunDecayDelay)
+            {
+                currentStun -= stunDecayRate * Time.deltaTime;
+            }
+            else
+            {
+                stunDecayTimer += Time.deltaTime;
+            }
         }
         if (currentStun >= maxStun)
         {
@@ -37,12 +48,8 @@ public class EnemyStun : MonoBehaviour
 
     public void DealDamage(float stun)
     {
-        if(enemy.invincibilityTime <= 0.0f)
-        {
-            currentStun -= stun;
-            
-            UpdateStunBar();
-            enemy.invincibilityTime = 0.1f;
-        }
+        currentStun += stun;
+        stunDecayTimer = 0;
+        UpdateStunBar();
     }
 }

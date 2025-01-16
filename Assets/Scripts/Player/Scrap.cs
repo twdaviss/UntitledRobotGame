@@ -10,6 +10,7 @@ public class Scrap : MonoBehaviour
     private ObjectPool<Scrap> scrapPool;
     private float moveSpeed;
     private float damage;
+    private float stun;
     private Vector2 direction;
     private float range;
     private float lifeTime;
@@ -41,6 +42,7 @@ public class Scrap : MonoBehaviour
         {
             Vector3 direction = (player.transform.position - transform.position).normalized;
             transform.position += direction * 40f * Time.deltaTime;
+            inert = false;
         }
         if (absorbTime < absorbDelay) { absorbTime += Time.deltaTime;}
         lifeTime -= Time.deltaTime;
@@ -50,10 +52,11 @@ public class Scrap : MonoBehaviour
         }
     }
 
-    public void SetParameters(float moveSpeed, float damage, float range, Vector2 direction, GameObject player)
+    public void SetParameters(float moveSpeed, float damage, float stun, float range, Vector2 direction, GameObject player)
     {
         this.moveSpeed = moveSpeed;
         this.damage = damage;
+        this.stun = stun;
         this.range = range;
         this.direction = direction;
         this.player = player;
@@ -73,6 +76,11 @@ public class Scrap : MonoBehaviour
     public float GetDamage()
     {
         return damage;
+    }
+
+    public float GetStun()
+    {
+        return stun;
     }
 
     public void Magnetize()

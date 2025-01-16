@@ -78,13 +78,13 @@ public class Grapple : MonoBehaviour
         isAimingGrapple = false;
         if (targetValid)
         {
-            playerController.SetState(new PlayerGrappling(playerController, targetObject.transform.position, speed));
-            grappleCooldownTimer = 0.0f;
-
-            if (targetObject.GetComponent<EnemyController>() != null)
+            if (targetObject.GetComponentInParent<EnemyController>() != null)
             {
                 targetObject.gameObject.transform.parent.GetComponentInChildren<EnemyHealth>().Stagger();
+                grappleCooldownTimer = 0.0f;
             }
+
+            playerController.SetState(new PlayerGrappling(playerController, targetObject.transform.position, speed));
         }
         
         StartCoroutine(GameManager.Instance.ResetTimeScale());

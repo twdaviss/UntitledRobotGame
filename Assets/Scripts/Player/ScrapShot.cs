@@ -10,6 +10,7 @@ public class ScrapShot : MonoBehaviour
     [SerializeField] private Scrap scrapPrefab;
     [SerializeField] private float scrapSpeed;
     [SerializeField] private float scrapDamage;
+    [SerializeField] private float scrapStun;
     [SerializeField] private float scrapRange;
     [SerializeField] private float magnetizeRadius;
 
@@ -52,7 +53,7 @@ public class ScrapShot : MonoBehaviour
     private void OnPullFromPool(Scrap scrap)
     {
         Vector2 aimDirection = InputManager.Instance.GetAimDirection(transform.position); 
-        scrap.SetParameters(scrapSpeed, scrapDamage, scrapRange, aimDirection, playerController.gameObject);
+        scrap.SetParameters(scrapSpeed, scrapDamage, scrapStun, scrapRange, aimDirection, playerController.gameObject);
         scrap.transform.position = transform.position;
         scrap.gameObject.SetActive(true);
         scrap.inert = false;

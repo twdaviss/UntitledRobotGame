@@ -5,6 +5,7 @@ public class Melee : MonoBehaviour
 {
     [SerializeField] private float radius;
     [SerializeField] private float damage;
+    [SerializeField] private float stun;
     [SerializeField] private float knockBack;
     [SerializeField] private float duration;
     [SerializeField] private float staggerTime;
@@ -35,8 +36,8 @@ public class Melee : MonoBehaviour
     {
         if(meleeCooldownTimer >= meleeCooldownTime)
         {
-            playerController.SetState(new PlayerMelee(playerController, radius, damage, knockBack, duration, staggerTime));
             meleeCooldownTimer = 0.0f;
+            playerController.SetState(new PlayerMelee(playerController, radius, damage, stun, knockBack, duration, staggerTime));
         }
     }
 

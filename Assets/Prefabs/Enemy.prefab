@@ -110,6 +110,8 @@ MonoBehaviour:
   stunBarBack: {fileID: 7741945794869339001}
   stunBar: {fileID: 576018030727083720}
   maxStun: 100
+  stunDecayRate: 5
+  stunDecayDelay: 5
 --- !u!1 &1744525905536491093
 GameObject:
   m_ObjectHideFlags: 0

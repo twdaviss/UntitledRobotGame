@@ -273,6 +273,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   radius: 2
   damage: 20
+  stun: 5
   knockBack: 10
   duration: 0.1
   staggerTime: 0.1
@@ -497,6 +498,7 @@ MonoBehaviour:
   scrapPrefab: {fileID: 3162969577572220229, guid: 5d7d1cb4dbdd508488cd5b2df08cd810, type: 3}
   scrapSpeed: 400
   scrapDamage: 20
+  scrapStun: 0
   scrapRange: 10
   magnetizeRadius: 20
 --- !u!1 &8177045860364016428
