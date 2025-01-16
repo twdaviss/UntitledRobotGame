@@ -50,16 +50,16 @@ public class PlayerHealth : MonoBehaviour
             if (oilSpillCooldown <= 0.0f)
             {
                 DealDamage(10);
-                oilSpillCooldown = oilSpillDuration / oilSpillRate;
+                //oilSpillCooldown = oilSpillDuration / oilSpillRate;
             }
-            oilSpillCooldown -= Time.deltaTime;
+            //oilSpillCooldown -= Time.deltaTime;
 
-            oilSpillTimer += Time.deltaTime;
-            if(oilSpillTimer > oilSpillDuration)
-            {
-                oilSpillTimer = 0;
-                isHurt = false;
-            }
+            //oilSpillTimer += Time.deltaTime;
+            //if(oilSpillTimer > oilSpillDuration)
+            //{
+            //    oilSpillTimer = 0;
+            //    isHurt = false;
+            //}
 
             if(staggerTimer <= 0.0f)
             {
@@ -72,7 +72,7 @@ public class PlayerHealth : MonoBehaviour
     private void FixedUpdate()
     {
         UpdateHealthBar();
-        AbsorbOil();
+        //AbsorbOil();
     }
 
     public void UpdateHealthBar()
@@ -99,7 +99,7 @@ public class PlayerHealth : MonoBehaviour
                 currentStaggerHealth = staggerHealth;
                 staggerTimer = 0.0f;
             }
-            DropOil();
+            //DropOil();
             invincibilityTime = 0.2f;
         }
     }
