@@ -2,6 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using RobotGame.States;
+using System;
+using static UnityEngine.EventSystems.EventTrigger;
+
+public enum EnemyStartingState
+{
+    EnemyFollow,
+    EnemyWander,
+}
 public class EnemyController : EnemyStateMachine
 {
     [SerializeField] public int moveSpeed;
@@ -13,33 +21,47 @@ public class EnemyController : EnemyStateMachine
     [SerializeField] public float meleeRecoveryTime;
     [SerializeField] public float meleeDamageTime;
     [SerializeField] public float meleeCooldown;
+    [SerializeField] public float wanderWaitTime;
+    [SerializeField] public int wanderMultiplier;
+    [SerializeField] public EnemyStartingState startingState;
 
-    ParticleSystem particleSystem;
+    private ParticleSystem particleSystem;
     private Rigidbody2D enemyRigidbody;
     private EnemyHealth enemyHealth;
     private EnemyStun enemyStun;
     private Vector3 prevTargetPosition;
     private Vector3 destination;
     private List<Vector3> path;
-
-    public float invincibilityTime = 0.0f;
-    public float meleeCooldownTimer = 0.0f;
+    private float invincibilityTime = 0.0f;
 
     private void Awake()
     {
-        enemyRigidbody = GetComponent<Rigidbody2D>();   
+        enemyRigidbody = GetComponent<Rigidbody2D>();
         enemyHealth = GetComponentInChildren<EnemyHealth>();
         enemyStun = GetComponentInChildren<EnemyStun>();
         particleSystem = GetComponentInChildren<ParticleSystem>();
         destination = target.position;
         prevTargetPosition = target.position;
-        SetState(new EnemyFollow(this));
+        path = null;
+
+        switch (startingState)
+        {
+            case EnemyStartingState.EnemyFollow:
+                SetState(new EnemyFollow(this));
+                break;
+            case EnemyStartingState.EnemyWander:
+                SetState(new EnemyWander(this, wanderWaitTime, wanderMultiplier));
+                break;
+            default:
+                {
+                    return;
+                }
+        }
     }
-    
+
     void Update()
     {
         if (invincibilityTime > 0.0f) { invincibilityTime -= Time.deltaTime; }
-        if (meleeCooldownTimer > 0.0f) { meleeCooldownTimer -= Time.deltaTime; }
         if (!GameManager.Instance.IsPauseMenuEnabled())
         {
             StartCoroutine(State.Update());
@@ -53,9 +75,9 @@ public class EnemyController : EnemyStateMachine
 
     public void Damage(float damage = 0, float stun = 0, float knockBack = 0, Vector2 direction = default)
     {
-        if(invincibilityTime > 0.0f){ return; }
+        if (invincibilityTime > 0.0f) { return; }
 
-        if(damage > 0) 
+        if (damage > 0)
         {
             if (State.GetType() == typeof(EnemyStaggered))
             {
@@ -63,13 +85,13 @@ public class EnemyController : EnemyStateMachine
             }
             else
             {
-                enemyHealth.DealDamage(damage); 
+                enemyHealth.DealDamage(damage);
             }
         }
 
         if (stun > 0) { enemyStun.DealDamage(stun); }
 
-        if(knockBack > 0)
+        if (knockBack > 0)
         {
             TransitionState(new EnemyKnockback(this, knockBack, direction));
             GameManager.Instance.FreezeTimeScale(0.1f);
@@ -86,13 +108,33 @@ public class EnemyController : EnemyStateMachine
 
     public void StopMoving()
     {
-        enemyRigidbody.velocity = Vector3.zero; 
+        enemyRigidbody.velocity = Vector3.zero;
+    }
+
+    public void MoveToNextPoint()
+    {
+        Vector2 moveTarget = path[0];
+        if (Vector3.Distance(transform.position, moveTarget) < 1.5f)
+        {
+            path.RemoveAt(0);
+
+            if (path.Count <= 0)
+            {
+                StopMoving();
+                Debug.Log("Reached target");
+            }
+        }
+        else
+        {
+            Vector2 moveDirection = (moveTarget - (Vector2)transform.position).normalized;
+            transform.position += (Vector3)(moveDirection * (moveSpeed * Time.deltaTime));
+        }
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("PlayerProjectiles"))
         {
-            if(collision.gameObject.GetComponent<Scrap>().inert)
+            if (collision.gameObject.GetComponent<Scrap>().inert)
             {
                 return;
             }
@@ -105,46 +147,57 @@ public class EnemyController : EnemyStateMachine
     #region Pathfinding
     public List<Vector3> GetActivePath()
     {
-        if(path == null)
-        {
-            GetNewPath();
-        }
         return path;
     }
-    public void GetNewPath()
+    public void GetPathToTarget()
     {
-        if (path == null)
-        {
-            path = new List<Vector3>();
-        }
-        if(path.Count > 0)
-        {
-            path = Pathfinding.Instance.FindPath(path[0], destination);
-            return;
-        }
-        else
-        {
-            path = Pathfinding.Instance.FindPath(this.transform.position, destination);
-            return;
-        }
+        destination = target.position;
+        path = Pathfinding.Instance.FindPath(this.transform.position, destination);
+        return;
     }
-    public bool CheckForTarget()
+
+    public void GetPathToDestination(Vector2 dest)
     {
-        if (path == null || TargetMoved())
+        destination = dest;
+        path = Pathfinding.Instance.FindPath(this.transform.position, destination);
+    }
+
+    public bool CheckTarget()
+    {
+        if (TargetMoved() || path == null)
         {
-            GetNewPath();
+            GetPathToTarget();
         }
-        if (Vector3.Distance(destination, transform.position) < meleeRange)
+        if(path == null)
+        {
+            return false;
+        }
+        return true;
+    }
+
+    public bool CheckDestination(Vector2 dest)
+    {
+        GetPathToTarget();
+        if(path == null)
+        {
+            return false;
+        }
+        return true;
+    }
+
+    public bool CheckMeleeRange()
+    {
+        if (Vector3.Distance(target.transform.position, transform.position) < meleeRange)
         {
             return true;
         }
         return false;
     }
+
     public bool TargetMoved()
     {
-        if (target.position != prevTargetPosition)
+        if (Vector2.Distance(target.position, prevTargetPosition) > 0.5f)
         {
-            destination = target.position;
             prevTargetPosition = target.position;
             return true;
         }

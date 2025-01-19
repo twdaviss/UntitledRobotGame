@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace RobotGame.States
@@ -6,8 +7,9 @@ namespace RobotGame.States
     public class EnemyFollow : EnemyState
     {
         private readonly EnemyController enemy;
-        private Vector3 moveTarget;
         public EnemyFollow(EnemyController enemy) { this.enemy = enemy; name = "EnemyFollow"; }
+
+        private List<Vector3> path;
         public override IEnumerator Start()
         {
             enemy.StopMoving();
@@ -22,48 +24,27 @@ namespace RobotGame.States
 
         public override IEnumerator FixedUpdate()
         {
-            if(enemy.GetActivePath() == null)
+            enemy.CheckTarget();
+            path = enemy.GetActivePath();
+            if(path == null)
             {
                 Debug.Log("No Available Path");
                 yield break;
             }
-            if(enemy.GetActivePath().Count <= 0)
+            if(enemy.CheckMeleeRange())
             {
-                yield break;
-            }
-            if(enemy.CheckForTarget())
-            {
-                if (enemy.meleeCooldownTimer <= 0)
-                {
-                    enemy.SetState(new EnemyMelee(enemy));
-                }
+                enemy.SetState(new EnemyMelee(enemy));
             }
             yield break;
         }
 
         private void MovementHandler()
         {
-            if(enemy.GetActivePath() == null)
+            if(path == null || path.Count == 0)
             {
-                Debug.Log("No Available Path");
                 return;
             }
-            moveTarget = enemy.GetActivePath()[0];
-            if (Vector3.Distance(enemy.transform.position, moveTarget) < 1.5f)
-            {
-                enemy.GetActivePath().RemoveAt(0);
-
-                if (enemy.GetActivePath().Count <= 0)
-                {
-                    StopMoving();
-                    Debug.Log("Reached target");
-                }
-            }
-            else
-            {
-                Vector3 moveDirection = (moveTarget - enemy.transform.position).normalized;
-                enemy.transform.position = enemy.transform.position + (moveDirection * (enemy.moveSpeed * Time.deltaTime));
-            }
+            enemy.MoveToNextPoint();
         }
         public override IEnumerator End()
         {

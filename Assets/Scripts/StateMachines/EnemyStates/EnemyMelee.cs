@@ -11,6 +11,8 @@ namespace RobotGame.States
         private bool isBuildingUp = true;
         private bool isMeleeing = false;
         private bool isRecovering = false;
+        private float meleeCooldownTimer = 0.0f;
+
         public override IEnumerator Start()
         {
             yield break;
@@ -18,6 +20,8 @@ namespace RobotGame.States
 
         public override IEnumerator Update()
         {
+            if (meleeCooldownTimer > 0.0f) { meleeCooldownTimer -= Time.deltaTime; }
+
             if (isBuildingUp)
             {
                 if (meleeTimer > enemy.meleeBuildUpTime)
@@ -45,7 +49,7 @@ namespace RobotGame.States
             {
                 if (meleeTimer > enemy.meleeRecoveryTime)
                 {
-                    enemy.meleeCooldownTimer += enemy.meleeCooldown;
+                    meleeCooldownTimer += enemy.meleeCooldown;
                     enemy.GetComponent<SpriteRenderer>().color = Color.black;
                     enemy.SetState(new EnemyFollow(enemy));
                     yield break;

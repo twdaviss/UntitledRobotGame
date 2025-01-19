@@ -41,13 +41,19 @@ public class Pathfinding
             }
             return vectorPath;
         }
-
     }
     private List<PathNode> FindPath(int startX, int startY, int endX, int endY)
     {
         PathNode startNode = grid.GetGridObject(startX, startY);
         PathNode endNode = grid.GetGridObject(endX, endY);
-
+        if(endNode == null)
+        {
+            return null;
+        }
+        if(!endNode.isWalkable)
+        {
+            return null;
+        }
         openList = new List<PathNode>{startNode};
         closedList = new List<PathNode>();
 
