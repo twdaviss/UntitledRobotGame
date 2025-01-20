@@ -814,7 +814,7 @@ PrefabInstance:
       objectReference: {fileID: 838020406}
     - target: {fileID: 3070662084528493124, guid: a78062a03c946f847ad27e000bdb04fc, type: 3}
       propertyPath: startingState
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3070662084528493124, guid: a78062a03c946f847ad27e000bdb04fc, type: 3}
       propertyPath: targetLocation
@@ -1582,7 +1582,7 @@ PrefabInstance:
       objectReference: {fileID: 838020406}
     - target: {fileID: 3070662084528493124, guid: a78062a03c946f847ad27e000bdb04fc, type: 3}
       propertyPath: startingState
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3070662084528493124, guid: a78062a03c946f847ad27e000bdb04fc, type: 3}
       propertyPath: targetLocation

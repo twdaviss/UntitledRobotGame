@@ -9,6 +9,7 @@ public enum EnemyStartingState
 {
     EnemyFollow,
     EnemyWander,
+    EnemyFlee,
 }
 public class EnemyController : EnemyStateMachine
 {
@@ -51,6 +52,9 @@ public class EnemyController : EnemyStateMachine
                 break;
             case EnemyStartingState.EnemyWander:
                 SetState(new EnemyWander(this, wanderWaitTime, wanderMultiplier));
+                break;
+            case EnemyStartingState.EnemyFlee:
+                SetState(new EnemyFlee(this));
                 break;
             default:
                 {
