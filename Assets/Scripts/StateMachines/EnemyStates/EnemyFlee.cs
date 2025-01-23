@@ -11,7 +11,7 @@ namespace RobotGame.States
         public EnemyFlee(EnemyController enemy) { this.enemy = enemy; this.name = "EnemyFlee"; }
 
         private List<Vector3> path = null;
-        private int numRays = 6;
+        private int numRays = 8;
 
         public override IEnumerator Start()
         {
@@ -61,33 +61,35 @@ namespace RobotGame.States
 
         private void FindNewPoint()
         {
-            Vector2 destination;
+            Vector2 destination = new Vector2();
             LayerMask layerMask = LayerMask.GetMask("Obstacles");
-            layerMask |= LayerMask.GetMask("Player");
-            RaycastHit2D[] hits = new RaycastHit2D[8];
-            
-            //hits[0] = Physics2D.Raycast(enemy.transform.position, new Vector2( 0.0f,  1.0f), 10.0f, layerMask);
-            //hits[1] = Physics2D.Raycast(enemy.transform.position, new Vector2( 0.5f,  0.5f), 10.0f, layerMask);
-            //hits[2] = Physics2D.Raycast(enemy.transform.position, new Vector2( 1.0f,  0.0f), 10.0f, layerMask);
-            //hits[3] = Physics2D.Raycast(enemy.transform.position, new Vector2( 0.5f, -0.5f), 10.0f, layerMask);
-            //hits[4] = Physics2D.Raycast(enemy.transform.position, new Vector2( 0.0f, -1.0f), 10.0f, layerMask);
-            //hits[5] = Physics2D.Raycast(enemy.transform.position, new Vector2(-0.5f, -0.5f), 10.0f, layerMask);
-            //hits[6] = Physics2D.Raycast(enemy.transform.position, new Vector2(-1.0f,  0.0f), 10.0f, layerMask);
-            //hits[7] = Physics2D.Raycast(enemy.transform.position, new Vector2(-0.5f,  0.5f), 10.0f, layerMask);
+            //layerMask |= LayerMask.GetMask("Player");
+            Vector2[] points = new Vector2[numRays];
+            for(int ray = 1; ray <= numRays; ++ray)
+            {
+                RaycastHit2D hit = Physics2D.Raycast(enemy.transform.position, Quaternion.AngleAxis(ray * 360 / numRays, Vector3.forward) * Vector2.up, 10, layerMask);
+                Debug.DrawRay(enemy.transform.position, Quaternion.AngleAxis(ray * 360 / numRays, Vector3.forward) * Vector2.up * 10);
+                if (hit.point != Vector2.zero)
+                {
+                    points[ray-1] = hit.point;
+                }
+                else
+                {
+                    points[ray-1] = enemy.transform.position += (Quaternion.AngleAxis(ray * 360 / numRays, Vector3.forward) * Vector2.up) * 10;
+                }
+            }
 
-            //has to be a better way to do this
-
-            if (hits.Count() == 0)
+            if (points.Count() == 0)
             {
                 return;
             }
-            destination = hits[0].point;
-            foreach (RaycastHit2D hit in hits)
+            destination = points[0];
+            foreach (Vector2 point in points)
             {
-                if(hit.point == null) continue;
-                if(Vector2.Distance(enemy.target.position, hit.point) > Vector2.Distance(enemy.target.position, destination))
+                if(point == null) continue;
+                if(Vector2.Distance(enemy.target.position, point) > Vector2.Distance(enemy.target.position, destination))
                 {
-                    destination = hit.point;
+                    destination = point;
                 }
             }
             if(destination == null) return; 
