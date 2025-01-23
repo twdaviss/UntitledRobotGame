@@ -181,7 +181,7 @@ public class EnemyController : EnemyStateMachine
 
     public bool CheckDestination(Vector2 dest)
     {
-        GetPathToTarget();
+        GetPathToDestination(dest);
         if(path == null)
         {
             return false;
