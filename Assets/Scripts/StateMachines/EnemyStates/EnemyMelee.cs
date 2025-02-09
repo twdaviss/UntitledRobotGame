@@ -31,7 +31,7 @@ namespace RobotGame.States
                     meleeTimer = 0.0f;
                     yield break;
                 }
-                enemy.GetComponent<SpriteRenderer>().color = Color.yellow;
+                enemy.GetComponentInChildren<SpriteRenderer>().color = Color.yellow;
             }
             else if (isMeleeing)
             {
@@ -43,18 +43,18 @@ namespace RobotGame.States
                     yield break;
                 }
                 Melee();
-                enemy.GetComponent<SpriteRenderer>().color = Color.red;
+                enemy.GetComponentInChildren<SpriteRenderer>().color = Color.red;
             }
             else if (isRecovering)
             {
                 if (meleeTimer > enemy.meleeRecoveryTime)
                 {
                     meleeCooldownTimer += enemy.meleeCooldown;
-                    enemy.GetComponent<SpriteRenderer>().color = Color.black;
+                    enemy.GetComponentInChildren<SpriteRenderer>().color = Color.white;
                     enemy.SetState(new EnemyFollow(enemy));
                     yield break;
                 }
-                enemy.GetComponent<SpriteRenderer>().color = Color.magenta;
+                enemy.GetComponentInChildren<SpriteRenderer>().color = Color.magenta;
             }
 
             meleeTimer += Time.deltaTime;

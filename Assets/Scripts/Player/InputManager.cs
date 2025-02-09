@@ -27,6 +27,12 @@ public class InputManager : MonoBehaviour
     public delegate void OnPaused();
     public static event OnPaused onPaused;
 
+    public delegate void OnInteract();
+    public static event OnInteract onInteract;
+
+    public delegate void OnContinue();
+    public static event OnContinue onContinue;
+
     public delegate void OnScrapShot();
     public static event OnScrapShot onScrapShot;
 
@@ -90,6 +96,27 @@ public class InputManager : MonoBehaviour
         }
     }
 
+    public void EnableDialogueMode()
+    {
+        GameManager.Instance.FreezeTimeScale();
+        playerControls.Gameplay.Disable();
+        playerControls.Menu.Disable();
+        playerControls.Dialogue.Enable();
+        moveDirection = Vector3.zero;
+    }
+
+    public void DisableDialogueMode()
+    {
+        StartCoroutine(GameManager.Instance.ResetTimeScale());
+        playerControls.Dialogue.Disable();
+        playerControls.Gameplay.Enable();
+    }
+
+    public void ContinuePressed()
+    {
+        onContinue?.Invoke();
+    }
+
     public void UnPauseGame()
     {
         playerControls.Menu.Disable();
@@ -121,6 +148,11 @@ public class InputManager : MonoBehaviour
 
         Vector2 mouseDirection = ((Vector2)hitPoint - (Vector2)position).normalized;
         return mouseDirection;
+    }
+
+    public void InteractPressed()
+    {
+        onInteract?.Invoke();
     }
 
     public Vector2 GetMoveDirection()
@@ -328,6 +360,8 @@ public class InputManager : MonoBehaviour
         playerControls.Gameplay.Grapple.performed += ctx => GrappleStart();
         playerControls.Gameplay.Grapple.canceled += ctx => GrappleStop();
         playerControls.Gameplay.Aim.performed += ctx => aimDirection = ctx.ReadValue<Vector2>();
+        playerControls.Gameplay.Interact.performed += ctx => InteractPressed();
+        playerControls.Dialogue.Continue.performed += ctx => ContinuePressed();
     }
 
     private void OnDestroy()
@@ -344,5 +378,8 @@ public class InputManager : MonoBehaviour
         playerControls.Gameplay.Grapple.performed -= ctx => GrappleStart();
         playerControls.Gameplay.Grapple.canceled -= ctx => GrappleStop();
         playerControls.Gameplay.Aim.performed -= ctx => aimDirection = ctx.ReadValue<Vector2>();
+        playerControls.Gameplay.Interact.performed -= ctx => InteractPressed();
+        playerControls.Dialogue.Continue.performed -= ctx => ContinuePressed();
+
     }
 }

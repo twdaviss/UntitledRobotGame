@@ -140,7 +140,10 @@ public class GameManager : MonoBehaviour
         if(_gameSpeed != 1.0f) { return; }
         _gameSpeed = 0.0f;
         Debug.Log("Time Frozen");
-        StartCoroutine(ResetTimeScale(duration));
+        if (duration > 0)
+        {
+            StartCoroutine(ResetTimeScale(duration));
+        }
     }
 
     public IEnumerator ResetTimeScale(float duration = 0.0f)
