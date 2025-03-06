@@ -44,7 +44,10 @@ public class EnemyHealth : MonoBehaviour
             Stagger();
             currentStaggerHealth = staggerHealth;
         }
-        enemy.ReleaseSparks();
+        if(Random.Range(0,4) == 0)
+        {
+            enemy.ReleaseSparks();
+        }
         UpdateHealthBar();
     }
 

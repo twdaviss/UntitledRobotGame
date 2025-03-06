@@ -30,8 +30,9 @@ namespace RobotGame.States
         }
         public override IEnumerator End()
         {
-            enemy.GetComponent<SpriteRenderer>().color = Color.black;
+            enemy.GetComponent<SpriteRenderer>().color = Color.white;
             yield break;
         }
+
     }
 }
