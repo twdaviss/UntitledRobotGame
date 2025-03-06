@@ -1,5 +1,7 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements.Experimental;
 
 namespace RobotGame.States
 {
@@ -9,22 +11,30 @@ namespace RobotGame.States
         private readonly Vector3 endPoint;
         private Rigidbody2D playerRigidbody;
         private Vector2 direction;
-        private float speed;
+        private float startingSpeed;
+        private float targetSpeed;
+        private float totalDistance;
 
-        public PlayerGrappling(PlayerController player, Vector3 grappleEndPoint, float speed) { this.player = player; name = "PlayerSlinging"; this.endPoint = grappleEndPoint; this.speed = speed; }
+        public PlayerGrappling(PlayerController player, Vector3 grappleEndPoint, float startingSpeed, float targetSpeed) { this.player = player; name = "PlayerSlinging"; this.endPoint = grappleEndPoint; this.startingSpeed = startingSpeed; this.targetSpeed = targetSpeed; }
         
         public override IEnumerator Start()
         {
             playerRigidbody = player.GetComponent<Rigidbody2D>();
             direction = (endPoint - player.transform.position).normalized;
+            totalDistance = Vector3.Distance(player.transform.position, endPoint);
+            InputManager.onMelee += Attack;
             yield break;
         }
 
         public override IEnumerator Update()
         {
-            if(Vector3.Distance(player.transform.position, endPoint) < 0.75f) 
+            float distance = Vector3.Distance(player.transform.position, endPoint);
+            float t = (totalDistance - distance)/ totalDistance;
+            float speed = startingSpeed + (targetSpeed * Easing.OutCubic(t));
+            if (distance < 0.75f) 
             {
                 player.TransitionState(new PlayerDefault(player));
+                Debug.Log(speed);
             }
             playerRigidbody.transform.position += (Vector3)direction * speed * Time.deltaTime;
             yield break;
@@ -37,8 +47,18 @@ namespace RobotGame.States
 
         public override IEnumerator End()
         {
+            InputManager.onMelee -= Attack;
             playerRigidbody.velocity = Vector2.zero;
             yield break;
+        }
+
+        private void Attack()
+        {
+            float distance = Vector3.Distance(player.transform.position, endPoint);
+            if(distance < 2)
+            {
+                player.playerMelee.Attack();
+            }
         }
 
         public override IEnumerator OnCollisionEnter2D(Collision2D collision)

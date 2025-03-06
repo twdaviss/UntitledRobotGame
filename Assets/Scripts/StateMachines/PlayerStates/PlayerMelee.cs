@@ -6,7 +6,7 @@ namespace RobotGame.States
     public class PlayerMelee : PlayerState
     {
         readonly PlayerController player;
-        public PlayerMelee(PlayerController player, float radius, float damage, float stun, float knockBack, float duration, float staggerTime) { this.player = player; name = "PlayerMelee"; this.radius = radius; this.damage = damage; this.stun = stun; this.knockBack = knockBack; this.duration = duration; this.staggerTime = staggerTime; }
+        public PlayerMelee(PlayerController player, float radius, float damage, float stun, float knockBack, float duration) { this.player = player; name = "PlayerMelee"; this.radius = radius; this.damage = damage; this.stun = stun; this.knockBack = knockBack; this.duration = duration;}
 
         private float radius;
         private float damage;
@@ -14,8 +14,6 @@ namespace RobotGame.States
         private float knockBack;
         private float duration;
         private float currentTime = 0.0f;
-        private float staggerTime;
-        //private bool staggerTriggered = false;
 
         int layerMask = LayerMask.GetMask("Enemies");
 
@@ -36,12 +34,6 @@ namespace RobotGame.States
                     if (target.gameObject.GetComponent<EnemyController>() != null)
                     {
                         target.gameObject.GetComponent<EnemyController>().Damage(damage, stun, knockBack, (target.transform.position - player.transform.position).normalized);
-
-                        //if(!staggerTriggered)
-                        //{
-                        //    GameManager.Instance.FreezeTimeScale(staggerTime);
-                        //    staggerTriggered = true;
-                        //}
                     }
                 }
                 currentTime += Time.deltaTime;

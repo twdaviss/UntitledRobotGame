@@ -5,7 +5,8 @@ public class Grapple : MonoBehaviour
 {
     [SerializeField] private GameObject targetUI;
     [SerializeField] private float range;
-    [SerializeField] private float speed;
+    [SerializeField] private float startingSpeed;
+    [SerializeField] private float targetSpeed;
     [SerializeField] private float grappleCooldownTime;
     [SerializeField] private float grappleAimMaxTime;
 
@@ -84,7 +85,7 @@ public class Grapple : MonoBehaviour
             }
 
             grappleCooldownTimer = 0.0f;
-            playerController.SetState(new PlayerGrappling(playerController, targetObject.transform.position, speed));
+            playerController.TransitionState(new PlayerGrappling(playerController, targetObject.transform.position, startingSpeed, targetSpeed));
         }
         
         StartCoroutine(GameManager.Instance.ResetTimeScale());

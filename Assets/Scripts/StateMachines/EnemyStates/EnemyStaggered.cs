@@ -6,7 +6,7 @@ namespace RobotGame.States
     public class EnemyStaggered : EnemyState
     {
         readonly private EnemyController enemy;
-        readonly private float duration = 0.5f;
+        readonly private float duration = 0.2f;
         private float currentTime = 0.0f;
         public EnemyStaggered(EnemyController enemy) { this.enemy = enemy; this.name = "EnemyStaggered"; }
         public override IEnumerator Start()

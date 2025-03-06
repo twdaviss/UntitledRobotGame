@@ -3865,6 +3865,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 1340760282465729318, guid: e1ba6dadd6d10e249b115f4057bf955a, type: 3}
+      propertyPath: range
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 1340760282465729318, guid: e1ba6dadd6d10e249b115f4057bf955a, type: 3}
+      propertyPath: speed
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 1340760282465729318, guid: e1ba6dadd6d10e249b115f4057bf955a, type: 3}
+      propertyPath: targetSpeed
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 1340760282465729318, guid: e1ba6dadd6d10e249b115f4057bf955a, type: 3}
+      propertyPath: startingSpeed
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 1672617182521118099, guid: e1ba6dadd6d10e249b115f4057bf955a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 98.36
@@ -3924,6 +3940,14 @@ PrefabInstance:
     - target: {fileID: 3538124195781019106, guid: e1ba6dadd6d10e249b115f4057bf955a, type: 3}
       propertyPath: stun
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3538124195781019106, guid: e1ba6dadd6d10e249b115f4057bf955a, type: 3}
+      propertyPath: knockBack
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 3538124195781019106, guid: e1ba6dadd6d10e249b115f4057bf955a, type: 3}
+      propertyPath: staggerTime
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4288910495188623383, guid: e1ba6dadd6d10e249b115f4057bf955a, type: 3}
       propertyPath: m_IsTrigger

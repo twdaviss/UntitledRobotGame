@@ -11,6 +11,7 @@ namespace RobotGame.States
         
         public override IEnumerator Start()
         {
+            InputManager.onMelee += Attack;
             yield break;
         }
 
@@ -19,7 +20,15 @@ namespace RobotGame.States
             player.InputHandler();
             yield break;
         }
-
+        private void Attack()
+        {
+            player.playerMelee.Attack();
+        }
+        public override IEnumerator End()
+        {
+            InputManager.onMelee -= Attack;
+            yield break;
+        }
         public override IEnumerator FixedUpdate()
         {
             yield break;
