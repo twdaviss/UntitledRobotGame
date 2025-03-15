@@ -9,6 +9,7 @@ public class PlayerController : PlayerStateMachine
     public Animator playerAnimator;
     public Melee playerMelee;
     public Vector2 moveDirection;
+    public Vector2 prevDirection;
 
     [SerializeField] private float defaultMoveSpeed;
     
@@ -40,7 +41,11 @@ public class PlayerController : PlayerStateMachine
     public void InputHandler()
     {
         moveDirection = InputManager.Instance.GetMoveDirection();
-        if (moveDirection.x < 0) { playerSprite.flipX = false; }
+        if(moveDirection.magnitude > 0.5)
+        {
+            prevDirection = moveDirection;
+        }
+        if (moveDirection.x < 0 || prevDirection.x < 0) { playerSprite.flipX = false; }
         else { playerSprite.flipX = true; }
         
         if(InputManager.playerControls.Gameplay.Sprint.inProgress) { moveSpeed = 2 * defaultMoveSpeed; }
@@ -51,6 +56,9 @@ public class PlayerController : PlayerStateMachine
         playerAnimator.SetFloat("Horizontal", moveDirection.x);
         playerAnimator.SetFloat("Vertical", moveDirection.y);
         playerAnimator.SetFloat("Speed", moveDirection.SqrMagnitude());
+
+        playerAnimator.SetFloat("PrevHorizontal", prevDirection.x);
+        playerAnimator.SetFloat("PrevVertical", prevDirection.y);
     }
 
     public string GetCurrentState()
