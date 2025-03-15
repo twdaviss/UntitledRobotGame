@@ -40,8 +40,8 @@ public class PlayerController : PlayerStateMachine
     public void InputHandler()
     {
         moveDirection = InputManager.Instance.GetMoveDirection();
-        if (moveDirection.x < 0) { playerSprite.flipX = true; }
-        else { playerSprite.flipX = false; }
+        if (moveDirection.x < 0) { playerSprite.flipX = false; }
+        else { playerSprite.flipX = true; }
         
         if(InputManager.playerControls.Gameplay.Sprint.inProgress) { moveSpeed = 2 * defaultMoveSpeed; }
         else { moveSpeed = defaultMoveSpeed; }

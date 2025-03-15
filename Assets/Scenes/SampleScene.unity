@@ -3857,29 +3857,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 460214981384824081, guid: e1ba6dadd6d10e249b115f4057bf955a, type: 3}
-      propertyPath: m_TagString
-      value: Player
-      objectReference: {fileID: 0}
     - target: {fileID: 1326478117698346847, guid: e1ba6dadd6d10e249b115f4057bf955a, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 1340760282465729318, guid: e1ba6dadd6d10e249b115f4057bf955a, type: 3}
-      propertyPath: range
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 1340760282465729318, guid: e1ba6dadd6d10e249b115f4057bf955a, type: 3}
-      propertyPath: speed
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 1340760282465729318, guid: e1ba6dadd6d10e249b115f4057bf955a, type: 3}
-      propertyPath: targetSpeed
-      value: 40
-      objectReference: {fileID: 0}
-    - target: {fileID: 1340760282465729318, guid: e1ba6dadd6d10e249b115f4057bf955a, type: 3}
-      propertyPath: startingSpeed
-      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 1672617182521118099, guid: e1ba6dadd6d10e249b115f4057bf955a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3920,62 +3900,6 @@ PrefabInstance:
     - target: {fileID: 1672617182521118099, guid: e1ba6dadd6d10e249b115f4057bf955a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2793727001973809937, guid: e1ba6dadd6d10e249b115f4057bf955a, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2793727001973809937, guid: e1ba6dadd6d10e249b115f4057bf955a, type: 3}
-      propertyPath: m_SortingLayer
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2793727001973809937, guid: e1ba6dadd6d10e249b115f4057bf955a, type: 3}
-      propertyPath: m_SortingOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2793727001973809937, guid: e1ba6dadd6d10e249b115f4057bf955a, type: 3}
-      propertyPath: m_SortingLayerID
-      value: -133567257
-      objectReference: {fileID: 0}
-    - target: {fileID: 3538124195781019106, guid: e1ba6dadd6d10e249b115f4057bf955a, type: 3}
-      propertyPath: stun
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 3538124195781019106, guid: e1ba6dadd6d10e249b115f4057bf955a, type: 3}
-      propertyPath: knockBack
-      value: 40
-      objectReference: {fileID: 0}
-    - target: {fileID: 3538124195781019106, guid: e1ba6dadd6d10e249b115f4057bf955a, type: 3}
-      propertyPath: staggerTime
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4288910495188623383, guid: e1ba6dadd6d10e249b115f4057bf955a, type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7429379723091429669, guid: e1ba6dadd6d10e249b115f4057bf955a, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7429379723091429669, guid: e1ba6dadd6d10e249b115f4057bf955a, type: 3}
-      propertyPath: m_SortingLayer
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7429379723091429669, guid: e1ba6dadd6d10e249b115f4057bf955a, type: 3}
-      propertyPath: m_SortingOrder
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7429379723091429669, guid: e1ba6dadd6d10e249b115f4057bf955a, type: 3}
-      propertyPath: m_SortingLayerID
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7429379723091429669, guid: e1ba6dadd6d10e249b115f4057bf955a, type: 3}
-      propertyPath: m_SpriteSortPoint
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8052276281748958729, guid: e1ba6dadd6d10e249b115f4057bf955a, type: 3}
-      propertyPath: scrapStun
-      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

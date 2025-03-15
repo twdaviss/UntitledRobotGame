@@ -9,6 +9,7 @@ public class Grapple : MonoBehaviour
     [SerializeField] private float targetSpeed;
     [SerializeField] private float grappleCooldownTime;
     [SerializeField] private float grappleAimMaxTime;
+    [SerializeField] private float targetUIOffset;
 
     private PlayerController playerController;
     private PlayerControls playerControls;
@@ -20,7 +21,6 @@ public class Grapple : MonoBehaviour
     private float grappleCooldownTimer;
     private float grappleAimTimer = 0.0f;
     private bool canGrapple = true;
-
     private void Awake()
     {
         grappleCooldownTimer = grappleCooldownTime;
@@ -58,7 +58,9 @@ public class Grapple : MonoBehaviour
         if (isAimingGrapple && targetObject != null)
         {
             targetUI.SetActive(true);
-            targetUI.transform.position = targetObject.transform.position;
+            Vector3 position = targetObject.transform.position;
+            position.z -= targetUIOffset;
+            targetUI.transform.position = position;
         }
         else
         {
