@@ -5,14 +5,17 @@ using RobotGame.States;
 using System;
 using static UnityEngine.EventSystems.EventTrigger;
 
-public enum EnemyStartingState
+public enum EnemyType
 {
-    EnemyFollow,
-    EnemyWander,
-    EnemyFlee,
+    Aggressive,
+    Shy,
+    Ranged,
+    Explosive,
 }
+
 public class EnemyController : EnemyStateMachine
 {
+    [SerializeField] public EnemyType enemyType;
     [SerializeField] public int moveSpeed;
     [SerializeField] public Transform target;
 
@@ -23,10 +26,12 @@ public class EnemyController : EnemyStateMachine
     [SerializeField] public float meleeDamageTime;
     [SerializeField] public float meleeCooldown;
     [SerializeField] public float wanderWaitTime;
+    [SerializeField] public float wanderTime;
     [SerializeField] public int wanderMultiplier;
-    [SerializeField] public EnemyStartingState startingState;
+    [SerializeField] public float fleeDistanceThreshold;
+    [SerializeField] public float fleeTime;
 
-    private ParticleSystem particleSystem;
+    private ParticleSystem enemyParticleSystem;
     private Rigidbody2D enemyRigidbody;
     private EnemyHealth enemyHealth;
     private EnemyStun enemyStun;
@@ -40,32 +45,18 @@ public class EnemyController : EnemyStateMachine
         enemyRigidbody = GetComponent<Rigidbody2D>();
         enemyHealth = GetComponentInChildren<EnemyHealth>();
         enemyStun = GetComponentInChildren<EnemyStun>();
-        particleSystem = GetComponentInChildren<ParticleSystem>();
+        enemyParticleSystem = GetComponentInChildren<ParticleSystem>();
         destination = target.position;
         prevTargetPosition = target.position;
         path = null;
 
-        switch (startingState)
-        {
-            case EnemyStartingState.EnemyFollow:
-                SetState(new EnemyFollow(this));
-                break;
-            case EnemyStartingState.EnemyWander:
-                SetState(new EnemyWander(this, wanderWaitTime, wanderMultiplier));
-                break;
-            case EnemyStartingState.EnemyFlee:
-                SetState(new EnemyFlee(this));
-                break;
-            default:
-                {
-                    return;
-                }
-        }
+        SetState(new EnemyIdle(this));
     }
 
     void Update()
     {
         if (invincibilityTime > 0.0f) { invincibilityTime -= Time.deltaTime; }
+
         if (!GameManager.Instance.IsPauseMenuEnabled())
         {
             StartCoroutine(State.Update());
@@ -168,7 +159,7 @@ public class EnemyController : EnemyStateMachine
 
     public bool CheckTarget()
     {
-        if (TargetMoved() || path == null)
+        if (TargetMoved() || path == null || path.Count == 0)
         {
             GetPathToTarget();
         }
@@ -215,7 +206,7 @@ public class EnemyController : EnemyStateMachine
 
     public void ReleaseSparks()
     {
-        particleSystem.Play();
+        enemyParticleSystem.Play();
     }
 
     private void OnDrawGizmos()

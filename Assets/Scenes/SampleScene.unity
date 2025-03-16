@@ -1435,7 +1435,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2681613831498773560, guid: a78062a03c946f847ad27e000bdb04fc, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.38
+      value: 14.4
       objectReference: {fileID: 0}
     - target: {fileID: 2681613831498773560, guid: a78062a03c946f847ad27e000bdb04fc, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1478,8 +1478,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 838020406}
     - target: {fileID: 3070662084528493124, guid: a78062a03c946f847ad27e000bdb04fc, type: 3}
+      propertyPath: fleeTime
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3070662084528493124, guid: a78062a03c946f847ad27e000bdb04fc, type: 3}
+      propertyPath: enemyType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3070662084528493124, guid: a78062a03c946f847ad27e000bdb04fc, type: 3}
+      propertyPath: wanderTime
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3070662084528493124, guid: a78062a03c946f847ad27e000bdb04fc, type: 3}
       propertyPath: startingState
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3070662084528493124, guid: a78062a03c946f847ad27e000bdb04fc, type: 3}
       propertyPath: targetLocation
@@ -1491,6 +1503,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3070662084528493124, guid: a78062a03c946f847ad27e000bdb04fc, type: 3}
       propertyPath: wanderMultiplier
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 3070662084528493124, guid: a78062a03c946f847ad27e000bdb04fc, type: 3}
+      propertyPath: fleeDistanceThreshold
       value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 8132658211172884929, guid: a78062a03c946f847ad27e000bdb04fc, type: 3}
@@ -2515,7 +2531,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8132658211172884929, guid: a78062a03c946f847ad27e000bdb04fc, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4114,6 +4130,10 @@ PrefabInstance:
     - target: {fileID: 8132658211172884929, guid: a78062a03c946f847ad27e000bdb04fc, type: 3}
       propertyPath: m_Name
       value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 8132658211172884929, guid: a78062a03c946f847ad27e000bdb04fc, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

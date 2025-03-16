@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace RobotGame.States
@@ -11,7 +13,10 @@ namespace RobotGame.States
         private Vector2 destination;
         private float waitTime;
         private int multiplier;
-        public EnemyWander(EnemyController enemy, float waitTime, int multiplier) { this.enemy = enemy; this.waitTime = waitTime; this.multiplier = multiplier; this.name = "EnemyWander"; }
+        private float wanderTime;
+        private float wanderTimer;
+
+        public EnemyWander(EnemyController enemy, float waitTime, int multiplier, float wanderTime) { this.enemy = enemy; this.waitTime = waitTime; this.multiplier = multiplier; this.name = "EnemyWander"; this.wanderTime = wanderTime;}
 
         private List<Vector3> path = null;
         private float waitTimer = 0f;
@@ -25,6 +30,29 @@ namespace RobotGame.States
 
         public override IEnumerator Update()
         {
+            float distance = Vector2.Distance(enemy.transform.position, enemy.target.position);
+            switch (enemy.enemyType)
+            {
+                case EnemyType.Aggressive:
+                    break;
+                case EnemyType.Shy:
+                    if(distance < enemy.fleeDistanceThreshold)
+                    {
+                        enemy.SetState(new EnemyFlee(enemy, enemy.fleeTime));
+                        Debug.Log("Too close. Switching to Flee (distance/timer):" + distance + "/" + wanderTimer);
+                    }
+                    else if (wanderTimer >= wanderTime)
+                    {
+                        enemy.SetState(new EnemyFollow(enemy));
+                        Debug.Log("Done wandering. Switching to Follow (distance/timer):" + distance + "/" + wanderTimer);
+                    }
+                    break;
+                case EnemyType.Ranged:
+                    break;
+                case EnemyType.Explosive:
+                    break;
+            }
+            wanderTimer += Time.deltaTime;
             MovementHandler();
             yield break;
         }

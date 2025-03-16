@@ -51,7 +51,7 @@ namespace RobotGame.States
                 {
                     meleeCooldownTimer += enemy.meleeCooldown;
                     enemy.GetComponentInChildren<SpriteRenderer>().color = Color.white;
-                    enemy.SetState(new EnemyFollow(enemy));
+                    enemy.SetState(new EnemyIdle(enemy));
                     yield break;
                 }
                 enemy.GetComponentInChildren<SpriteRenderer>().color = Color.magenta;

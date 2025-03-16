@@ -8,19 +8,41 @@ namespace RobotGame.States
     public class EnemyFlee : EnemyState
     {
         readonly EnemyController enemy;
-        public EnemyFlee(EnemyController enemy) { this.enemy = enemy; this.name = "EnemyFlee"; }
+        public EnemyFlee(EnemyController enemy, float fleeTime) { this.enemy = enemy; this.name = "EnemyFlee"; this.fleeTime = fleeTime; }
 
         private List<Vector3> path = null;
         private int numRays = 8;
-        private int minDistance = 15;
-
+        private float minDistance;
+        private float fleeTime;
+        private float fleeTimer = 0.0f;
         public override IEnumerator Start()
         {
+            minDistance = enemy.fleeDistanceThreshold + 5;
+            //FindNewPoint();
             yield break;
         }
 
         public override IEnumerator Update()
         {
+            float distance = Vector2.Distance(enemy.transform.position, enemy.target.position);
+            if (distance > minDistance || fleeTimer > fleeTime)
+            {
+                switch (enemy.enemyType)
+                {
+                    case EnemyType.Aggressive:
+                        //enemy.SetState(new EnemyFollow(enemy));
+                        break;
+                    case EnemyType.Shy:
+                        enemy.SetState(new EnemyWander(enemy, enemy.wanderWaitTime, enemy.wanderMultiplier, enemy.wanderTime));
+                        Debug.Log("Far enought away or timer finished. Switching to wander (distance/timer):" + distance);
+                        break;
+                    case EnemyType.Ranged:
+                        break;
+                    case EnemyType.Explosive:
+                        break;
+                }
+            }
+            fleeTimer += Time.deltaTime;
             MovementHandler();
             yield break;
         }
@@ -31,15 +53,15 @@ namespace RobotGame.States
             {
                 FindNewPoint();
             }
-//
-            //if (path == nul//
-            ///
-            //    FindNewPoint(//
-            ///
-            //else if (path.Count == //
-            ///
-            //    FindNewPoint(//
-            //}
+            
+            if (path == null)
+            {
+                FindNewPoint();
+            }
+            else if (path.Count == 0)
+            {
+                FindNewPoint();
+            }
             if (path == null)
             {
                 Debug.Log("No Available Path");
@@ -68,7 +90,7 @@ namespace RobotGame.States
         private void FindNewPoint()
         {
             float distFromPlayer = Vector2.Distance(enemy.transform.position, enemy.target.position);
-            if(distFromPlayer >= minDistance)
+            if(distFromPlayer > minDistance)
             {
                 return;
             }

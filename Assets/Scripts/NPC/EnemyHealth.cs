@@ -49,6 +49,11 @@ public class EnemyHealth : MonoBehaviour
             enemy.ReleaseSparks();
         }
         UpdateHealthBar();
+
+        if(enemy.enemyType == EnemyType.Shy)
+        {
+            enemy.SetState(new EnemyFlee(enemy, enemy.fleeTime));
+        }
     }
 
     public void Stagger()
