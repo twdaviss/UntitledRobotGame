@@ -10,6 +10,8 @@ public class Grapple : MonoBehaviour
     [SerializeField] private float grappleCooldownTime;
     [SerializeField] private float grappleAimMaxTime;
     [SerializeField] private float targetUIOffset;
+    [SerializeField] private AudioClip grappleStart;
+    [SerializeField] private AudioClip grappleEnd;
 
     private PlayerController playerController;
     private PlayerControls playerControls;
@@ -21,6 +23,7 @@ public class Grapple : MonoBehaviour
     private float grappleCooldownTimer;
     private float grappleAimTimer = 0.0f;
     private bool canGrapple = true;
+    private bool canGrappleAudio = true;
     private void Awake()
     {
         grappleCooldownTimer = grappleCooldownTime;
@@ -32,7 +35,6 @@ public class Grapple : MonoBehaviour
         grappleCooldownTimer += Time.deltaTime;
         if (InputManager.playerControls.Gameplay.Grapple.inProgress)
         {
-            grappleAimTimer += Time.deltaTime;
             canGrapple = true;
         }
         else
@@ -54,6 +56,7 @@ public class Grapple : MonoBehaviour
         else
         {
             GrappleTarget();
+            canGrappleAudio = true;
         }
         if (isAimingGrapple && targetObject != null)
         {
@@ -109,6 +112,12 @@ public class Grapple : MonoBehaviour
         {
             return;
         }
+        if (canGrappleAudio)
+        {
+            GetComponent<AudioSource>().pitch = 2;
+            GetComponent<AudioSource>().PlayOneShot(grappleStart);
+            canGrappleAudio = false;
+        }
         GameManager.Instance.SetSlowMoTimeScale();
         isAimingGrapple = true;
         Vector2 mousePosition = InputManager.Instance.GetMousePosition();
@@ -140,5 +149,11 @@ public class Grapple : MonoBehaviour
             targetValid = false;
             targetUI.GetComponent<SpriteRenderer>().color = Color.red;
         }
+    }
+
+    public void PlayGrappleEnd()
+    {
+        GetComponent<AudioSource>().pitch = 2;
+        GetComponent<AudioSource>().PlayOneShot(grappleEnd);
     }
 }

@@ -13,13 +13,16 @@ public class ScrapShot : MonoBehaviour
     [SerializeField] private float scrapStun;
     [SerializeField] private float scrapRange;
     [SerializeField] private float magnetizeRadius;
+    [SerializeField] private AudioClip projectile;
 
     private ObjectPool<Scrap> scrapPool;
     private PlayerController playerController;
+    private AudioSource audioSource;
 
     private void Awake()
     {
         playerController = GetComponentInParent<PlayerController>();
+        audioSource = GetComponent<AudioSource>();
         currentAmmo = maxAmmo;
         GeneratePool();
     }
@@ -38,6 +41,8 @@ public class ScrapShot : MonoBehaviour
         if (currentAmmo > 0)
         {
             scrapPool.Get();
+            audioSource.pitch = 1;
+            audioSource.PlayOneShot(projectile);
         }
     }
 
@@ -46,7 +51,6 @@ public class ScrapShot : MonoBehaviour
         Scrap scrap = Instantiate(scrapPrefab);
         scrap.gameObject.SetActive(false);
         scrap.SetPool(scrapPool);
-        
         return scrap;
     }
 
@@ -71,14 +75,26 @@ public class ScrapShot : MonoBehaviour
         Destroy(scrap);
     }
 
+    public void PlayMagnetizeAudio()
+    {
+        if(currentAmmo < maxAmmo)
+        {
+            audioSource.clip = projectile;
+            audioSource.pitch = -1;
+            audioSource.timeSamples = projectile.samples - 1;
+            audioSource.Play();
+        }
+    }
+
     private void OnEnable()
     {
         InputManager.onScrapShot += ShootScrap;
+        InputManager.onMagnetize += PlayMagnetizeAudio;
     }
 
     private void OnDestroy()
     {
         InputManager.onScrapShot -= ShootScrap;
-
+        InputManager.onMagnetize -= PlayMagnetizeAudio;
     }
 }

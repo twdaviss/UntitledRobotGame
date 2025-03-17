@@ -8,6 +8,7 @@ public class Melee : MonoBehaviour
     [SerializeField] private float stun;
     [SerializeField] private float knockBack;
     [SerializeField] private float duration;
+    [SerializeField] private AudioClip swoosh;
 
     private PlayerController playerController;
     private float meleeCooldownTime = 1.0f;
@@ -36,6 +37,7 @@ public class Melee : MonoBehaviour
         if(meleeCooldownTimer >= meleeCooldownTime)
         {
             meleeCooldownTimer = 0.0f;
+            GetComponentInParent<AudioSource>().PlayOneShot(swoosh);
             playerController.SetState(new PlayerMelee(playerController, radius, damage, stun, knockBack, duration));
         }
     }

@@ -8,6 +8,8 @@ public class EnemyHealth : MonoBehaviour
     [SerializeField] private Image healthBar;
     [SerializeField] private float maxHealth;
     [SerializeField] private GameObject pfOilSlick;
+    [SerializeField] private AudioClip[] metalSounds;
+
     private float currentHealth;
     private EnemyController enemy;
     private float staggerHealth;
@@ -49,6 +51,10 @@ public class EnemyHealth : MonoBehaviour
             enemy.ReleaseSparks();
         }
         UpdateHealthBar();
+
+        int randIndex = Random.Range(0,metalSounds.Length);
+        float randVolume = Random.Range(0.3f, 0.5f);
+        GetComponentInParent<AudioSource>().PlayOneShot(metalSounds[randIndex],randVolume);
 
         if(enemy.enemyType == EnemyType.Shy)
         {

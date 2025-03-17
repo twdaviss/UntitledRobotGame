@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements.Experimental;
+using static InputManager;
 
 namespace RobotGame.States
 {
@@ -19,6 +20,7 @@ namespace RobotGame.States
         
         public override IEnumerator Start()
         {
+            player.GetComponentInChildren<Grapple>().PlayGrappleEnd();
             playerRigidbody = player.GetComponent<Rigidbody2D>();
             direction = (endPoint - player.transform.position).normalized;
             totalDistance = Vector3.Distance(player.transform.position, endPoint);
