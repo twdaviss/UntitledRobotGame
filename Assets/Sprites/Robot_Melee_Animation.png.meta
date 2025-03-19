@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 3a7d956af3702e140aad35c73d37ef4c
+guid: 69cd5d13a372fcc4e9c78b51884b80a6
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -110,13 +110,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Robot_Sideway_Running_Animation_0
+      name: Robot_Melee_Animation_0
       rect:
         serializedVersion: 2
-        x: 89
-        y: 1905
-        width: 305
-        height: 758
+        x: 188
+        y: 1630
+        width: 505
+        height: 739
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -124,20 +124,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ec930bceb98ed6845bfd4f1a2b53e6a2
-      internalID: -881404738
+      spriteID: 91877ef703197a847bcec4783f8e592e
+      internalID: -1411506563
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Robot_Sideway_Running_Animation_1
+      name: Robot_Melee_Animation_1
       rect:
         serializedVersion: 2
-        x: 516
-        y: 1905
-        width: 449
-        height: 758
+        x: 1081
+        y: 1630
+        width: 505
+        height: 739
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -145,20 +145,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2ec714598c7e83d469dbbe5c91c3479d
-      internalID: -468218379
+      spriteID: 56cb73017aef79844b8e449675665da4
+      internalID: 600219877
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Robot_Sideway_Running_Animation_2
+      name: Robot_Melee_Animation_2
       rect:
         serializedVersion: 2
-        x: 1091
-        y: 1905
-        width: 307
-        height: 758
+        x: 1974
+        y: 1630
+        width: 505
+        height: 739
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -166,20 +166,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1ad0b53dfa2a7b94f8b674a5ccc759d7
-      internalID: 580899805
+      spriteID: aa87539f9636bfa469ff44fe53e1173a
+      internalID: -877317840
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Robot_Sideway_Running_Animation_3
+      name: Robot_Melee_Animation_3
       rect:
         serializedVersion: 2
-        x: 91
-        y: 1007
-        width: 305
-        height: 758
+        x: 188
+        y: 829
+        width: 505
+        height: 739
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -187,20 +187,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d7467b2705e57944587fa45a73204d31
-      internalID: -127010297
+      spriteID: 761e696cddc2b7e42b999a0caa384647
+      internalID: -1270943930
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Robot_Sideway_Running_Animation_4
+      name: Robot_Melee_Animation_4
       rect:
         serializedVersion: 2
-        x: 546
-        y: 1007
-        width: 384
-        height: 758
+        x: 1081
+        y: 829
+        width: 505
+        height: 739
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -208,20 +208,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 648e57621cb837a49a7f33b25c937564
-      internalID: -169350425
+      spriteID: d78e077f646796049b10fe4d1c797853
+      internalID: 1275600611
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Robot_Sideway_Running_Animation_5
+      name: Robot_Melee_Animation_5
       rect:
         serializedVersion: 2
-        x: 1097
-        y: 1004
-        width: 303
-        height: 758
+        x: 1974
+        y: 829
+        width: 505
+        height: 739
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -229,20 +229,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 44114cbd638cf8d47b7537ea30f09113
-      internalID: -375606902
+      spriteID: 18ff6c610e2d4654c972bf75d841daaa
+      internalID: -584961252
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Robot_Sideway_Running_Animation_6
+      name: Robot_Melee_Animation_6
       rect:
         serializedVersion: 2
-        x: 93
-        y: 100
-        width: 303
-        height: 758
+        x: 188
+        y: 28
+        width: 505
+        height: 739
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -250,8 +250,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2851c4df7310cee4a8301afe7dd03faf
-      internalID: 519191472
+      spriteID: e995c0ba8d1a0cc43aa6283f25a06de2
+      internalID: -1073588621
       vertices: []
       indices: 
       edges: []
@@ -267,14 +267,13 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Robot_Sideway_Running_Animation_0: -881404738
-      Robot_Sideway_Running_Animation_1: -468218379
-      Robot_Sideway_Running_Animation_2: 580899805
-      Robot_Sideway_Running_Animation_3: -127010297
-      Robot_Sideway_Running_Animation_4: -169350425
-      Robot_Sideway_Running_Animation_5: -375606902
-      Robot_Sideway_Running_Animation_6: 519191472
-      Robot_Sideway_Running_Animation_7: 1465209202
+      Robot_Melee_Animation_0: -1411506563
+      Robot_Melee_Animation_1: 600219877
+      Robot_Melee_Animation_2: -877317840
+      Robot_Melee_Animation_3: -1270943930
+      Robot_Melee_Animation_4: 1275600611
+      Robot_Melee_Animation_5: -584961252
+      Robot_Melee_Animation_6: -1073588621
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

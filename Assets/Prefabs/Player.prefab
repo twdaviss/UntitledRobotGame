@@ -428,7 +428,7 @@ MonoBehaviour:
   damage: 20
   stun: 10
   knockBack: 40
-  duration: 0.1
+  duration: 0.3
   swoosh: {fileID: 8300000, guid: d04542fcdddcb2c40878a040c7063f62, type: 3}
 --- !u!1 &3565628548010297144
 GameObject:

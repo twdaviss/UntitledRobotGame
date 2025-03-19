@@ -21,6 +21,7 @@ namespace RobotGame.States
         {
             player.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
             player.gameObject.GetComponent<SpriteRenderer>().color = Color.blue;
+
             yield break;
         }
 
@@ -40,6 +41,7 @@ namespace RobotGame.States
             }
             else
             {
+                player.playerAnimator.SetBool("isMeleeing", false);
                 player.TransitionState(new PlayerDefault(player));
             }
             yield break;

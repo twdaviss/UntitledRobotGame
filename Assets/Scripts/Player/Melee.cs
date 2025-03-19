@@ -13,6 +13,7 @@ public class Melee : MonoBehaviour
     private PlayerController playerController;
     private float meleeCooldownTime = 1.0f;
     private float meleeCooldownTimer;
+    private bool isDealingDamage = false;
 
     private void Awake()
     {
@@ -26,10 +27,33 @@ public class Melee : MonoBehaviour
     private void Update()
     {
         meleeCooldownTimer += Time.deltaTime;
+        if(isDealingDamage)
+        {
+            int layerMask = LayerMask.GetMask("Enemies");
+
+            Collider2D[] targets = Physics2D.OverlapCircleAll(playerController.transform.position, radius, layerMask);
+            foreach (Collider2D target in targets)
+            {
+                if (target.gameObject.GetComponent<EnemyController>() != null)
+                {
+                    target.gameObject.GetComponent<EnemyController>().Damage(damage, stun, knockBack, (target.transform.position - playerController.transform.position).normalized);
+                }
+            }
+        }
     }
     private void FixedUpdate()
     {
         GameManager.Instance.SetMeleeCooldownUI(meleeCooldownTimer/ meleeCooldownTime);
+    }
+
+    public void StartDealDamage()
+    {
+        isDealingDamage = true;
+    }
+
+    public void StopDealDamage()
+    {
+        isDealingDamage = false;
     }
 
     public void Attack()
@@ -39,6 +63,7 @@ public class Melee : MonoBehaviour
             meleeCooldownTimer = 0.0f;
             GetComponentInParent<AudioSource>().PlayOneShot(swoosh);
             playerController.SetState(new PlayerMelee(playerController, radius, damage, stun, knockBack, duration));
+            playerController.playerAnimator.SetBool("isMeleeing", true);
         }
     }
 
