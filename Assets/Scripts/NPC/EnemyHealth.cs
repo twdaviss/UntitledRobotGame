@@ -60,7 +60,7 @@ public class EnemyHealth : MonoBehaviour
         }
     }
 
-    public void Stagger(float duration = 0.1f)
+    public void Stagger(float duration = 0.05f)
     {
         enemy.TransitionState(new EnemyStaggered(enemy, duration));
     }

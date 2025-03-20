@@ -24,7 +24,7 @@ namespace RobotGame.States
                 yield break;
             }
             
-            int rand = Random.Range(0, 1);
+            int rand = Random.Range(0, 3);
 
             if (enemy.enemyType == EnemyType.Shy && rand == 0)
             {
