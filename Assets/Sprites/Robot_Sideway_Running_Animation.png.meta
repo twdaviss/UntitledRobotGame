@@ -116,7 +116,7 @@ TextureImporter:
         x: 89
         y: 1905
         width: 305
-        height: 758
+        height: 745
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -137,7 +137,7 @@ TextureImporter:
         x: 516
         y: 1905
         width: 449
-        height: 758
+        height: 747
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -155,10 +155,10 @@ TextureImporter:
       name: Robot_Sideway_Running_Animation_2
       rect:
         serializedVersion: 2
-        x: 1091
+        x: 1073
         y: 1905
-        width: 307
-        height: 758
+        width: 325
+        height: 747
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -176,10 +176,10 @@ TextureImporter:
       name: Robot_Sideway_Running_Animation_3
       rect:
         serializedVersion: 2
-        x: 91
-        y: 1007
-        width: 305
-        height: 758
+        x: 76
+        y: 1006
+        width: 320
+        height: 751
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -200,7 +200,7 @@ TextureImporter:
         x: 546
         y: 1007
         width: 384
-        height: 758
+        height: 750
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -218,10 +218,10 @@ TextureImporter:
       name: Robot_Sideway_Running_Animation_5
       rect:
         serializedVersion: 2
-        x: 1097
+        x: 1075
         y: 1004
-        width: 303
-        height: 758
+        width: 325
+        height: 751
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -242,7 +242,7 @@ TextureImporter:
         x: 93
         y: 100
         width: 303
-        height: 758
+        height: 749
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
