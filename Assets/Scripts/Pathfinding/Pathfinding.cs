@@ -46,7 +46,7 @@ public class Pathfinding
     {
         PathNode startNode = grid.GetGridObject(startX, startY);
         PathNode endNode = grid.GetGridObject(endX, endY);
-        if(endNode == null)
+        if(endNode == null || startNode == null)
         {
             return null;
         }

@@ -22,9 +22,19 @@ namespace RobotGame.States
         public override IEnumerator Update()
         {
             float speed = knockbackSpeed - ((knockbackTimer / knockbackTime) * knockbackSpeed);
-            enemy.transform.position += (Vector3)direction * speed * Time.deltaTime;
-
-            if(knockbackTimer < knockbackTime)
+            //enemy.transform.position += (Vector3)direction * speed * Time.deltaTime;
+            Vector3 newPosition = enemy.transform.position + (Vector3)direction * speed * Time.deltaTime;
+            float vertVelocity = 10.0f;
+            if(knockbackTimer <= knockbackTime/2)
+            {
+                newPosition.z -= vertVelocity * Time.deltaTime;
+            }
+            else if (knockbackTimer > knockbackTime/2)
+            {
+                newPosition.z += vertVelocity * Time.deltaTime;
+            }
+            enemy.transform.position = newPosition;
+            if (knockbackTimer < knockbackTime)
             {
                 knockbackTimer += Time.deltaTime;
             }
