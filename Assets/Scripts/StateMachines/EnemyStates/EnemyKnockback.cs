@@ -15,7 +15,8 @@ namespace RobotGame.States
         
         public override IEnumerator Start()
         {
-            enemy.GetComponent<SpriteRenderer>().color = Color.red;
+            enemy.enemyAnimator.SetBool("isReacting", true);
+            //enemy.GetComponent<SpriteRenderer>().color = Color.red;
             yield break;
         }
 
@@ -34,13 +35,14 @@ namespace RobotGame.States
                 newPosition.z += vertVelocity * Time.deltaTime;
             }
             enemy.transform.position = newPosition;
+
             if (knockbackTimer < knockbackTime)
             {
                 knockbackTimer += Time.deltaTime;
             }
             else
             {
-                enemy.TransitionState(new EnemyStaggered(enemy));
+                enemy.TransitionState(new EnemyStaggered(enemy, 0.1f));
             }
             yield break;
         }
@@ -52,7 +54,7 @@ namespace RobotGame.States
 
         public override IEnumerator End()
         {
-            enemy.GetComponent<SpriteRenderer>().color = Color.white;
+            //enemy.GetComponent<SpriteRenderer>().color = Color.white;
             yield break;
         }
     }

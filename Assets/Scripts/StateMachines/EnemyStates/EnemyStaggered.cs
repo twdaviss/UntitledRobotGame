@@ -6,12 +6,13 @@ namespace RobotGame.States
     public class EnemyStaggered : EnemyState
     {
         readonly private EnemyController enemy;
-        readonly private float duration = 0.2f;
+        readonly private float duration;
         private float currentTime = 0.0f;
-        public EnemyStaggered(EnemyController enemy) { this.enemy = enemy; this.name = "EnemyStaggered"; }
+        public EnemyStaggered(EnemyController enemy, float duration) { this.enemy = enemy; this.duration = duration; this.name = "EnemyStaggered"; }
         public override IEnumerator Start()
         {
-            enemy.GetComponent<SpriteRenderer>().color = Color.red;
+            enemy.enemyAnimator.SetBool("isReacting", true);
+            //enemy.GetComponent<SpriteRenderer>().color = Color.red;
             yield break;
         }
 
@@ -20,17 +21,24 @@ namespace RobotGame.States
             if(currentTime < duration)
             {
                 currentTime += Time.deltaTime;
-            }
-            else
-            {
-                enemy.TransitionState(new EnemyFollow(enemy));
                 yield break;
             }
+            
+            int rand = Random.Range(0, 1);
+
+            if (enemy.enemyType == EnemyType.Shy && rand == 0)
+            {
+                enemy.TransitionState(new EnemyFlee(enemy, enemy.fleeTime));
+                yield break;
+            }
+
+            enemy.TransitionState(new EnemyFollow(enemy));
             yield break;
         }
         public override IEnumerator End()
         {
-            enemy.GetComponent<SpriteRenderer>().color = Color.white;
+            enemy.enemyAnimator.SetBool("isReacting", false);
+            //enemy.GetComponent<SpriteRenderer>().color = Color.white;
             yield break;
         }
 

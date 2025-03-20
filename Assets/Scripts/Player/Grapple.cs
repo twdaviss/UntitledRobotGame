@@ -14,7 +14,6 @@ public class Grapple : MonoBehaviour
     [SerializeField] private AudioClip grappleEnd;
 
     private PlayerController playerController;
-    private PlayerControls playerControls;
     private GameObject targetObject;
 
     private bool isAimingGrapple = false;
@@ -86,7 +85,7 @@ public class Grapple : MonoBehaviour
         {
             if (targetObject.GetComponentInParent<EnemyController>() != null)
             {
-                targetObject.gameObject.transform.parent.GetComponentInChildren<EnemyHealth>().Stagger();
+                targetObject.gameObject.transform.parent.GetComponentInChildren<EnemyHealth>().Stagger(0.5f);
             }
 
             grappleCooldownTimer = 0.0f;

@@ -37,16 +37,8 @@ public class EnemyHealth : MonoBehaviour
     {
         currentHealth -= damage;
         currentStaggerHealth -= damage;
-        if(damage > maxHealth/10)
-        {
-            //DropOil();
-        }
-        if(currentStaggerHealth < 0.0f)
-        {
-            Stagger();
-            currentStaggerHealth = staggerHealth;
-        }
-        if(Random.Range(0,4) == 0)
+       
+        if (Random.Range(0,4) == 0)
         {
             enemy.ReleaseSparks();
         }
@@ -56,22 +48,20 @@ public class EnemyHealth : MonoBehaviour
         float randVolume = Random.Range(0.3f, 0.5f);
         GetComponentInParent<AudioSource>().PlayOneShot(metalSounds[randIndex],randVolume);
 
-        if(enemy.enemyType == EnemyType.Shy)
+        if (currentStaggerHealth < 0.0f)
         {
-            enemy.SetState(new EnemyFlee(enemy, enemy.fleeTime));
+            Stagger(0.4f);
+
+            currentStaggerHealth = staggerHealth;
+        }
+        else
+        {
+            Stagger();
         }
     }
 
-    public void Stagger()
+    public void Stagger(float duration = 0.1f)
     {
-        enemy.TransitionState(new EnemyStaggered(enemy));
-    }
-
-    private void DropOil()
-    {
-        Vector3 spawnPos = transform.position;
-        spawnPos.x += Random.Range(-0.25f, 0.25f);
-        spawnPos.y += Random.Range(-1.25f, -0.25f);
-        Instantiate(pfOilSlick, spawnPos, Quaternion.identity);
+        enemy.TransitionState(new EnemyStaggered(enemy, duration));
     }
 }

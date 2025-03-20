@@ -36,12 +36,13 @@ namespace RobotGame.States
                 case EnemyType.Aggressive:
                     break;
                 case EnemyType.Shy:
-                    if(distance < enemy.fleeDistanceThreshold)
-                    {
-                        enemy.SetState(new EnemyFlee(enemy, enemy.fleeTime));
-                        Debug.Log("Too close. Switching to Flee (distance/timer):" + distance + "/" + wanderTimer);
-                    }
-                    else if (wanderTimer >= wanderTime)
+                    //if(distance < enemy.fleeDistanceThreshold)
+                    //{
+                    //    enemy.SetState(new EnemyFlee(enemy, enemy.fleeTime));
+                    //    Debug.Log("Too close. Switching to Flee (distance/timer):" + distance + "/" + wanderTimer);
+                    //}
+                    //else 
+                    if (wanderTimer >= wanderTime)
                     {
                         enemy.SetState(new EnemyFollow(enemy));
                         Debug.Log("Done wandering. Switching to Follow (distance/timer):" + distance + "/" + wanderTimer);

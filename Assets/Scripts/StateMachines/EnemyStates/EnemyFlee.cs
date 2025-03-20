@@ -119,7 +119,7 @@ namespace RobotGame.States
 
             if(noObstacles)
             {
-                destination = (Vector2)enemy.transform.position + dirFromPlayer * 10;
+                destination = (Vector2)enemy.transform.position + (dirFromPlayer * 10);
                 enemy.GetPathToDestination(destination);
                 path = enemy.GetActivePath();
                 return;

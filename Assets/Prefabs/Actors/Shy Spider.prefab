@@ -39,7 +39,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0.1028}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 0.5, y: 0.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1069266341789339959
 CanvasRenderer:
@@ -5340,7 +5340,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0.0707}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 0.5, y: 0.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5949332832486385936
 CanvasRenderer:
@@ -5467,8 +5467,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.48, y: 1.1, z: 0.8341757}
-  m_Center: {x: 0, y: 0.41510016, z: -0.008594508}
+  m_Size: {x: 1.1, y: 1.1, z: 1.1}
+  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!1 &7741945794869339001
 GameObject:
   m_ObjectHideFlags: 0
@@ -5555,7 +5555,6 @@ GameObject:
   - component: {fileID: 2681613831498773560}
   - component: {fileID: 9200029334217431510}
   - component: {fileID: 3070662084528493124}
-  - component: {fileID: 153557176130918475}
   - component: {fileID: 1704032984399140240}
   - component: {fileID: 2450777006771968736}
   - component: {fileID: 8318045903128526152}
@@ -5650,8 +5649,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 773ee4044d8e75f44b2c2d785271b70f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyAnimator: {fileID: 0}
   enemyType: 1
-  moveSpeed: 3
+  moveSpeed: 5
   target: {fileID: 0}
   meleeDamage: 10
   meleeRange: 2
@@ -5660,45 +5660,10 @@ MonoBehaviour:
   meleeDamageTime: 0.1
   meleeCooldown: 2
   wanderWaitTime: 0.5
-  wanderTime: 0
-  wanderMultiplier: 20
-  fleeDistanceThreshold: 0
-  fleeTime: 0
---- !u!58 &153557176130918475
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8132658211172884929}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.07999999
+  wanderTime: 0.5
+  wanderMultiplier: 10
+  fleeDistanceThreshold: 15
+  fleeTime: 2
 --- !u!50 &1704032984399140240
 Rigidbody2D:
   serializedVersion: 4
@@ -5759,7 +5724,7 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.16, y: 0.16}
+  m_Size: {x: 0.25, y: 0.0001}
   m_Direction: 0
 --- !u!95 &8318045903128526152
 Animator:

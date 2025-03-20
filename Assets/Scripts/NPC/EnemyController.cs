@@ -15,6 +15,8 @@ public enum EnemyType
 
 public class EnemyController : EnemyStateMachine
 {
+    public Animator enemyAnimator;
+
     [SerializeField] public EnemyType enemyType;
     [SerializeField] public int moveSpeed;
     [SerializeField] public Transform target;
@@ -31,6 +33,7 @@ public class EnemyController : EnemyStateMachine
     [SerializeField] public float fleeDistanceThreshold;
     [SerializeField] public float fleeTime;
 
+
     private ParticleSystem enemyParticleSystem;
     private Rigidbody2D enemyRigidbody;
     private EnemyHealth enemyHealth;
@@ -46,6 +49,7 @@ public class EnemyController : EnemyStateMachine
         enemyHealth = GetComponentInChildren<EnemyHealth>();
         enemyStun = GetComponentInChildren<EnemyStun>();
         enemyParticleSystem = GetComponentInChildren<ParticleSystem>();
+        enemyAnimator = GetComponent<Animator>();
         destination = target.position;
         prevTargetPosition = target.position;
         path = null;
@@ -119,11 +123,9 @@ public class EnemyController : EnemyStateMachine
                 Debug.Log("Reached target");
             }
         }
-        else
-        {
-            Vector2 moveDirection = (moveTarget - (Vector2)transform.position).normalized;
-            transform.position += (Vector3)(moveDirection * (moveSpeed * Time.deltaTime));
-        }
+
+        Vector2 moveDirection = (moveTarget - (Vector2)transform.position).normalized;
+        transform.position += (Vector3)(moveDirection * (moveSpeed * Time.deltaTime));
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -147,8 +149,15 @@ public class EnemyController : EnemyStateMachine
     public void GetPathToTarget()
     {
         destination = target.position;
+        if (path != null)
+        {
+            if (path.Count > 1)
+            {
+                path = Pathfinding.Instance.FindPath(path[0], destination);
+                return;
+            }
+        }
         path = Pathfinding.Instance.FindPath(this.transform.position, destination);
-        return;
     }
 
     public void GetPathToDestination(Vector2 dest)
@@ -191,7 +200,7 @@ public class EnemyController : EnemyStateMachine
 
     public bool TargetMoved()
     {
-        if (Vector2.Distance(target.position, prevTargetPosition) > 0.5f)
+        if (Vector2.Distance(target.position, prevTargetPosition) > 1.5f)
         {
             prevTargetPosition = target.position;
             return true;

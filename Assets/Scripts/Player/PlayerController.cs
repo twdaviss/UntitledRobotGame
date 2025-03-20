@@ -10,10 +10,10 @@ public class PlayerController : PlayerStateMachine
     public Melee playerMelee;
     public Vector2 moveDirection;
     public Vector2 prevDirection;
+    public float moveSpeed;
 
     [SerializeField] private float defaultMoveSpeed;
     
-    private float moveSpeed;
 
     private void Awake()
     {

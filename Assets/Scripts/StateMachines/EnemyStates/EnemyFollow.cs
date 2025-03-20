@@ -10,9 +10,10 @@ namespace RobotGame.States
         public EnemyFollow(EnemyController enemy) { this.enemy = enemy; name = "EnemyFollow"; }
 
         private List<Vector3> path;
+        private float pathUpdateTime = 0.4f;
+        private float pathUpdateTimer = 0.0f;
         public override IEnumerator Start()
         {
-            enemy.StopMoving();
             yield break;
         }
 
@@ -24,8 +25,17 @@ namespace RobotGame.States
 
         public override IEnumerator FixedUpdate()
         {
-            enemy.CheckTarget();
-            path = enemy.GetActivePath();
+            if(pathUpdateTimer < pathUpdateTime)
+            {
+                pathUpdateTimer += Time.deltaTime;
+                yield break;
+            }
+
+            pathUpdateTimer = 0.0f;
+            if(enemy.CheckTarget())
+            {
+                path = enemy.GetActivePath();
+            }
             if(path == null)
             {
                 Debug.Log("No Available Path");
@@ -44,6 +54,7 @@ namespace RobotGame.States
             {
                 return;
             }
+            
             enemy.MoveToNextPoint();
         }
         public override IEnumerator End()
