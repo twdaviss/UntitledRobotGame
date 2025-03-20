@@ -35,15 +35,16 @@ namespace RobotGame.States
             }
             else if (isMeleeing)
             {
+                enemy.enemyAnimator.SetBool("isAttacking", true);
                 if (meleeTimer > enemy.meleeDamageTime)
                 {
                     isMeleeing = false;
                     isRecovering = true;
                     meleeTimer = 0.0f;
+                    enemy.enemyAnimator.SetBool("isAttacking", false);
                     yield break;
                 }
                 Melee();
-                enemy.GetComponentInChildren<SpriteRenderer>().color = Color.red;
             }
             else if (isRecovering)
             {
@@ -51,7 +52,7 @@ namespace RobotGame.States
                 {
                     meleeCooldownTimer += enemy.meleeCooldown;
                     enemy.GetComponentInChildren<SpriteRenderer>().color = Color.white;
-                    enemy.SetState(new EnemyIdle(enemy));
+                    enemy.TransitionState(new EnemyIdle(enemy));
                     yield break;
                 }
                 enemy.GetComponentInChildren<SpriteRenderer>().color = Color.magenta;
