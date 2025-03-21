@@ -14,8 +14,10 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private float absorbShortRadius;
     [SerializeField] private float absorbLongRadius;
     [SerializeField] private float absorbTime;
+    [SerializeField] private AudioClip hurtSound;
 
     private PlayerController playerController;
+    private AudioSource audioSource;
     private float currentHealth;
     private EnemyController enemy;
     private float staggerHealth;
@@ -33,6 +35,7 @@ public class PlayerHealth : MonoBehaviour
     private void Awake()
     {
         playerController = GetComponentInParent<PlayerController>();
+        audioSource = GetComponentInParent<AudioSource>();
         currentHealth = maxHealth;
         staggerHealth = maxHealth * ((float)staggerHealthPercentage/100);
         currentStaggerHealth = staggerHealth;
@@ -100,6 +103,7 @@ public class PlayerHealth : MonoBehaviour
                 staggerTimer = 0.0f;
             }
             //DropOil();
+            audioSource.PlayOneShot(hurtSound);
             invincibilityTime = 0.2f;
         }
     }

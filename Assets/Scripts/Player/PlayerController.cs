@@ -7,18 +7,21 @@ public class PlayerController : PlayerStateMachine
 {
     public SpriteRenderer playerSprite;
     public Animator playerAnimator;
+    public AudioSource playerAudioSource;
     public Melee playerMelee;
     public Vector2 moveDirection;
     public Vector2 prevDirection;
     public float moveSpeed;
 
     [SerializeField] private float defaultMoveSpeed;
+    [SerializeField] private AudioClip footsteps;
     
 
     private void Awake()
     {
         playerSprite = GetComponent<SpriteRenderer>();
         playerAnimator = GetComponent<Animator>();
+        playerAudioSource = GetComponent<AudioSource>();
         playerMelee = GetComponentInChildren<Melee>();
 
         SetState(new PlayerDefault(this));
@@ -44,14 +47,15 @@ public class PlayerController : PlayerStateMachine
         if(moveDirection.magnitude > 0.5)
         {
             prevDirection = moveDirection;
-            if (!GetComponent<AudioSource>().isPlaying)
+            if (!playerAudioSource.isPlaying)
             {
-                GetComponent<AudioSource>().Play();
+                playerAudioSource.Play();
             }
         }
         else
         {
-            GetComponent<AudioSource>().Stop();
+            playerAudioSource.Stop();
+
         }
         if (moveDirection.x < 0 || prevDirection.x < 0) { playerSprite.flipX = false; }
         else { playerSprite.flipX = true; }

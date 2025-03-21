@@ -28,14 +28,14 @@ public class Scrap : MonoBehaviour
     }
     private void OnEnable()
     {
-        InputManager.onMagnetize += Magnetize;
+        InputManager.onMagnetizeScrap += Magnetize;
         lifeTime = range;
         scrapRigidbody.AddForce(direction * moveSpeed, ForceMode2D.Force);
     }
 
     private void OnDestroy()
     {
-        InputManager.onMagnetize -= Magnetize;
+        InputManager.onMagnetizeScrap -= Magnetize;
     }
     void Update()
     {

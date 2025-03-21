@@ -12,7 +12,6 @@ namespace RobotGame.States
         public override IEnumerator Start()
         {
             enemy.StopMoving();
-            Debug.Log("Stagger Triggered for: " + duration);
             enemy.enemyAnimator.SetBool("isReacting", true);
             enemy.enemyAnimator.SetBool("isAttacking", false);
             enemy.enemyAnimator.SetBool("isBuildingUp", false);

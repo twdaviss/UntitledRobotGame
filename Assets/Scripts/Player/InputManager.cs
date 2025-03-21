@@ -51,6 +51,9 @@ public class InputManager : MonoBehaviour
     public delegate void OnMagnetize();
     public static event OnMagnetize onMagnetize;
 
+    public delegate void OnMagnetizeScrap();
+    public static event OnMagnetize onMagnetizeScrap;
+
     void Awake()
     {
         if (Instance != null && Instance != this)
@@ -181,9 +184,15 @@ public class InputManager : MonoBehaviour
     {
         onMelee?.Invoke();
     }
+
     private void Magnetize()
     {
         onMagnetize?.Invoke();
+    }
+
+    public void MagnetizeScrap()
+    {
+        onMagnetizeScrap?.Invoke();
     }
 
     public static void StartRebind(string actionName, int bindingIndex, TextMeshProUGUI statusText, bool excludeMouse)

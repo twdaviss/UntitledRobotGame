@@ -224,11 +224,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerSprite: {fileID: 7429379723091429669}
   playerAnimator: {fileID: 7899832127833797893}
+  playerAudioSource: {fileID: 0}
   playerMelee: {fileID: 0}
   moveDirection: {x: 0, y: 0}
   prevDirection: {x: 0, y: 0}
   moveSpeed: 0
   defaultMoveSpeed: 5
+  footsteps: {fileID: 0}
 --- !u!95 &7899832127833797893
 Animator:
   serializedVersion: 5
@@ -429,7 +431,7 @@ MonoBehaviour:
   damage: 20
   stun: 10
   knockBack: 40
-  duration: 0.3
+  duration: 0.1
   swoosh: {fileID: 8300000, guid: d04542fcdddcb2c40878a040c7063f62, type: 3}
 --- !u!1 &3565628548010297144
 GameObject:
@@ -567,6 +569,7 @@ MonoBehaviour:
   absorbShortRadius: 0.5
   absorbLongRadius: 1
   absorbTime: 1
+  hurtSound: {fileID: 8300000, guid: 46d9b86314382f34d9c9ac33c94d2452, type: 3}
   isHurt: 0
 --- !u!70 &5829717358442260822
 CapsuleCollider2D:
@@ -648,13 +651,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4caea682c9887ba448c9097bd44a58d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentAmmo: 0
+  currentAmmo: 3
   maxAmmo: 3
   scrapPrefab: {fileID: 3162969577572220229, guid: 5d7d1cb4dbdd508488cd5b2df08cd810, type: 3}
   scrapSpeed: 400
   scrapDamage: 20
   scrapStun: 5
   scrapRange: 10
+  scrapCoolDownTime: 0
   magnetizeRadius: 20
   projectile: {fileID: 8300000, guid: 474b62e28094ec24d8acaa34e53fe8dc, type: 3}
 --- !u!82 &2275517315256472430

@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Image healthBar;
     [SerializeField] private Image meleeCooldownIcon;
     [SerializeField] private Image grappleCooldownIcon;
+    [SerializeField] private Image scrapCooldownIcon;
     [SerializeField] private TextMeshProUGUI ammoCount;
 
     public static GameManager Instance {  get; private set; }
@@ -126,6 +127,11 @@ public class GameManager : MonoBehaviour
     public void SetGrappleCooldownUI(float grappleTime)
     {
         grappleCooldownIcon.fillAmount = 1 - grappleTime;
+    }
+
+    public void SetScrapCooldownUI(float magnetizeTime)
+    {
+        scrapCooldownIcon.fillAmount = 1 - magnetizeTime;
     }
 
     public void SetAmmoCountUI(int count, int max)

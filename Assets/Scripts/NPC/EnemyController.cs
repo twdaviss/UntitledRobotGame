@@ -59,6 +59,8 @@ public class EnemyController : EnemyStateMachine
     private List<Vector3> path;
     private float invincibilityTime = 0.0f;
 
+    public bool isStunned = false;
+
     private void Awake()
     {
         enemyRigidbody = GetComponent<Rigidbody2D>();
@@ -95,22 +97,12 @@ public class EnemyController : EnemyStateMachine
 
         if (damage > 0)
         {
-            if (State.GetType() == typeof(EnemyStaggered))
-            {
-                enemyHealth.DealDamage(2 * damage);
-            }
-            else
-            {
-                enemyHealth.DealDamage(damage);
-            }
+            enemyHealth.DealDamage(damage, knockBack, direction);
         }
 
-        if (stun > 0) { enemyStun.DealDamage(stun); }
-
-        if (knockBack > 0)
+        if (stun > 0) 
         {
-            TransitionState(new EnemyKnockback(this, knockBack, direction));
-            GameManager.Instance.FreezeTimeScale(0.1f);
+            enemyStun.DealDamage(stun); 
         }
 
         invincibilityTime = 0.1f;

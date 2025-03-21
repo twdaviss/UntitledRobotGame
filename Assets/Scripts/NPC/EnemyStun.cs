@@ -9,6 +9,8 @@ public class EnemyStun : MonoBehaviour
     [SerializeField] private float maxStun;
     [SerializeField] private float stunDecayRate;
     [SerializeField] private float stunDecayDelay;
+    [SerializeField] private float stunTime;
+
     private float currentStun;
     private float stunDecayTimer = 0;
     private EnemyController enemy;
@@ -37,9 +39,10 @@ public class EnemyStun : MonoBehaviour
         }
         if (currentStun >= maxStun)
         {
-            //enemy.SetState(new EnemyStunned(enemy));
+            currentStun = 0;
+            UpdateStunBar();
+            enemy.TransitionState(new EnemyStunned(enemy, stunTime));
         }
-        UpdateStunBar();
     }
     public void UpdateStunBar()
     {
