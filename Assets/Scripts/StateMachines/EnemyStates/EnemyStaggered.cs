@@ -11,8 +11,10 @@ namespace RobotGame.States
         public EnemyStaggered(EnemyController enemy, float duration) { this.enemy = enemy; this.duration = duration; this.name = "EnemyStaggered"; }
         public override IEnumerator Start()
         {
+            enemy.StopMoving();
+            Debug.Log("Stagger Triggered for: " + duration);
             enemy.enemyAnimator.SetBool("isReacting", true);
-            //enemy.GetComponent<SpriteRenderer>().color = Color.red;
+            enemy.ReleaseSparks();
             yield break;
         }
 
@@ -31,14 +33,12 @@ namespace RobotGame.States
                 enemy.TransitionState(new EnemyFlee(enemy, enemy.fleeTime));
                 yield break;
             }
-
             enemy.TransitionState(new EnemyFollow(enemy));
             yield break;
         }
         public override IEnumerator End()
         {
             enemy.enemyAnimator.SetBool("isReacting", false);
-            //enemy.GetComponent<SpriteRenderer>().color = Color.white;
             yield break;
         }
 

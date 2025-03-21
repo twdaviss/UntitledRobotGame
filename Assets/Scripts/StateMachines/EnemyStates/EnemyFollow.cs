@@ -19,13 +19,38 @@ namespace RobotGame.States
 
         public override IEnumerator Update()
         {
+            switch (enemy.enemyType)
+            {
+                case EnemyType.Aggressive:
+                    break;
+                case EnemyType.Shy:
+                    break;
+                case EnemyType.Ranged:
+                    if(Vector3.Distance(enemy.transform.position, enemy.target.position) < enemy.fleeDistanceThreshold)
+                    {
+                        enemy.TransitionState(new EnemyFlee(enemy, enemy.fleeTime));
+                    }
+                    break;
+                case EnemyType.Explosive:
+                    break;
+            }
+
+            if (enemy.CheckMeleeRange())
+            {
+                enemy.TransitionState(new EnemyMelee(enemy));
+            }
+
+            if (enemy.CheckShootRange())
+            {
+                enemy.TransitionState(new EnemyShoot(enemy));
+            }
             MovementHandler();
             yield break;
         }
 
         public override IEnumerator FixedUpdate()
         {
-            if(pathUpdateTimer < pathUpdateTime)
+            if (pathUpdateTimer < pathUpdateTime)
             {
                 pathUpdateTimer += Time.deltaTime;
                 yield break;
@@ -41,10 +66,7 @@ namespace RobotGame.States
                 Debug.Log("No Available Path");
                 yield break;
             }
-            if(enemy.CheckMeleeRange())
-            {
-                enemy.SetState(new EnemyMelee(enemy));
-            }
+            
             yield break;
         }
 

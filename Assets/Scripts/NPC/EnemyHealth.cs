@@ -38,10 +38,10 @@ public class EnemyHealth : MonoBehaviour
         currentHealth -= damage;
         currentStaggerHealth -= damage;
        
-        if (Random.Range(0,4) == 0)
-        {
-            enemy.ReleaseSparks();
-        }
+        //if (Random.Range(0,4) == 0)
+        //{
+        //    enemy.ReleaseSparks();
+        //}
         UpdateHealthBar();
 
         int randIndex = Random.Range(0,metalSounds.Length);
@@ -50,9 +50,9 @@ public class EnemyHealth : MonoBehaviour
 
         if (currentStaggerHealth < 0.0f)
         {
-            Stagger(0.4f);
-
             currentStaggerHealth = staggerHealth;
+            
+            Stagger(0.4f);
         }
         else
         {
@@ -60,7 +60,7 @@ public class EnemyHealth : MonoBehaviour
         }
     }
 
-    public void Stagger(float duration = 0.05f)
+    public void Stagger(float duration = 0.1f)
     {
         enemy.TransitionState(new EnemyStaggered(enemy, duration));
     }

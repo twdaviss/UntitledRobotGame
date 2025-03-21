@@ -624,7 +624,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 0.5
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -5736,14 +5736,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyAnimator: {fileID: 0}
   enemyType: 0
-  moveSpeed: 5
+  projectile: {fileID: 0}
+  moveSpeed: 8
   target: {fileID: 0}
   meleeDamage: 10
   meleeRange: 2
-  meleeBuildUpTime: 1
+  meleeBuildUpTime: 0.5
   meleeRecoveryTime: 1
-  meleeDamageTime: 0.1
+  meleeDamageTime: 0.3
   meleeCooldown: 2
+  shootBuildUpTime: 0.2
+  shootRecoveryTime: 0.2
+  shootTime: 0
+  shootCooldown: 3
+  shootRange: 30
+  projectileSpeed: 200
   wanderWaitTime: 0.5
   wanderTime: 0.5
   wanderMultiplier: 10
@@ -5809,7 +5816,7 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.25, y: 0.0001}
+  m_Size: {x: 0.2, y: 0.0001}
   m_Direction: 0
 --- !u!95 &8318045903128526152
 Animator:

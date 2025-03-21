@@ -24,6 +24,11 @@ namespace RobotGame.States
 
         public override IEnumerator Update()
         {
+            if (enemy.CheckShootRange())
+            {
+                enemy.TransitionState(new EnemyShoot(enemy));
+            }
+
             float distance = Vector2.Distance(enemy.transform.position, enemy.target.position);
             if (distance > minDistance || fleeTimer > fleeTime)
             {
@@ -37,6 +42,7 @@ namespace RobotGame.States
                         Debug.Log("Far enought away or timer finished. Switching to wander (distance/timer):" + distance);
                         break;
                     case EnemyType.Ranged:
+                        enemy.SetState(new EnemyFollow(enemy));
                         break;
                     case EnemyType.Explosive:
                         break;

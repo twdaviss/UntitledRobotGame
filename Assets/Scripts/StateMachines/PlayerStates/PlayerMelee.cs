@@ -20,7 +20,6 @@ namespace RobotGame.States
         public override IEnumerator Start()
         {
             player.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
-            player.gameObject.GetComponent<SpriteRenderer>().color = Color.blue;
 
             yield break;
         }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Pool;
+using UnityEngine.UIElements;
 
 public class Scrap : MonoBehaviour
 {
@@ -38,6 +39,10 @@ public class Scrap : MonoBehaviour
     }
     void Update()
     {
+        if(scrapRigidbody.velocity.magnitude > 2.0f)
+        {
+            transform.Rotate(0, 360 * Time.deltaTime, 360 * Time.deltaTime, Space.World);
+        }
         if(isMagnetized)
         {
             Vector3 direction = (player.transform.position - transform.position).normalized;

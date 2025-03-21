@@ -20,6 +20,7 @@ namespace RobotGame.States
                     enemy.SetState(new EnemyFollow(enemy));
                     break;
                 case EnemyType.Ranged:
+                    enemy.SetState(new EnemyFollow(enemy));
                     break;
                 case EnemyType.Explosive:
                     break;

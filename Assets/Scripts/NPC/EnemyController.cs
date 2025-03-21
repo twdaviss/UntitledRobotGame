@@ -15,24 +15,38 @@ public enum EnemyType
 
 public class EnemyController : EnemyStateMachine
 {
-    public Animator enemyAnimator;
+    [HideInInspector] public Animator enemyAnimator;
 
+    [Header("General")]
     [SerializeField] public EnemyType enemyType;
+    [SerializeField] private GameObject projectile;
     [SerializeField] public int moveSpeed;
     [SerializeField] public Transform target;
 
+    [Header("Melee")]
     [SerializeField] public float meleeDamage;
     [SerializeField] public float meleeRange;
     [SerializeField] public float meleeBuildUpTime;
     [SerializeField] public float meleeRecoveryTime;
     [SerializeField] public float meleeDamageTime;
     [SerializeField] public float meleeCooldown;
+
+    [Header("Ranged")]
+    [SerializeField] public float shootBuildUpTime;
+    [SerializeField] public float shootRecoveryTime;
+    [SerializeField] public float shootTime;
+    [SerializeField] public float shootCooldown;
+    [SerializeField] public float shootRange;
+    [SerializeField] public float projectileSpeed;
+
+    [Header("Wander")]
     [SerializeField] public float wanderWaitTime;
     [SerializeField] public float wanderTime;
     [SerializeField] public int wanderMultiplier;
+
+    [Header("Flee")]
     [SerializeField] public float fleeDistanceThreshold;
     [SerializeField] public float fleeTime;
-
 
     private ParticleSystem enemyParticleSystem;
     private Rigidbody2D enemyRigidbody;
@@ -99,6 +113,28 @@ public class EnemyController : EnemyStateMachine
         invincibilityTime = 0.1f;
     }
 
+    public void Shoot(Vector2 direction, float speed)
+    {
+        GameObject enemyProjectile = Instantiate(projectile,transform.position, Quaternion.identity);
+        enemyProjectile.GetComponent<Rigidbody2D>().AddForce(direction * speed, ForceMode2D.Force);
+        enemyProjectile.transform.rotation = Quaternion.Euler(-90,0,0);
+    }
+    public bool CheckMeleeRange()
+    {
+        if (Vector3.Distance(target.transform.position, transform.position) < meleeRange)
+        {
+            return true;
+        }
+        return false;
+    }
+    public bool CheckShootRange()
+    {
+        if (Vector3.Distance(target.transform.position, transform.position) < shootRange)
+        {
+            return true;
+        }
+        return false;
+    }
     public IEnumerator Despawn()
     {
         Destroy(gameObject);
@@ -110,23 +146,6 @@ public class EnemyController : EnemyStateMachine
         enemyRigidbody.velocity = Vector3.zero;
     }
 
-    public void MoveToNextPoint()
-    {
-        Vector2 moveTarget = path[0];
-        if (Vector3.Distance(transform.position, moveTarget) < 1.5f)
-        {
-            path.RemoveAt(0);
-
-            if (path.Count <= 0)
-            {
-                StopMoving();
-                Debug.Log("Reached target");
-            }
-        }
-
-        Vector2 moveDirection = (moveTarget - (Vector2)transform.position).normalized;
-        transform.position += (Vector3)(moveDirection * (moveSpeed * Time.deltaTime));
-    }
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("PlayerProjectiles"))
@@ -142,10 +161,29 @@ public class EnemyController : EnemyStateMachine
     }
 
     #region Pathfinding
+    public void MoveToNextPoint()
+    {
+        Vector2 moveTarget = path[0];
+        if (Vector3.Distance(transform.position, moveTarget) < 1.0)
+        {
+            path.RemoveAt(0);
+
+            if (path.Count <= 0)
+            {
+                StopMoving();
+                Debug.Log("Reached target");
+            }
+        }
+
+        Vector2 moveDirection = (moveTarget - (Vector2)transform.position).normalized;
+        transform.position += (Vector3)(moveDirection * (moveSpeed * Time.deltaTime));
+    }
+
     public List<Vector3> GetActivePath()
     {
         return path;
     }
+
     public void GetPathToTarget()
     {
         destination = target.position;
@@ -189,15 +227,6 @@ public class EnemyController : EnemyStateMachine
         return true;
     }
 
-    public bool CheckMeleeRange()
-    {
-        if (Vector3.Distance(target.transform.position, transform.position) < meleeRange)
-        {
-            return true;
-        }
-        return false;
-    }
-
     public bool TargetMoved()
     {
         if (Vector2.Distance(target.position, prevTargetPosition) > 1.5f)
@@ -231,5 +260,4 @@ public class EnemyController : EnemyStateMachine
         }
     }
     #endregion
-
 }
