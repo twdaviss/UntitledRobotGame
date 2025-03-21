@@ -14,6 +14,10 @@ namespace RobotGame.States
             enemy.StopMoving();
             Debug.Log("Stagger Triggered for: " + duration);
             enemy.enemyAnimator.SetBool("isReacting", true);
+            enemy.enemyAnimator.SetBool("isAttacking", false);
+            enemy.enemyAnimator.SetBool("isBuildingUp", false);
+            enemy.enemyAnimator.SetBool("isShooting", false);
+
             enemy.ReleaseSparks();
             yield break;
         }

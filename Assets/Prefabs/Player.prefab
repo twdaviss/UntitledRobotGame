@@ -227,6 +227,7 @@ MonoBehaviour:
   playerMelee: {fileID: 0}
   moveDirection: {x: 0, y: 0}
   prevDirection: {x: 0, y: 0}
+  moveSpeed: 0
   defaultMoveSpeed: 5
 --- !u!95 &7899832127833797893
 Animator:

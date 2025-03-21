@@ -56,9 +56,11 @@ public class ScrapShot : MonoBehaviour
 
     private void OnPullFromPool(Scrap scrap)
     {
+        Vector3 spawnPosition = transform.position;
+        spawnPosition.z -= 1;
         Vector2 aimDirection = InputManager.Instance.GetAimDirection(transform.position); 
         scrap.SetParameters(scrapSpeed, scrapDamage, scrapStun, scrapRange, aimDirection, playerController.gameObject);
-        scrap.transform.position = transform.position;
+        scrap.transform.position = spawnPosition;
         scrap.gameObject.SetActive(true);
         scrap.inert = false;
         currentAmmo--;

@@ -31,6 +31,7 @@ namespace RobotGame.States
                     isBuildingUp = false;
                     meleeTimer = 0.0f;
                     enemy.enemyAnimator.SetBool("isBuildingUp", false);
+                    enemy.PlayZapSound();
                     yield break;
                 }
             }

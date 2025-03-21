@@ -45,7 +45,9 @@ public class Scrap : MonoBehaviour
         }
         if(isMagnetized)
         {
-            Vector3 direction = (player.transform.position - transform.position).normalized;
+            Vector3 spawnPosition = player.transform.position;
+            spawnPosition.z -= 1;
+            Vector3 direction = (spawnPosition - transform.position).normalized;
             transform.position += direction * 40f * Time.deltaTime;
             inert = false;
         }

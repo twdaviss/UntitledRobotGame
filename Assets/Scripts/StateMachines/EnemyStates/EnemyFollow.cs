@@ -22,11 +22,18 @@ namespace RobotGame.States
             switch (enemy.enemyType)
             {
                 case EnemyType.Aggressive:
-                    break;
                 case EnemyType.Shy:
+                    if (enemy.CheckMeleeRange())
+                    {
+                        enemy.TransitionState(new EnemyMelee(enemy));
+                    }
                     break;
                 case EnemyType.Ranged:
-                    if(Vector3.Distance(enemy.transform.position, enemy.target.position) < enemy.fleeDistanceThreshold)
+                    if (enemy.CheckShootRange())
+                    {
+                        enemy.TransitionState(new EnemyShoot(enemy));
+                    }
+                    if (Vector3.Distance(enemy.transform.position, enemy.target.position) < enemy.fleeDistanceThreshold)
                     {
                         enemy.TransitionState(new EnemyFlee(enemy, enemy.fleeTime));
                     }
@@ -35,15 +42,6 @@ namespace RobotGame.States
                     break;
             }
 
-            if (enemy.CheckMeleeRange())
-            {
-                enemy.TransitionState(new EnemyMelee(enemy));
-            }
-
-            if (enemy.CheckShootRange())
-            {
-                enemy.TransitionState(new EnemyShoot(enemy));
-            }
             MovementHandler();
             yield break;
         }
@@ -81,7 +79,7 @@ namespace RobotGame.States
         }
         public override IEnumerator End()
         {
-            enemy.ClearPath();
+            //enemy.ClearPath();
             yield break;
         }
 

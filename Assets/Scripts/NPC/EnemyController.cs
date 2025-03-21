@@ -30,6 +30,7 @@ public class EnemyController : EnemyStateMachine
     [SerializeField] public float meleeRecoveryTime;
     [SerializeField] public float meleeDamageTime;
     [SerializeField] public float meleeCooldown;
+    [SerializeField] public AudioClip zapSound;
 
     [Header("Ranged")]
     [SerializeField] public float shootBuildUpTime;
@@ -49,6 +50,7 @@ public class EnemyController : EnemyStateMachine
     [SerializeField] public float fleeTime;
 
     private ParticleSystem enemyParticleSystem;
+    private AudioSource enemyAudioSource;
     private Rigidbody2D enemyRigidbody;
     private EnemyHealth enemyHealth;
     private EnemyStun enemyStun;
@@ -64,6 +66,7 @@ public class EnemyController : EnemyStateMachine
         enemyStun = GetComponentInChildren<EnemyStun>();
         enemyParticleSystem = GetComponentInChildren<ParticleSystem>();
         enemyAnimator = GetComponent<Animator>();
+        enemyAudioSource = GetComponent<AudioSource>();
         destination = target.position;
         prevTargetPosition = target.position;
         path = null;
@@ -118,6 +121,13 @@ public class EnemyController : EnemyStateMachine
         GameObject enemyProjectile = Instantiate(projectile,transform.position, Quaternion.identity);
         enemyProjectile.GetComponent<Rigidbody2D>().AddForce(direction * speed, ForceMode2D.Force);
         enemyProjectile.transform.rotation = Quaternion.Euler(-90,0,0);
+    }
+
+    public void PlayZapSound()
+    {
+        enemyAudioSource.clip = zapSound;
+        enemyAudioSource.pitch = 1.5f;
+        enemyAudioSource.Play();
     }
     public bool CheckMeleeRange()
     {
