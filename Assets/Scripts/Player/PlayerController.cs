@@ -77,7 +77,13 @@ public class PlayerController : PlayerStateMachine
     {
         return State.name;
     }
-
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("EnemyProjectile"))
+        {
+            GetComponentInChildren<PlayerHealth>().DealDamage(10);
+        }
+    }
     private void OnCollisionEnter2D(Collision2D collision)
     {
         StartCoroutine(State.OnCollisionEnter2D(collision));

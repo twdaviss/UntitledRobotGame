@@ -4,6 +4,7 @@ using UnityEngine;
 using RobotGame.States;
 using System;
 using static UnityEngine.EventSystems.EventTrigger;
+using Unity.VisualScripting;
 
 public enum EnemyType
 {
@@ -49,6 +50,8 @@ public class EnemyController : EnemyStateMachine
     [SerializeField] public float fleeDistanceThreshold;
     [SerializeField] public float fleeTime;
 
+    public float shootCooldownTimer = 0.0f;
+
     private ParticleSystem enemyParticleSystem;
     private AudioSource enemyAudioSource;
     private Rigidbody2D enemyRigidbody;
@@ -79,6 +82,7 @@ public class EnemyController : EnemyStateMachine
     void Update()
     {
         if (invincibilityTime > 0.0f) { invincibilityTime -= Time.deltaTime; }
+        if (shootCooldownTimer > 0.0f) { shootCooldownTimer -= Time.deltaTime; }
 
         if (!GameManager.Instance.IsPauseMenuEnabled())
         {
@@ -150,15 +154,27 @@ public class EnemyController : EnemyStateMachine
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("PlayerProjectiles"))
+        GameObject collisionObject = collision.gameObject;
+        if (collisionObject.CompareTag("PlayerProjectiles"))
         {
-            if (collision.gameObject.GetComponent<Scrap>().inert)
+            if (collisionObject.GetComponent<Scrap>().inert)
             {
                 return;
             }
-            Scrap scrap = collision.gameObject.GetComponent<Scrap>();
+            Scrap scrap = collisionObject.GetComponent<Scrap>();
             Damage(scrap.GetDamage(), scrap.GetStun());
             scrap.ClampVelocity();
+        }
+        else if (collisionObject.CompareTag("Enemy"))
+        {
+            EnemyController enemy = collisionObject.GetComponent<EnemyController>();
+            if(State.GetType() == typeof(EnemyKnockback))
+            {
+                //enemy.TransitionState(new EnemyKnockback(enemy,40,(enemy.transform.position - transform.position).normalized));
+                enemy.enemyStun.DealDamage(20);
+                enemy.enemyHealth.DealDamage(5, 40, (enemy.transform.position - transform.position).normalized);
+
+            }
         }
     }
 

@@ -112,6 +112,7 @@ MonoBehaviour:
   maxStun: 100
   stunDecayRate: 5
   stunDecayDelay: 5
+  stunTime: 3
 --- !u!1 &1744525905536491093
 GameObject:
   m_ObjectHideFlags: 0
@@ -5416,6 +5417,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 769cc783ef8e94c4a9492edf54acdfec, type: 3}
   - {fileID: 8300000, guid: 64a745937ed9a1f4f9486f6c6d1e1694, type: 3}
   - {fileID: 8300000, guid: 4dbfcfdc90c1bda4d8079f54f2ad59e4, type: 3}
+  isGrappled: 0
+  grappledTime: 1
+  grappledTimer: 0
 --- !u!1 &7737747183703315943
 GameObject:
   m_ObjectHideFlags: 0
@@ -5736,19 +5740,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyAnimator: {fileID: 0}
   enemyType: 0
-  projectile: {fileID: 0}
+  projectile: {fileID: 7476597268278418430, guid: a2e13fda4255b614798cbdc29bc06162, type: 3}
   moveSpeed: 8
   target: {fileID: 0}
   meleeDamage: 10
   meleeRange: 3
   meleeBuildUpTime: 0.5
   meleeRecoveryTime: 1
-  meleeDamageTime: 0.3
+  meleeDamageTime: 0.2
   meleeCooldown: 2
   zapSound: {fileID: 8300000, guid: 77d7837b97d00ef48a6665ba1f6e4a2f, type: 3}
   shootBuildUpTime: 0.2
   shootRecoveryTime: 0.2
-  shootTime: 0
+  shootTime: 0.5
   shootCooldown: 3
   shootRange: 30
   projectileSpeed: 200
@@ -5757,6 +5761,7 @@ MonoBehaviour:
   wanderMultiplier: 10
   fleeDistanceThreshold: 15
   fleeTime: 2
+  isStunned: 0
 --- !u!50 &1704032984399140240
 Rigidbody2D:
   serializedVersion: 4
@@ -5852,7 +5857,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.506
   m_Pitch: 2.33
   Loop: 0
   Mute: 0

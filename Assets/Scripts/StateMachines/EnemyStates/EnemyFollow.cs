@@ -29,7 +29,7 @@ namespace RobotGame.States
                     }
                     break;
                 case EnemyType.Ranged:
-                    if (enemy.CheckShootRange())
+                    if (enemy.CheckShootRange() && enemy.shootCooldownTimer <= 0)
                     {
                         enemy.TransitionState(new EnemyShoot(enemy));
                     }

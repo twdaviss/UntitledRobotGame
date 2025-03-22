@@ -11,7 +11,7 @@ namespace RobotGame.States
         private bool isBuildingUp = true;
         private bool isShooting = false;
         private bool isRecovering = false;
-        private float shootCooldownTimer = 0.0f;
+        private bool canShoot = true;
 
         public override IEnumerator Start()
         {
@@ -20,8 +20,6 @@ namespace RobotGame.States
 
         public override IEnumerator Update()
         {
-            if (shootCooldownTimer > 0.0f) { shootCooldownTimer -= Time.deltaTime; }
-
             if (isBuildingUp)
             {
                 enemy.enemyAnimator.SetBool("isBuildingUp", true);
@@ -45,14 +43,18 @@ namespace RobotGame.States
                     enemy.enemyAnimator.SetBool("isShooting", false);
                     yield break;
                 }
-                enemy.Shoot((enemy.target.position - enemy.transform.position).normalized, enemy.projectileSpeed);
+                if(canShoot)
+                {
+                    enemy.Shoot((enemy.target.position - enemy.transform.position).normalized, enemy.projectileSpeed);
+                    canShoot = false;
+                }
             }
             else if (isRecovering)
             {
                 enemy.enemyAnimator.SetBool("isReacting", true);
                 if (shootTimer > enemy.shootRecoveryTime)
                 {
-                    shootCooldownTimer += enemy.shootCooldown;
+                    enemy.shootCooldownTimer += enemy.shootCooldown;
                     enemy.TransitionState(new EnemyIdle(enemy));
                     enemy.enemyAnimator.SetBool("isReacting", false);
                     yield break;

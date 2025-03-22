@@ -24,7 +24,7 @@ namespace RobotGame.States
 
         public override IEnumerator Update()
         {
-            if (enemy.CheckShootRange())
+            if (enemy.CheckShootRange() && enemy.shootCooldownTimer <= 0)
             {
                 enemy.TransitionState(new EnemyShoot(enemy));
             }
