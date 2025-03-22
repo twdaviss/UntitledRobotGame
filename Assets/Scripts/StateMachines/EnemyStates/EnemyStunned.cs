@@ -40,6 +40,7 @@ namespace RobotGame.States
 
         public override IEnumerator End()
         {
+            enemy.enemyAnimator.SetBool("isStunned", false);
             enemy.isStunned = false;
             yield break;
         }

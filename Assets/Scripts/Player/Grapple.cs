@@ -1,5 +1,6 @@
 using RobotGame.States;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Grapple : MonoBehaviour
 {
@@ -16,7 +17,7 @@ public class Grapple : MonoBehaviour
     private PlayerController playerController;
     private GameObject targetObject;
 
-    private bool isAimingGrapple = false;
+    [HideInInspector] public bool isAimingGrapple = false;
     private bool targetValid = false;
 
     private float grappleCooldownTimer;
@@ -91,7 +92,9 @@ public class Grapple : MonoBehaviour
             grappleCooldownTimer = 0.0f;
             playerController.TransitionState(new PlayerGrappling(playerController, targetObject.transform.position, startingSpeed, targetSpeed));
         }
-        
+
+        playerController.playerAnimator.SetBool("isBuildingUp", false);
+
         StartCoroutine(GameManager.Instance.ResetTimeScale());
         isAimingGrapple = false;
         targetObject = null;
@@ -121,6 +124,12 @@ public class Grapple : MonoBehaviour
         isAimingGrapple = true;
         Vector2 mousePosition = InputManager.Instance.GetMousePosition();
         Vector3 aimDirection = InputManager.Instance.GetAimDirection(playerController.transform.position);
+
+        playerController.playerAnimator.SetBool("isBuildingUp", true);
+
+        if (aimDirection.x < 0) { playerController.playerSprite.flipX = false; }
+        else { playerController.playerSprite.flipX = true; }
+
         int layerMask = LayerMask.GetMask("Enemies") | LayerMask.GetMask("Grapple");
 
         Ray mouseRay = Camera.main.ScreenPointToRay(InputManager.Instance.GetMousePosition());

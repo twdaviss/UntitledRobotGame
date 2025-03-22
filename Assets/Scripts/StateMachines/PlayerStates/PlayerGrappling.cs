@@ -20,6 +20,8 @@ namespace RobotGame.States
         
         public override IEnumerator Start()
         {
+            player.playerAnimator.SetBool("isBuildingUp", false);
+            player.playerAnimator.SetBool("isGrappling", true);
             player.GetComponentInChildren<Grapple>().PlayGrappleEnd();
             playerRigidbody = player.GetComponent<Rigidbody2D>();
             direction = (endPoint - player.transform.position).normalized;
@@ -49,6 +51,7 @@ namespace RobotGame.States
 
         public override IEnumerator End()
         {
+            player.playerAnimator.SetBool("isGrappling", false);
             InputManager.onMelee -= Attack;
             playerRigidbody.velocity = Vector2.zero;
             yield break;

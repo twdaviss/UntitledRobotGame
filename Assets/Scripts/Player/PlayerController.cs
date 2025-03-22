@@ -55,22 +55,28 @@ public class PlayerController : PlayerStateMachine
         else
         {
             playerAudioSource.Stop();
-
         }
-        if (moveDirection.x < 0 || prevDirection.x < 0) { playerSprite.flipX = false; }
-        else { playerSprite.flipX = true; }
         
         if(InputManager.playerControls.Gameplay.Sprint.inProgress) { moveSpeed = 2 * defaultMoveSpeed; }
         else { moveSpeed = defaultMoveSpeed; }
 
-        transform.position += (Vector3)moveDirection.normalized * moveSpeed * Time.deltaTime;
-
+        if (!GetComponentInChildren<Grapple>().isAimingGrapple)
+        {
+            transform.position += (Vector3)moveDirection.normalized * moveSpeed * Time.deltaTime;
+        }
         playerAnimator.SetFloat("Horizontal", moveDirection.x);
         playerAnimator.SetFloat("Vertical", moveDirection.y);
         playerAnimator.SetFloat("Speed", moveDirection.SqrMagnitude());
 
         playerAnimator.SetFloat("PrevHorizontal", prevDirection.x);
         playerAnimator.SetFloat("PrevVertical", prevDirection.y);
+
+        if (moveDirection.magnitude < 0.1)
+        {
+            return;
+        }
+        if (moveDirection.x < 0 || prevDirection.x < 0) { playerSprite.flipX = false; }
+        else { playerSprite.flipX = true; }
     }
 
     public string GetCurrentState()
