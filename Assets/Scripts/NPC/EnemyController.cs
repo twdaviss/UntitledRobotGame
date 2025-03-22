@@ -114,9 +114,13 @@ public class EnemyController : EnemyStateMachine
 
     public void Shoot(Vector2 direction, float speed)
     {
-        GameObject enemyProjectile = Instantiate(projectile,transform.position, Quaternion.identity);
+        Vector3 spawnPos = transform.position;
+        spawnPos.z -= 0.5f;
+        GameObject enemyProjectile = Instantiate(projectile, spawnPos, Quaternion.identity);
         enemyProjectile.GetComponent<Rigidbody2D>().AddForce(direction * speed, ForceMode2D.Force);
-        enemyProjectile.transform.rotation = Quaternion.Euler(-90,0,0);
+        enemyProjectile.transform.rotation = Quaternion.LookRotation(direction, new Vector3(0,0,1));
+        enemyProjectile.transform.Rotate(90,90,0);
+        PlayZapSound();
     }
 
     public void PlayZapSound()

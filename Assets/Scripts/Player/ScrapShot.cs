@@ -54,8 +54,8 @@ public class ScrapShot : MonoBehaviour
                 scrapPool.Get();
                 audioSource.pitch = 1;
                 audioSource.PlayOneShot(projectile);
+                coolDownTimer = 0;
             }
-            coolDownTimer = 0;
         }
     }
 

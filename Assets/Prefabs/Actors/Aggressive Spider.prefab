@@ -5739,9 +5739,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyAnimator: {fileID: 0}
-  enemyType: 0
+  enemyType: 2
   projectile: {fileID: 7476597268278418430, guid: a2e13fda4255b614798cbdc29bc06162, type: 3}
-  moveSpeed: 8
+  moveSpeed: 6
   target: {fileID: 0}
   meleeDamage: 10
   meleeRange: 3
@@ -5750,17 +5750,18 @@ MonoBehaviour:
   meleeDamageTime: 0.2
   meleeCooldown: 2
   zapSound: {fileID: 8300000, guid: 77d7837b97d00ef48a6665ba1f6e4a2f, type: 3}
-  shootBuildUpTime: 0.2
-  shootRecoveryTime: 0.2
-  shootTime: 0.5
-  shootCooldown: 3
+  shootBuildUpTime: 0.53
+  shootRecoveryTime: 1
+  shootTime: 0
+  shootCooldown: 2
   shootRange: 30
-  projectileSpeed: 200
+  projectileSpeed: 800
   wanderWaitTime: 0.5
   wanderTime: 0.5
   wanderMultiplier: 10
   fleeDistanceThreshold: 15
   fleeTime: 2
+  shootCooldownTimer: 0
   isStunned: 0
 --- !u!50 &1704032984399140240
 Rigidbody2D:

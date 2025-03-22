@@ -24,11 +24,13 @@ public class EnemyStun : MonoBehaviour
         if(currentStun <= 0)
         {
             stunBarBack.SetActive(false);
+            stunBar.gameObject.SetActive(false);
         }
         else if (currentStun > 0)
         {
             stunBarBack.SetActive(true);
-            if(stunDecayTimer >= stunDecayDelay)
+            stunBar.gameObject.SetActive(true);
+            if (stunDecayTimer >= stunDecayDelay)
             {
                 currentStun -= stunDecayRate * Time.deltaTime;
             }

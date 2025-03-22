@@ -5,17 +5,17 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : PlayerStateMachine
 {
-    public SpriteRenderer playerSprite;
-    public Animator playerAnimator;
-    public AudioSource playerAudioSource;
-    public Melee playerMelee;
-    public Vector2 moveDirection;
-    public Vector2 prevDirection;
-    public float moveSpeed;
-
     [SerializeField] private float defaultMoveSpeed;
     [SerializeField] private AudioClip footsteps;
-    
+   
+    private float moveSpeed;
+
+    [HideInInspector] public SpriteRenderer playerSprite;
+    [HideInInspector] public Animator playerAnimator;
+    [HideInInspector] public AudioSource playerAudioSource;
+    [HideInInspector] public Melee playerMelee;
+    [HideInInspector] public Vector2 moveDirection;
+    [HideInInspector] public Vector2 prevDirection;
 
     private void Awake()
     {
@@ -79,7 +79,7 @@ public class PlayerController : PlayerStateMachine
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("EnemyProjectile"))
+        if (collision.gameObject.CompareTag("EnemyProjectiles"))
         {
             GetComponentInChildren<PlayerHealth>().DealDamage(10);
         }

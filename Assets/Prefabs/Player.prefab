@@ -222,15 +222,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7932e20a6058c04e878a19bbc2d1c5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defaultMoveSpeed: 5
+  footsteps: {fileID: 0}
   playerSprite: {fileID: 7429379723091429669}
   playerAnimator: {fileID: 7899832127833797893}
   playerAudioSource: {fileID: 0}
   playerMelee: {fileID: 0}
   moveDirection: {x: 0, y: 0}
   prevDirection: {x: 0, y: 0}
-  moveSpeed: 0
-  defaultMoveSpeed: 5
-  footsteps: {fileID: 0}
 --- !u!95 &7899832127833797893
 Animator:
   serializedVersion: 5
@@ -300,7 +299,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: be910a2520ddab8438daec7611414698, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.5
-  m_Pitch: 1.5
+  m_Pitch: 1
   Loop: 1
   Mute: 0
   Spatialize: 0
