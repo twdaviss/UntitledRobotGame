@@ -20,7 +20,6 @@ namespace RobotGame.States
         
         public override IEnumerator Start()
         {
-            player.playerAnimator.SetBool("isBuildingUp", false);
             player.playerAnimator.SetBool("isGrappling", true);
             player.GetComponentInChildren<Grapple>().PlayGrappleEnd();
             playerRigidbody = player.GetComponent<Rigidbody2D>();

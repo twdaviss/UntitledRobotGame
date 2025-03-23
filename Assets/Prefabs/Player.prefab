@@ -811,6 +811,7 @@ MonoBehaviour:
   targetUIOffset: 0
   grappleStart: {fileID: 8300000, guid: 415e5c772fd4d7d4dba951fbaad83233, type: 3}
   grappleEnd: {fileID: 8300000, guid: c2be9156618601542b99b300ce919305, type: 3}
+  isAimingGrapple: 0
 --- !u!82 &1003408597905814130
 AudioSource:
   m_ObjectHideFlags: 0

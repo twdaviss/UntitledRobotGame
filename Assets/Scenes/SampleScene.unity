@@ -6163,15 +6163,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2681613831498773560, guid: 7a2c7547dd6eabc4cbcf61ce4605c777, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 142.28198
+      value: 111.9
       objectReference: {fileID: 0}
     - target: {fileID: 2681613831498773560, guid: 7a2c7547dd6eabc4cbcf61ce4605c777, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 119.52574
+      value: 133.57
       objectReference: {fileID: 0}
     - target: {fileID: 2681613831498773560, guid: 7a2c7547dd6eabc4cbcf61ce4605c777, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2681613831498773560, guid: 7a2c7547dd6eabc4cbcf61ce4605c777, type: 3}
       propertyPath: m_LocalRotation.w
@@ -6207,7 +6207,7 @@ PrefabInstance:
       objectReference: {fileID: 838020406}
     - target: {fileID: 3070662084528493124, guid: 7a2c7547dd6eabc4cbcf61ce4605c777, type: 3}
       propertyPath: enemyType
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3070662084528493124, guid: 7a2c7547dd6eabc4cbcf61ce4605c777, type: 3}
       propertyPath: moveSpeed
@@ -6219,7 +6219,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8132658211172884929, guid: 7a2c7547dd6eabc4cbcf61ce4605c777, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6733,7 +6733,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8132658211172884929, guid: 7a2c7547dd6eabc4cbcf61ce4605c777, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -9909,6 +9909,10 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 838020406}
+    - target: {fileID: 3070662084528493124, guid: 7a2c7547dd6eabc4cbcf61ce4605c777, type: 3}
+      propertyPath: enemyType
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8132658211172884929, guid: 7a2c7547dd6eabc4cbcf61ce4605c777, type: 3}
       propertyPath: m_Name
       value: Aggressive Spider (1)
