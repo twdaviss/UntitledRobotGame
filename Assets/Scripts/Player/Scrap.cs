@@ -17,11 +17,14 @@ public class Scrap : MonoBehaviour
     private float lifeTime;
 
     private GameObject player;
+    private GameObject prevEnemy;
     private bool isMagnetized = false;
     private float absorbDelay = 0.1f;
     private float absorbTime = 0.0f;
+    private int bounces = 2;
     
     public bool inert = false;
+    public bool canRicochet = false;
     private void Awake()
     {
         scrapRigidbody = GetComponent<Rigidbody2D>();
@@ -30,6 +33,7 @@ public class Scrap : MonoBehaviour
     {
         InputManager.onMagnetizeScrap += Magnetize;
         lifeTime = range;
+        bounces = 2;
         scrapRigidbody.AddForce(direction * moveSpeed, ForceMode2D.Force);
     }
 
@@ -96,6 +100,33 @@ public class Scrap : MonoBehaviour
         scrapRigidbody.velocity = Vector2.zero;
     }
 
+    public void Ricochet()
+    {
+        if(bounces <= 0)
+        {
+            return;
+        }
+        int layerMask = LayerMask.GetMask("Enemies");
+        Vector2 position = Vector2.zero;
+        Collider2D[] targets = Physics2D.OverlapCircleAll(player.transform.position, 10, layerMask);
+        foreach (Collider2D target in targets)
+        {
+            if (target.gameObject.GetComponent<EnemyController>() == null || target.gameObject == prevEnemy)
+            {
+                continue;
+            }
+
+            float distance = Vector2.Distance(target.transform.position, transform.position);
+            if (distance <= 10 && distance > 3)
+            {
+                direction = (target.transform.position - transform.position).normalized;
+                scrapRigidbody.AddForce(direction * moveSpeed, ForceMode2D.Force);
+                bounces--;
+                return;
+            }
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(absorbTime < absorbDelay)
@@ -107,6 +138,18 @@ public class Scrap : MonoBehaviour
             isMagnetized = false;
             absorbTime = 0;
             scrapPool.Release(this);
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            if (canRicochet)
+            {
+                prevEnemy = collision.gameObject;
+                Ricochet();
+            }
         }
     }
 

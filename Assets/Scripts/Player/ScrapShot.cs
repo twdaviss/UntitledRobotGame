@@ -21,6 +21,7 @@ public class ScrapShot : MonoBehaviour
     private PlayerController playerController;
     private AudioSource audioSource;
 
+    public bool canRicochet = false;
     private void Awake()
     {
         playerController = GetComponentInParent<PlayerController>();
@@ -95,6 +96,7 @@ public class ScrapShot : MonoBehaviour
         scrap.transform.position = spawnPosition;
         scrap.gameObject.SetActive(true);
         scrap.inert = false;
+        scrap.canRicochet = canRicochet;
         currentAmmo--;
     }
 
