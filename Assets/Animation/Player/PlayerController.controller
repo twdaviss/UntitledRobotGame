@@ -11,19 +11,19 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 7791563921488652458}
-    m_Position: {x: 30, y: 270, z: 0}
+    m_Position: {x: 30, y: 260, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -2377618270512255406}
     m_Position: {x: 30, y: 170, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 5634052612729803496}
-    m_Position: {x: -280, y: 240, z: 0}
+    m_Position: {x: -440, y: 240, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -6035433835393297614}
-    m_Position: {x: 410, y: 230, z: 0}
+    m_Position: {x: 500, y: 240, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 5739757101403214424}
-    m_Position: {x: 390, y: 380, z: 0}
+    m_Position: {x: 60, y: 510, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions:
@@ -115,6 +115,9 @@ AnimatorStateTransition:
     m_EventTreshold: 0
   - m_ConditionMode: 2
     m_ConditionEvent: isBuildingUp
+    m_EventTreshold: 0
+  - m_ConditionMode: 2
+    m_ConditionEvent: isMeleeing
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 7791563921488652458}
@@ -237,6 +240,34 @@ AnimatorStateTransition:
   m_ExitTime: 0.9952865
   m_HasExitTime: 0
   m_HasFixedDuration: 1
+  m_InterruptionSource: 0
+  m_OrderedInterruption: 1
+  m_CanTransitionToSelf: 1
+--- !u!1101 &-383975047192788637
+AnimatorStateTransition:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_Conditions:
+  - m_ConditionMode: 2
+    m_ConditionEvent: isGrappling
+    m_EventTreshold: 0
+  - m_ConditionMode: 1
+    m_ConditionEvent: isMeleeing
+    m_EventTreshold: 0
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: 5634052612729803496}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 0
+  serializedVersion: 3
+  m_TransitionDuration: 0
+  m_TransitionOffset: 0
+  m_ExitTime: 0
+  m_HasExitTime: 0
+  m_HasFixedDuration: 0
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
@@ -454,6 +485,7 @@ AnimatorState:
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -2633384266858240035}
+  - {fileID: -383975047192788637}
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0

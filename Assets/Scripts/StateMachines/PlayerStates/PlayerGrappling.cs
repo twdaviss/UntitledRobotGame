@@ -9,35 +9,45 @@ namespace RobotGame.States
     public class PlayerGrappling : PlayerState
     {
         private readonly PlayerController player;
-        private readonly Vector3 endPoint;
+        private readonly GameObject target;
         private Rigidbody2D playerRigidbody;
         private Vector2 direction;
         private float startingSpeed;
         private float targetSpeed;
         private float totalDistance;
+        private bool meleePressed = false;
 
-        public PlayerGrappling(PlayerController player, Vector3 grappleEndPoint, float startingSpeed, float targetSpeed) { this.player = player; name = "PlayerSlinging"; this.endPoint = grappleEndPoint; this.startingSpeed = startingSpeed; this.targetSpeed = targetSpeed; }
+        public PlayerGrappling(PlayerController player, GameObject target, float startingSpeed, float targetSpeed) { this.player = player; name = "PlayerSlinging"; this.target = target; this.startingSpeed = startingSpeed; this.targetSpeed = targetSpeed; }
         
         public override IEnumerator Start()
         {
             player.playerAnimator.SetBool("isGrappling", true);
             player.GetComponentInChildren<Grapple>().PlayGrappleEnd();
             playerRigidbody = player.GetComponent<Rigidbody2D>();
-            direction = (endPoint - player.transform.position).normalized;
-            totalDistance = Vector3.Distance(player.transform.position, endPoint);
+            
             InputManager.onMelee += Attack;
             yield break;
         }
 
         public override IEnumerator Update()
         {
-            float distance = Vector3.Distance(player.transform.position, endPoint);
+            direction = (target.transform.position - player.transform.position).normalized;
+            totalDistance = Vector3.Distance(player.transform.position, target.transform.position);
+
+            float distance = Vector3.Distance(player.transform.position, target.transform.position);
             float t = (totalDistance - distance)/ totalDistance;
             float speed = startingSpeed + (targetSpeed * Easing.OutCubic(t));
-            if (distance < 0.75f) 
+            if (distance < 2.0f) 
             {
-                player.TransitionState(new PlayerDefault(player));
-                Debug.Log(speed);
+                if (meleePressed)
+                {
+                    player.playerMelee.Attack();
+                    Debug.Log("Combo achieved");
+                }
+                else
+                {
+                    player.TransitionState(new PlayerDefault(player));
+                }
             }
             playerRigidbody.transform.position += (Vector3)direction * speed * Time.deltaTime;
             yield break;
@@ -50,24 +60,27 @@ namespace RobotGame.States
 
         public override IEnumerator End()
         {
-            player.playerAnimator.SetBool("isGrappling", false);
             InputManager.onMelee -= Attack;
+            player.playerAnimator.SetBool("isGrappling", false);
             playerRigidbody.velocity = Vector2.zero;
+            
             yield break;
         }
 
         private void Attack()
         {
-            float distance = Vector3.Distance(player.transform.position, endPoint);
-            if(distance < 2)
-            {
-                player.playerMelee.Attack();
-            }
+            meleePressed = true;
+            Debug.Log("Melee Pressed");
         }
 
         public override IEnumerator OnCollisionEnter2D(Collision2D collision)
         {
-            if (this.GetType() == typeof(PlayerGrappling))
+            if (meleePressed)
+            {
+                player.playerMelee.Attack();
+                Debug.Log("Combo achieved");
+            }
+            else
             {
                 player.TransitionState(new PlayerDefault(player));
             }

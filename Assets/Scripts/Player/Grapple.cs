@@ -90,7 +90,7 @@ public class Grapple : MonoBehaviour
             }
 
             grappleCooldownTimer = 0.0f;
-            playerController.TransitionState(new PlayerGrappling(playerController, targetObject.transform.position, startingSpeed, targetSpeed));
+            playerController.TransitionState(new PlayerGrappling(playerController, targetObject, startingSpeed, targetSpeed));
         }
 
         playerController.playerAnimator.SetBool("isBuildingUp", false);

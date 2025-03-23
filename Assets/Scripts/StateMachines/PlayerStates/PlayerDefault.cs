@@ -22,7 +22,7 @@ namespace RobotGame.States
         }
         private void Attack()
         {
-            player.playerMelee.Attack();
+            player.playerMelee.TryAttack();
         }
         public override IEnumerator End()
         {

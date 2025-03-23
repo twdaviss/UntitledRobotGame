@@ -56,13 +56,22 @@ public class Melee : MonoBehaviour
         isDealingDamage = false;
     }
 
+    public void TryAttack()
+    {
+        if (playerController.GetCurrentState() == "PlayerGrappling")
+        {
+            return;
+        }
+        Attack();
+    }
+
     public void Attack()
     {
-        if(meleeCooldownTimer >= meleeCooldownTime)
+        if (meleeCooldownTimer >= meleeCooldownTime)
         {
             meleeCooldownTimer = 0.0f;
             GetComponentInParent<AudioSource>().PlayOneShot(swoosh);
-            playerController.SetState(new PlayerMelee(playerController, radius, damage, stun, knockBack, duration));
+            playerController.TransitionState(new PlayerMelee(playerController, radius, damage, stun, knockBack, duration));
             playerController.playerAnimator.SetBool("isMeleeing", true);
         }
     }
