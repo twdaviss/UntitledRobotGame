@@ -66,6 +66,7 @@ public class EnemyController : EnemyStateMachine
 
     private void Awake()
     {
+        target = GameObject.Find("Player").transform;
         enemyRigidbody = GetComponent<Rigidbody2D>();
         enemyHealth = GetComponentInChildren<EnemyHealth>();
         enemyStun = GetComponentInChildren<EnemyStun>();

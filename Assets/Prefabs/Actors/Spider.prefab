@@ -5649,7 +5649,7 @@ GameObject:
   - component: {fileID: 8318045903128526152}
   - component: {fileID: -4044161635340709094}
   m_Layer: 8
-  m_Name: Aggressive Spider
+  m_Name: Spider
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5717,7 +5717,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 2
   m_Sprite: {fileID: -27976067, guid: 321a29b8e67712c4ca5e4984283622c8, type: 3}
-  m_Color: {r: 0.8584906, g: 0.51428443, b: 0.51428443, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -5740,7 +5740,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyAnimator: {fileID: 0}
-  enemyType: 0
+  enemyType: 2
   projectile: {fileID: 7476597268278418430, guid: a2e13fda4255b614798cbdc29bc06162, type: 3}
   moveSpeed: 6
   target: {fileID: 0}

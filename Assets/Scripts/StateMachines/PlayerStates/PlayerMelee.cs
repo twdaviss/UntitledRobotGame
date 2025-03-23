@@ -53,6 +53,7 @@ namespace RobotGame.States
 
         public override IEnumerator End()
         {
+            player.playerAnimator.SetBool("isMeleeing", false);
             player.gameObject.GetComponent<SpriteRenderer>().color = Color.white;
             yield break;
         }

@@ -110,8 +110,8 @@ namespace RobotGame.States
             bool noObstacles = true;
             for(int ray = 1; ray <= numRays; ++ray)
             {
-                RaycastHit2D hit = Physics2D.Raycast(enemy.transform.position, Quaternion.AngleAxis(ray * 360 / numRays, Vector3.forward) * Vector2.up, 10, layerMask);
-                Debug.DrawRay(enemy.transform.position, Quaternion.AngleAxis(ray * 360 / numRays, Vector3.forward) * Vector2.up * 10);
+                RaycastHit2D hit = Physics2D.Raycast(enemy.transform.position, Quaternion.AngleAxis(ray * 360 / numRays, Vector3.forward) * Vector2.up, 5, layerMask);
+                Debug.DrawRay(enemy.transform.position, Quaternion.AngleAxis(ray * 360 / numRays, Vector3.forward) * Vector2.up * 5);
                 if (hit.collider != null)
                 {
                     points[ray-1] = hit.point;
@@ -119,7 +119,7 @@ namespace RobotGame.States
                 }
                 else
                 {
-                    points[ray-1] = enemy.transform.position + (Quaternion.AngleAxis(ray * 360 / numRays, Vector3.forward) * Vector2.up).normalized * 10;
+                    points[ray-1] = enemy.transform.position + (Quaternion.AngleAxis(ray * 360 / numRays, Vector3.forward) * Vector2.up).normalized * 5;
                 }
             }
 
