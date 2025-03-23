@@ -57,9 +57,10 @@ public class PlayerController : PlayerStateMachine
             playerAudioSource.Stop();
         }
         
-        if(InputManager.playerControls.Gameplay.Sprint.inProgress) { moveSpeed = 2 * defaultMoveSpeed; }
-        else { moveSpeed = defaultMoveSpeed; }
+        //if(InputManager.playerControls.Gameplay.Sprint.inProgress) { moveSpeed = 2 * defaultMoveSpeed; }
+        //else { moveSpeed = defaultMoveSpeed; }
 
+        moveSpeed = defaultMoveSpeed;
         if (!GetComponentInChildren<Grapple>().isAimingGrapple)
         {
             transform.position += (Vector3)moveDirection.normalized * moveSpeed * Time.deltaTime;

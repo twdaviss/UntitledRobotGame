@@ -114,7 +114,7 @@ public class RebindUI : MonoBehaviour
     private void EnableOverlay(InputAction actionToRebind, int binding)
     {
         rebindOverlay?.SetActive(true);
-        rebindOverlayText.text = "Press a " + actionToRebind.expectedControlType;
+        rebindOverlayText.text = "Press a " + actionToRebind.expectedControlType + " to Rebind";
     }
 
     private void DisableOverlay()
