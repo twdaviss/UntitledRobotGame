@@ -18,6 +18,7 @@ public class Grapple : MonoBehaviour
     private GameObject targetObject;
 
     [HideInInspector] public bool isAimingGrapple = false;
+    [HideInInspector] public bool canPull = false;
     private bool targetValid = false;
 
     private float grappleCooldownTimer;
@@ -58,6 +59,7 @@ public class Grapple : MonoBehaviour
             GrappleTarget();
             canGrappleAudio = true;
         }
+
         if (isAimingGrapple && targetObject != null)
         {
             targetUI.SetActive(true);
@@ -98,6 +100,38 @@ public class Grapple : MonoBehaviour
         StartCoroutine(GameManager.Instance.ResetTimeScale());
         isAimingGrapple = false;
         targetObject = null;
+    }
+
+    public void PullGrappleTarget()
+    {
+        if(canGrapple && canPull)
+        {
+            if (grappleCooldownTimer < grappleCooldownTime) { return; }
+            if (isAimingGrapple == false) { return; }
+
+            if (targetValid)
+            {
+                if (targetObject.GetComponentInParent<EnemyController>() != null)
+                {
+                    targetObject.GetComponentInParent<EnemyController>().Pull(gameObject, startingSpeed, targetSpeed);
+                }
+
+                grappleCooldownTimer = 0.0f;
+            }
+
+            playerController.playerAnimator.SetBool("isBuildingUp", false);
+
+            StartCoroutine(GameManager.Instance.ResetTimeScale());
+            targetObject = null;
+        }
+        playerController.playerAnimator.SetBool("isGrappling", true);
+        Invoke(nameof(ReEnableGrapple), 0.1f);
+    }
+
+    private void ReEnableGrapple()
+    {
+        isAimingGrapple = false;
+        playerController.playerAnimator.SetBool("isGrappling", false);
     }
 
     public void CancelGrapple()
@@ -163,5 +197,17 @@ public class Grapple : MonoBehaviour
     {
         GetComponent<AudioSource>().pitch = 2;
         GetComponent<AudioSource>().PlayOneShot(grappleEnd);
+    }
+
+    private void OnEnable()
+    {
+        InputManager.onScrapShot += PullGrappleTarget;
+
+    }
+
+    private void OnDisable()
+    {
+        InputManager.onScrapShot -= PullGrappleTarget;
+
     }
 }

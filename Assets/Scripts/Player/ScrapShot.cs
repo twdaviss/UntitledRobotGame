@@ -48,7 +48,7 @@ public class ScrapShot : MonoBehaviour
 
     public void ShootScrap()
     {
-        if(coolDownTimer >= scrapCoolDownTime)
+        if(coolDownTimer >= scrapCoolDownTime && !playerController.GetComponentInChildren<Grapple>().isAimingGrapple)
         {
             if (currentAmmo > 0)
             {

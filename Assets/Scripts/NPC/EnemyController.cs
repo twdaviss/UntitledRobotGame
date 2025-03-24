@@ -157,6 +157,11 @@ public class EnemyController : EnemyStateMachine
         enemyRigidbody.velocity = Vector3.zero;
     }
 
+    public void Pull(GameObject target, float startingSpeed, float targetSpeed)
+    {
+        TransitionState(new EnemyGrappled(this, target, startingSpeed, targetSpeed));
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         GameObject collisionObject = collision.gameObject;

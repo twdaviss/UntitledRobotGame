@@ -9,7 +9,7 @@ public class EnemyStun : MonoBehaviour
     [SerializeField] private float maxStun;
     [SerializeField] private float stunDecayRate;
     [SerializeField] private float stunDecayDelay;
-    [SerializeField] private float stunTime;
+    [SerializeField] public float stunTime;
 
     private float currentStun;
     private float stunDecayTimer = 0;

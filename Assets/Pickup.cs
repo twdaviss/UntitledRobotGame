@@ -47,6 +47,9 @@ public class Pickup : MonoBehaviour
                 player.GetComponentInChildren<ScrapShot>().maxAmmo += 1;
                 player.GetComponentInChildren<ScrapShot>().currentAmmo += 1;
                 break;
+            case PickupType.GrapplePull:
+                player.GetComponentInChildren<Grapple>().canPull = true;
+                break;
         }
         Destroy(gameObject);
     }
