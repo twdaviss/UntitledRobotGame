@@ -73,10 +73,9 @@ public class ScrapShot : MonoBehaviour
             audioSource.pitch = -1.5f;
             audioSource.timeSamples = projectile.samples - 1;
             audioSource.Play();
+            InputManager.Instance.MagnetizeScrap();
+            coolDownTimer = 0;
         }
-
-        InputManager.Instance.MagnetizeScrap();
-        coolDownTimer = 0;
     }
 
     private Scrap OnCreateScrap()
