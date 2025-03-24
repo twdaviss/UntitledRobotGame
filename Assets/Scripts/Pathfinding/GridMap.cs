@@ -25,10 +25,11 @@ public class GridMap : MonoBehaviour
 
     public void InitializeGrid()
     {
-        int layerMask = LayerMask.GetMask("Obstacles");
+        int layerMask = LayerMask.GetMask("Obstacles") | LayerMask.GetMask("Grapple");
         foreach (PathNode node in grid.GetAllGridObjects())
         {
-            if (Physics2D.OverlapCircle(node.GetWorldCoords(), grid.GetCellSize() / 2,layerMask))
+            Vector2 point = new Vector2(node.GetWorldCoords().x + grid.GetCellSize() / 2, node.GetWorldCoords().y + grid.GetCellSize() / 2);
+            if (Physics2D.OverlapCircle(point, grid.GetCellSize() / 3,layerMask))
             {
                 node.isWalkable = false;
             }
