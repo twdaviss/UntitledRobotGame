@@ -22,9 +22,9 @@ public class Scrap : MonoBehaviour
     private float absorbDelay = 0.1f;
     private float absorbTime = 0.0f;
     private int bounces = 2;
-    
-    public bool inert = false;
-    public bool canRicochet = false;
+
+    [HideInInspector] public bool canRicochet = false;
+    [HideInInspector] public bool inert = false;
     private void Awake()
     {
         scrapRigidbody = GetComponent<Rigidbody2D>();
@@ -104,11 +104,14 @@ public class Scrap : MonoBehaviour
     {
         if(bounces <= 0)
         {
+            ClampVelocity();
             return;
         }
+        inert = false;
+        isMagnetized = false;
         int layerMask = LayerMask.GetMask("Enemies");
         Vector2 position = Vector2.zero;
-        Collider2D[] targets = Physics2D.OverlapCircleAll(player.transform.position, 10, layerMask);
+        Collider2D[] targets = Physics2D.OverlapCircleAll(player.transform.position, 15, layerMask);
         foreach (Collider2D target in targets)
         {
             if (target.gameObject.GetComponent<EnemyController>() == null || target.gameObject == prevEnemy)
@@ -117,7 +120,7 @@ public class Scrap : MonoBehaviour
             }
 
             float distance = Vector2.Distance(target.transform.position, transform.position);
-            if (distance <= 10 && distance > 3)
+            if (distance < 15 && distance >= 4)
             {
                 direction = (target.transform.position - transform.position).normalized;
                 scrapRigidbody.AddForce(direction * moveSpeed, ForceMode2D.Force);
@@ -125,6 +128,8 @@ public class Scrap : MonoBehaviour
                 return;
             }
         }
+        bounces = 0;
+        ClampVelocity();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

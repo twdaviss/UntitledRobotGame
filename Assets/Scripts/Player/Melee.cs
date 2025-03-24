@@ -41,6 +41,12 @@ public class Melee : MonoBehaviour
             }
         }
     }
+
+    public void IncreaseKnockBack(float mult)
+    {
+        knockBack *= mult;
+    }
+
     private void FixedUpdate()
     {
         GameManager.Instance.SetMeleeCooldownUI(meleeCooldownTimer/ meleeCooldownTime);

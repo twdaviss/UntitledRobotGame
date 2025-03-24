@@ -5,6 +5,9 @@ using UnityEngine;
 public enum PickupType
 {
     Ricochet,
+    KnockBack,
+    Ammo,
+    GrapplePull,
 }
 
 public class Pickup : MonoBehaviour
@@ -36,6 +39,13 @@ public class Pickup : MonoBehaviour
         {
             case PickupType.Ricochet:
                 player.GetComponentInChildren<ScrapShot>().canRicochet = true;
+                break;
+            case PickupType.KnockBack:
+                player.GetComponentInChildren<Melee>().IncreaseKnockBack(1.5f);
+                break;
+            case PickupType.Ammo:
+                player.GetComponentInChildren<ScrapShot>().maxAmmo += 1;
+                player.GetComponentInChildren<ScrapShot>().currentAmmo += 1;
                 break;
         }
         Destroy(gameObject);

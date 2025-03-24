@@ -175,10 +175,8 @@ public class EnemyController : EnemyStateMachine
             EnemyController enemy = collisionObject.GetComponent<EnemyController>();
             if(State.GetType() == typeof(EnemyKnockback))
             {
-                //enemy.TransitionState(new EnemyKnockback(enemy,40,(enemy.transform.position - transform.position).normalized));
                 enemy.enemyStun.DealDamage(20);
                 enemy.enemyHealth.DealDamage(5, 40, (enemy.transform.position - transform.position).normalized);
-
             }
         }
     }

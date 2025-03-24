@@ -23,11 +23,7 @@ public class PlayerHealth : MonoBehaviour
     private float staggerHealth;
     private float currentStaggerHealth;
     private float invincibilityTime;
-    private float oilSpillDuration = 1.0f;
-    private int oilSpillRate = 4;
     private float oilSpillCooldown = 0.0f;
-    private float oilSpillTimer = 0.0f;
-    private float absorbTimer = 0.0f;
     private float staggerCooldown = 5.0f;
     private float staggerTimer = 0.0f;
 
@@ -53,17 +49,8 @@ public class PlayerHealth : MonoBehaviour
             if (oilSpillCooldown <= 0.0f)
             {
                 DealDamage(10);
-                //oilSpillCooldown = oilSpillDuration / oilSpillRate;
             }
-            //oilSpillCooldown -= Time.deltaTime;
-
-            //oilSpillTimer += Time.deltaTime;
-            //if(oilSpillTimer > oilSpillDuration)
-            //{
-            //    oilSpillTimer = 0;
-            //    isHurt = false;
-            //}
-
+            
             if(staggerTimer <= 0.0f)
             {
                 currentStaggerHealth = staggerHealth;
@@ -75,7 +62,6 @@ public class PlayerHealth : MonoBehaviour
     private void FixedUpdate()
     {
         UpdateHealthBar();
-        //AbsorbOil();
     }
 
     public void UpdateHealthBar()
@@ -115,47 +101,6 @@ public class PlayerHealth : MonoBehaviour
         {
             currentHealth = maxHealth;
         }
-    }
-
-    private void AbsorbOil()
-    {
-        if(maxHealth - currentHealth <= 0) { return; }
-        int layerMask = LayerMask.GetMask("Absorb");
-        Vector3 position = transform.position;
-        position.y -= 1.0f;
-        Collider2D[] oilSlicks = Physics2D.OverlapCircleAll(position, absorbLongRadius, layerMask);
-
-        if (oilSlicks.Length == 0)
-        {
-            absorbTimer = 0.0f;
-            return;
-        }
-        GameObject oil = oilSlicks[0].gameObject;
-
-        for (int i = 0; i < oilSlicks.Length; i++)
-        {
-            float distToPlayer = Vector2.Distance(position, oilSlicks[i].transform.position);
-            float closestDistance = Vector2.Distance(position, oil.transform.position);
-            if (distToPlayer < closestDistance)
-            {
-                oil = oilSlicks[i].gameObject;
-            }
-            if (absorbTimer > absorbTime && oil != null)
-            {
-                Destroy(oil.transform.parent.gameObject);
-                AddHealth(10);
-                absorbTimer = 0.0f;
-                continue;
-            }
-            absorbTimer += Time.deltaTime;
-        }
-    }
-    private void DropOil()
-    {
-        Vector3 spawnPos = transform.position;
-        spawnPos.x += Random.Range(-1.75f, 1.75f);
-        spawnPos.y += Random.Range(-2.75f, -2.25f);
-        Instantiate(pfOilSlick, spawnPos, Quaternion.identity);
     }
 
     private void PlayerDeath()
