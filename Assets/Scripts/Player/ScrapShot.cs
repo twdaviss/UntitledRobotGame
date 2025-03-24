@@ -53,7 +53,7 @@ public class ScrapShot : MonoBehaviour
             if (currentAmmo > 0)
             {
                 scrapPool.Get();
-                audioSource.pitch = 1;
+                audioSource.pitch = 1.5f;
                 audioSource.PlayOneShot(projectile);
                 coolDownTimer = 0;
             }
@@ -70,7 +70,7 @@ public class ScrapShot : MonoBehaviour
         if (currentAmmo < maxAmmo)
         {
             audioSource.clip = projectile;
-            audioSource.pitch = -1;
+            audioSource.pitch = -1.5f;
             audioSource.timeSamples = projectile.samples - 1;
             audioSource.Play();
         }

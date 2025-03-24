@@ -123,9 +123,10 @@ public class Grapple : MonoBehaviour
 
             StartCoroutine(GameManager.Instance.ResetTimeScale());
             targetObject = null;
+            PlayGrappleEnd();
+            playerController.playerAnimator.SetBool("isGrappling", true);
+            Invoke(nameof(ReEnableGrapple), 0.1f);
         }
-        playerController.playerAnimator.SetBool("isGrappling", true);
-        Invoke(nameof(ReEnableGrapple), 0.1f);
     }
 
     private void ReEnableGrapple()
