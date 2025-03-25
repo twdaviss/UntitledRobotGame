@@ -6,8 +6,10 @@ public enum PickupType
 {
     Ricochet,
     KnockBack,
-    Ammo,
     GrapplePull,
+    Health,
+    Ammo,
+    AutoHeal,
 }
 
 public class Pickup : MonoBehaviour
@@ -43,12 +45,19 @@ public class Pickup : MonoBehaviour
             case PickupType.KnockBack:
                 player.GetComponentInChildren<Melee>().IncreaseKnockBack(1.5f);
                 break;
+            case PickupType.GrapplePull:
+                player.GetComponentInChildren<Grapple>().canPull = true;
+                break;
+            case PickupType.Health:
+                player.GetComponentInChildren<PlayerHealth>().Heal(20);
+                break;
             case PickupType.Ammo:
                 player.GetComponentInChildren<ScrapShot>().maxAmmo += 1;
                 player.GetComponentInChildren<ScrapShot>().currentAmmo += 1;
                 break;
-            case PickupType.GrapplePull:
-                player.GetComponentInChildren<Grapple>().canPull = true;
+            case PickupType.AutoHeal:
+                player.GetComponentInChildren<PlayerHealth>().EnableAutoHeal();
+
                 break;
         }
         Destroy(gameObject);

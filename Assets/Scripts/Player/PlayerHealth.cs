@@ -10,24 +10,21 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private float maxHealth;
     [SerializeField] private int staggerHealthPercentage;
     [SerializeField] private float staggerTime;
-    [SerializeField] private GameObject pfOilSlick;
-    [SerializeField] private float absorbShortRadius;
-    [SerializeField] private float absorbLongRadius;
-    [SerializeField] private float absorbTime;
     [SerializeField] private AudioClip hurtSound;
+    [SerializeField] private float healRate;
 
     private PlayerController playerController;
     private AudioSource audioSource;
     private float currentHealth;
-    private EnemyController enemy;
     private float staggerHealth;
     private float currentStaggerHealth;
     private float invincibilityTime;
-    private float oilSpillCooldown = 0.0f;
     private float staggerCooldown = 5.0f;
     private float staggerTimer = 0.0f;
+    private float healCooldownTime = 1.0f;
+    private bool autoHeal = true;
+    private float healCooldownTimer;
 
-    public bool isHurt = false;
     private void Awake()
     {
         playerController = GetComponentInParent<PlayerController>();
@@ -44,18 +41,19 @@ public class PlayerHealth : MonoBehaviour
         {
             invincibilityTime = 0.0f;
         }
-        if (isHurt)
+
+        staggerTimer -= Time.deltaTime;
+        if(staggerTimer <= 0.0f)
         {
-            if (oilSpillCooldown <= 0.0f)
-            {
-                DealDamage(10);
-            }
-            
-            if(staggerTimer <= 0.0f)
-            {
-                currentStaggerHealth = staggerHealth;
-            }
-            staggerTimer -= Time.deltaTime;
+            currentStaggerHealth = staggerHealth;
+        }
+
+        if (!autoHeal) { return; }
+        healCooldownTimer -= Time.deltaTime;
+        if(healCooldownTimer <= 0.0f)
+        {
+            Heal(healRate);
+            healCooldownTimer = healCooldownTime;
         }
     }
 
@@ -92,6 +90,20 @@ public class PlayerHealth : MonoBehaviour
             audioSource.PlayOneShot(hurtSound);
             invincibilityTime = 0.2f;
         }
+    }
+
+    public void Heal(float health)
+    {
+        currentHealth += health;
+        if(currentHealth > maxHealth)
+        {
+            currentHealth = maxHealth;
+        }
+    }
+
+    public void EnableAutoHeal()
+    {
+        autoHeal = true;
     }
 
     public void AddHealth(float health)
