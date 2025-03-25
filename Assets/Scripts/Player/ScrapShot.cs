@@ -4,9 +4,7 @@ using UnityEngine.Pool;
 
 public class ScrapShot : MonoBehaviour
 {
-    public int currentAmmo; 
     [SerializeField] public int maxAmmo;
-
     [SerializeField] private Scrap scrapPrefab;
     [SerializeField] private float scrapSpeed;
     [SerializeField] private float scrapDamage;
@@ -16,6 +14,7 @@ public class ScrapShot : MonoBehaviour
     [SerializeField] private float magnetizeRadius;
     [SerializeField] private AudioClip projectile;
     
+    private int currentAmmo; 
     private float coolDownTimer;
     private ObjectPool<Scrap> scrapPool;
     private PlayerController playerController;
@@ -34,6 +33,10 @@ public class ScrapShot : MonoBehaviour
     private void Update()
     {
         coolDownTimer += Time.deltaTime;
+        if(currentAmmo > maxAmmo)
+        {
+            currentAmmo = maxAmmo;
+        }
     }
 
     private void FixedUpdate()
@@ -76,6 +79,12 @@ public class ScrapShot : MonoBehaviour
             InputManager.Instance.MagnetizeScrap();
             coolDownTimer = 0;
         }
+    }
+
+    public void IncreaseAmmo(int num)
+    {
+        maxAmmo += num;
+        currentAmmo += num;
     }
 
     private Scrap OnCreateScrap()

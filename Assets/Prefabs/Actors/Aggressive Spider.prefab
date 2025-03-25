@@ -109,7 +109,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stunBarBack: {fileID: 7741945794869339001}
   stunBar: {fileID: 576018030727083720}
-  maxStun: 100
+  maxStun: 75
   stunDecayRate: 5
   stunDecayDelay: 5
   stunTime: 3
@@ -5413,7 +5413,6 @@ MonoBehaviour:
   staggerHealthPercentage: 50
   healthBar: {fileID: 4425984467977687344}
   maxHealth: 100
-  pfOilSlick: {fileID: 8974461600461266386, guid: 3e626798e98ac1f41851d9a10d94db74, type: 3}
   metalSounds:
   - {fileID: 8300000, guid: 769cc783ef8e94c4a9492edf54acdfec, type: 3}
   - {fileID: 8300000, guid: 64a745937ed9a1f4f9486f6c6d1e1694, type: 3}
@@ -5740,8 +5739,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyAnimator: {fileID: 0}
-  enemyType: 0
   projectile: {fileID: 7476597268278418430, guid: a2e13fda4255b614798cbdc29bc06162, type: 3}
+  enemyType: 0
   moveSpeed: 6
   target: {fileID: 0}
   meleeDamage: 10
@@ -5762,8 +5761,8 @@ MonoBehaviour:
   wanderMultiplier: 10
   fleeDistanceThreshold: 15
   fleeTime: 2
-  shootCooldownTimer: 0
   isStunned: 0
+  shootCooldownTimer: 0
 --- !u!50 &1704032984399140240
 Rigidbody2D:
   serializedVersion: 4

@@ -19,8 +19,8 @@ public class EnemyController : EnemyStateMachine
     [HideInInspector] public Animator enemyAnimator;
 
     [Header("General")]
-    [SerializeField] public EnemyType enemyType;
     [SerializeField] private GameObject projectile;
+    [SerializeField] public EnemyType enemyType;
     [SerializeField] public int moveSpeed;
     [SerializeField] public Transform target;
 
@@ -50,7 +50,6 @@ public class EnemyController : EnemyStateMachine
     [SerializeField] public float fleeDistanceThreshold;
     [SerializeField] public float fleeTime;
 
-    public float shootCooldownTimer = 0.0f;
 
     private ParticleSystem enemyParticleSystem;
     private AudioSource enemyAudioSource;
@@ -63,6 +62,7 @@ public class EnemyController : EnemyStateMachine
     private float invincibilityTime = 0.0f;
 
     public bool isStunned = false;
+    public float shootCooldownTimer = 0.0f;
 
     private void Awake()
     {
@@ -189,6 +189,11 @@ public class EnemyController : EnemyStateMachine
     #region Pathfinding
     public void MoveToNextPoint()
     {
+        if(path == null)
+        {
+            return;
+        }
+
         Vector2 moveTarget = path[0];
         if (Vector3.Distance(transform.position, moveTarget) < 1.0)
         {

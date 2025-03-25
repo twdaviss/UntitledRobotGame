@@ -35,6 +35,7 @@ public class Scrap : MonoBehaviour
         lifeTime = range;
         bounces = 2;
         scrapRigidbody.AddForce(direction * moveSpeed, ForceMode2D.Force);
+        isMagnetized = false;
     }
 
     private void OnDestroy()

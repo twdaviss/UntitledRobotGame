@@ -7,7 +7,6 @@ public class EnemyHealth : MonoBehaviour
     [SerializeField] private int staggerHealthPercentage;
     [SerializeField] private Image healthBar;
     [SerializeField] private float maxHealth;
-    [SerializeField] private GameObject pfOilSlick;
     [SerializeField] private AudioClip[] metalSounds;
 
     private float currentHealth;
@@ -72,10 +71,6 @@ public class EnemyHealth : MonoBehaviour
             currentHealth -= damage;
             currentStaggerHealth -= damage;
 
-            //if (Random.Range(0,4) == 0)
-            //{
-            //    enemy.ReleaseSparks();
-            //}
             UpdateHealthBar();
 
             int randIndex = Random.Range(0, metalSounds.Length);

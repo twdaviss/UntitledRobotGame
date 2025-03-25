@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public enum PickupType
@@ -52,8 +50,7 @@ public class Pickup : MonoBehaviour
                 player.GetComponentInChildren<PlayerHealth>().Heal(20);
                 break;
             case PickupType.Ammo:
-                player.GetComponentInChildren<ScrapShot>().maxAmmo += 1;
-                player.GetComponentInChildren<ScrapShot>().currentAmmo += 1;
+                player.GetComponentInChildren<ScrapShot>().IncreaseAmmo(1);
                 break;
             case PickupType.AutoHeal:
                 player.GetComponentInChildren<PlayerHealth>().EnableAutoHeal();
