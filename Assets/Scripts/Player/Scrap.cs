@@ -1,9 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Pool;
-using UnityEngine.UIElements;
 
 public class Scrap : MonoBehaviour
 {

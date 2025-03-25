@@ -1,5 +1,4 @@
 using UnityEngine;
-
 public enum PickupType
 {
     Ricochet,
@@ -38,13 +37,13 @@ public class Pickup : MonoBehaviour
         switch (pickup)
         {
             case PickupType.Ricochet:
-                player.GetComponentInChildren<ScrapShot>().canRicochet = true;
+                player.GetComponentInChildren<ScrapShot>().EnableRicochet();
                 break;
             case PickupType.KnockBack:
                 player.GetComponentInChildren<Melee>().IncreaseKnockBack(1.5f);
                 break;
             case PickupType.GrapplePull:
-                player.GetComponentInChildren<Grapple>().canPull = true;
+                player.GetComponentInChildren<Grapple>().EnableGrapplePull();
                 break;
             case PickupType.Health:
                 player.GetComponentInChildren<PlayerHealth>().Heal(20);
@@ -54,7 +53,6 @@ public class Pickup : MonoBehaviour
                 break;
             case PickupType.AutoHeal:
                 player.GetComponentInChildren<PlayerHealth>().EnableAutoHeal();
-
                 break;
         }
         Destroy(gameObject);

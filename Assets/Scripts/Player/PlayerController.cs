@@ -1,7 +1,5 @@
 using RobotGame.States;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class PlayerController : PlayerStateMachine
 {
@@ -57,11 +55,8 @@ public class PlayerController : PlayerStateMachine
             playerAudioSource.Stop();
         }
         
-        //if(InputManager.playerControls.Gameplay.Sprint.inProgress) { moveSpeed = 2 * defaultMoveSpeed; }
-        //else { moveSpeed = defaultMoveSpeed; }
-
         moveSpeed = defaultMoveSpeed;
-        if (!GetComponentInChildren<Grapple>().isAimingGrapple)
+        if (!GetComponentInChildren<Grapple>().CheckGrappling())
         {
             transform.position += (Vector3)moveDirection.normalized * moveSpeed * Time.deltaTime;
         }

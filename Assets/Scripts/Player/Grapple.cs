@@ -1,7 +1,5 @@
 using RobotGame.States;
 using UnityEngine;
-using UnityEngine.EventSystems;
-
 public class Grapple : MonoBehaviour
 {
     [SerializeField] private GameObject targetUI;
@@ -17,10 +15,9 @@ public class Grapple : MonoBehaviour
     private PlayerController playerController;
     private GameObject targetObject;
 
-    [HideInInspector] public bool isAimingGrapple = false;
-    [HideInInspector] public bool canPull = false;
+    private bool isAimingGrapple = false;
+    private bool canGrapplePull = false;
     private bool targetValid = false;
-
     private float grappleCooldownTimer;
     private float grappleAimTimer = 0.0f;
     private bool canGrapple = true;
@@ -104,7 +101,7 @@ public class Grapple : MonoBehaviour
 
     public void PullGrappleTarget()
     {
-        if(canGrapple && canPull)
+        if(canGrapple && canGrapplePull)
         {
             if (grappleCooldownTimer < grappleCooldownTime) { return; }
             if (isAimingGrapple == false) { return; }
@@ -127,6 +124,16 @@ public class Grapple : MonoBehaviour
             playerController.playerAnimator.SetBool("isGrappling", true);
             Invoke(nameof(ReEnableGrapple), 0.1f);
         }
+    }
+
+    public bool CheckGrappling()
+    {
+        return isAimingGrapple;
+    }
+
+    public void EnableGrapplePull()
+    {
+        canGrapplePull = true;
     }
 
     private void ReEnableGrapple()

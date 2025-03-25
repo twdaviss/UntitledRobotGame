@@ -17,7 +17,7 @@ public class DialogueManager : MonoBehaviour
     private TextMeshProUGUI[] choicesText;
 
     private Story currentStory;
-    private bool dialogueIsPlaying;
+    //private bool dialogueIsPlaying;
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -33,7 +33,7 @@ public class DialogueManager : MonoBehaviour
     private void Start()
     {
         SelectFirstChoice();
-        dialogueIsPlaying = false;
+       // dialogueIsPlaying = false;
         dialoguePanel.SetActive(false);
 
         choicesText = new TextMeshProUGUI[choices.Length];
@@ -49,7 +49,7 @@ public class DialogueManager : MonoBehaviour
     {
         InputManager.Instance.EnableDialogueMode();
         currentStory = new Story(inkJSON.text);
-        dialogueIsPlaying = true;
+        //dialogueIsPlaying = true;
         dialoguePanel.SetActive(true);
 
         ContinueStory();
@@ -58,7 +58,7 @@ public class DialogueManager : MonoBehaviour
     private void ExitDialogueMode()
     {
         InputManager.Instance.DisableDialogueMode();
-        dialogueIsPlaying = false;
+        //dialogueIsPlaying = false;
         dialoguePanel.SetActive(false);
 
         dialogueText.text = "";

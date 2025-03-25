@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -19,8 +18,8 @@ public class ScrapShot : MonoBehaviour
     private ObjectPool<Scrap> scrapPool;
     private PlayerController playerController;
     private AudioSource audioSource;
+    private bool canRicochet = false;
 
-    public bool canRicochet = false;
     private void Awake()
     {
         playerController = GetComponentInParent<PlayerController>();
@@ -51,7 +50,7 @@ public class ScrapShot : MonoBehaviour
 
     public void ShootScrap()
     {
-        if(coolDownTimer >= scrapCoolDownTime && !playerController.GetComponentInChildren<Grapple>().isAimingGrapple)
+        if (coolDownTimer >= scrapCoolDownTime && !playerController.GetComponentInChildren<Grapple>().CheckGrappling())
         {
             if (currentAmmo > 0)
             {
@@ -85,6 +84,11 @@ public class ScrapShot : MonoBehaviour
     {
         maxAmmo += num;
         currentAmmo += num;
+    }
+
+    public void EnableRicochet()
+    {
+        canRicochet = true;
     }
 
     private Scrap OnCreateScrap()
