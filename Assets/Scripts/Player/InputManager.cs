@@ -84,6 +84,11 @@ public class InputManager : MonoBehaviour
             GameManager.Instance.DisableOptionsMenu();
             return;
         }
+        else if (GameManager.Instance.IsTutorialEnabled())
+        {
+            GameManager.Instance.DisableTutorial();
+            return;
+        }
         if (GameManager.Instance.IsPauseMenuEnabled())
         {
             playerControls.Menu.Disable();
@@ -324,7 +329,6 @@ public class InputManager : MonoBehaviour
     public static void ResetBinding(string actionName, int bindingIndex)
     {
         InputAction action = playerControls.asset.FindAction(actionName);
-
         if(action == null || action.bindings.Count <= bindingIndex)
         {
             Debug.Log("Could not find action or binding");
@@ -362,10 +366,9 @@ public class InputManager : MonoBehaviour
 
         playerControls.Gameplay.Mouse.performed += ctx => mouseScreenPosition = ctx.ReadValue<Vector2>();
         playerControls.Gameplay.Move.performed += ctx => moveDirection = ctx.ReadValue<Vector2>();
-        playerControls.Gameplay.Sprint.performed += ctx => Sprint();
         playerControls.Gameplay.Scrap.performed += ctx => ScrapShot();
         playerControls.Gameplay.Magnetize.performed += ctx => Magnetize();
-        playerControls.Gameplay.Melee.performed += ctx => Melee();
+        playerControls.Gameplay.Spin.performed += ctx => Melee();
         playerControls.Gameplay.Grapple.performed += ctx => GrappleStart();
         playerControls.Gameplay.Grapple.canceled += ctx => GrappleStop();
         playerControls.Gameplay.Aim.performed += ctx => aimDirection = ctx.ReadValue<Vector2>();
@@ -380,10 +383,9 @@ public class InputManager : MonoBehaviour
         playerControls.Menu.Pause.performed -= PauseGame;
         playerControls.Gameplay.Mouse.performed -= ctx => mouseScreenPosition = ctx.ReadValue<Vector2>();
         playerControls.Gameplay.Move.performed -= ctx => moveDirection = ctx.ReadValue<Vector2>();
-        playerControls.Gameplay.Sprint.performed -= ctx => Sprint();
         playerControls.Gameplay.Scrap.performed -= ctx => ScrapShot();
         playerControls.Gameplay.Magnetize.performed -= ctx => Magnetize();
-        playerControls.Gameplay.Melee.performed -= ctx => Melee();
+        playerControls.Gameplay.Spin.performed -= ctx => Melee();
         playerControls.Gameplay.Grapple.performed -= ctx => GrappleStart();
         playerControls.Gameplay.Grapple.canceled -= ctx => GrappleStop();
         playerControls.Gameplay.Aim.performed -= ctx => aimDirection = ctx.ReadValue<Vector2>();

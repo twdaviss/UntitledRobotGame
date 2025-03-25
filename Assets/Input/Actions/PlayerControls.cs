@@ -46,15 +46,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Sprint"",
-                    ""type"": ""Button"",
-                    ""id"": ""78e9321e-02c8-471d-acb1-2cba80f7f3b0"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""Mouse"",
                     ""type"": ""Value"",
                     ""id"": ""f2573fb6-f2db-4849-aebb-bfb8c8a8d3ca"",
@@ -73,7 +64,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Melee"",
+                    ""name"": ""Spin"",
                     ""type"": ""Button"",
                     ""id"": ""864e5421-1349-4570-8ce8-9852c127086f"",
                     ""expectedControlType"": ""Button"",
@@ -209,39 +200,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""efb9ca34-74bd-43e9-b478-c15454662ec2"",
-                    ""path"": ""<Keyboard>/shift"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard"",
-                    ""action"": ""Sprint"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""fa99af06-1ef1-4494-a83e-8a8549fc173f"",
-                    ""path"": ""<Gamepad>/leftStickPress"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""Sprint"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""54b77ccd-9f56-4cd7-971b-87219dad80df"",
-                    ""path"": ""<Gamepad>/buttonEast"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""Sprint"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""62b6e095-dabb-4140-a9fe-0b25dce125e3"",
                     ""path"": ""<Mouse>/position"",
                     ""interactions"": """",
@@ -280,7 +238,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
-                    ""action"": ""Melee"",
+                    ""action"": ""Spin"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -291,7 +249,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""Melee"",
+                    ""action"": ""Spin"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -487,10 +445,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
         m_Gameplay_Scrap = m_Gameplay.FindAction("Scrap", throwIfNotFound: true);
         m_Gameplay_Move = m_Gameplay.FindAction("Move", throwIfNotFound: true);
-        m_Gameplay_Sprint = m_Gameplay.FindAction("Sprint", throwIfNotFound: true);
         m_Gameplay_Mouse = m_Gameplay.FindAction("Mouse", throwIfNotFound: true);
         m_Gameplay_Grapple = m_Gameplay.FindAction("Grapple", throwIfNotFound: true);
-        m_Gameplay_Melee = m_Gameplay.FindAction("Melee", throwIfNotFound: true);
+        m_Gameplay_Spin = m_Gameplay.FindAction("Spin", throwIfNotFound: true);
         m_Gameplay_Pause = m_Gameplay.FindAction("Pause", throwIfNotFound: true);
         m_Gameplay_Magnetize = m_Gameplay.FindAction("Magnetize", throwIfNotFound: true);
         m_Gameplay_Aim = m_Gameplay.FindAction("Aim", throwIfNotFound: true);
@@ -564,10 +521,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private List<IGameplayActions> m_GameplayActionsCallbackInterfaces = new List<IGameplayActions>();
     private readonly InputAction m_Gameplay_Scrap;
     private readonly InputAction m_Gameplay_Move;
-    private readonly InputAction m_Gameplay_Sprint;
     private readonly InputAction m_Gameplay_Mouse;
     private readonly InputAction m_Gameplay_Grapple;
-    private readonly InputAction m_Gameplay_Melee;
+    private readonly InputAction m_Gameplay_Spin;
     private readonly InputAction m_Gameplay_Pause;
     private readonly InputAction m_Gameplay_Magnetize;
     private readonly InputAction m_Gameplay_Aim;
@@ -578,10 +534,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public GameplayActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Scrap => m_Wrapper.m_Gameplay_Scrap;
         public InputAction @Move => m_Wrapper.m_Gameplay_Move;
-        public InputAction @Sprint => m_Wrapper.m_Gameplay_Sprint;
         public InputAction @Mouse => m_Wrapper.m_Gameplay_Mouse;
         public InputAction @Grapple => m_Wrapper.m_Gameplay_Grapple;
-        public InputAction @Melee => m_Wrapper.m_Gameplay_Melee;
+        public InputAction @Spin => m_Wrapper.m_Gameplay_Spin;
         public InputAction @Pause => m_Wrapper.m_Gameplay_Pause;
         public InputAction @Magnetize => m_Wrapper.m_Gameplay_Magnetize;
         public InputAction @Aim => m_Wrapper.m_Gameplay_Aim;
@@ -601,18 +556,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Move.started += instance.OnMove;
             @Move.performed += instance.OnMove;
             @Move.canceled += instance.OnMove;
-            @Sprint.started += instance.OnSprint;
-            @Sprint.performed += instance.OnSprint;
-            @Sprint.canceled += instance.OnSprint;
             @Mouse.started += instance.OnMouse;
             @Mouse.performed += instance.OnMouse;
             @Mouse.canceled += instance.OnMouse;
             @Grapple.started += instance.OnGrapple;
             @Grapple.performed += instance.OnGrapple;
             @Grapple.canceled += instance.OnGrapple;
-            @Melee.started += instance.OnMelee;
-            @Melee.performed += instance.OnMelee;
-            @Melee.canceled += instance.OnMelee;
+            @Spin.started += instance.OnSpin;
+            @Spin.performed += instance.OnSpin;
+            @Spin.canceled += instance.OnSpin;
             @Pause.started += instance.OnPause;
             @Pause.performed += instance.OnPause;
             @Pause.canceled += instance.OnPause;
@@ -635,18 +587,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Move.started -= instance.OnMove;
             @Move.performed -= instance.OnMove;
             @Move.canceled -= instance.OnMove;
-            @Sprint.started -= instance.OnSprint;
-            @Sprint.performed -= instance.OnSprint;
-            @Sprint.canceled -= instance.OnSprint;
             @Mouse.started -= instance.OnMouse;
             @Mouse.performed -= instance.OnMouse;
             @Mouse.canceled -= instance.OnMouse;
             @Grapple.started -= instance.OnGrapple;
             @Grapple.performed -= instance.OnGrapple;
             @Grapple.canceled -= instance.OnGrapple;
-            @Melee.started -= instance.OnMelee;
-            @Melee.performed -= instance.OnMelee;
-            @Melee.canceled -= instance.OnMelee;
+            @Spin.started -= instance.OnSpin;
+            @Spin.performed -= instance.OnSpin;
+            @Spin.canceled -= instance.OnSpin;
             @Pause.started -= instance.OnPause;
             @Pause.performed -= instance.OnPause;
             @Pause.canceled -= instance.OnPause;
@@ -790,10 +739,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     {
         void OnScrap(InputAction.CallbackContext context);
         void OnMove(InputAction.CallbackContext context);
-        void OnSprint(InputAction.CallbackContext context);
         void OnMouse(InputAction.CallbackContext context);
         void OnGrapple(InputAction.CallbackContext context);
-        void OnMelee(InputAction.CallbackContext context);
+        void OnSpin(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
         void OnMagnetize(InputAction.CallbackContext context);
         void OnAim(InputAction.CallbackContext context);

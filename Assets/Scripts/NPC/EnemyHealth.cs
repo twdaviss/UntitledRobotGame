@@ -14,10 +14,9 @@ public class EnemyHealth : MonoBehaviour
     private float staggerHealth;
     private float invincibilityTime;
     private float currentStaggerHealth;
-
-    public bool isGrappled = false;
-    public float grappledTime = 1.0f;
-    public float grappledTimer = 0.0f;
+    private bool isGrappled = false;
+    private float grappledTime = 1.0f;
+    private float grappledTimer = 0.0f;
 
     private void Awake()
     {
@@ -34,7 +33,7 @@ public class EnemyHealth : MonoBehaviour
             invincibilityTime = 0.0f;
         }
 
-        if (isGrappled )
+        if (isGrappled)
         {
             grappledTimer += Time.deltaTime;
             if(grappledTimer > grappledTime)
@@ -94,6 +93,11 @@ public class EnemyHealth : MonoBehaviour
             }
             invincibilityTime = 0.2f;
         }
+    }
+
+    public void SetGrappled()
+    {
+        isGrappled = true;
     }
 
     public void Stagger(float duration = 0.1f)

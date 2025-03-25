@@ -24,15 +24,6 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Sprint",
-                    "type": "Button",
-                    "id": "78e9321e-02c8-471d-acb1-2cba80f7f3b0",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Mouse",
                     "type": "Value",
                     "id": "f2573fb6-f2db-4849-aebb-bfb8c8a8d3ca",
@@ -51,7 +42,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Melee",
+                    "name": "Spin",
                     "type": "Button",
                     "id": "864e5421-1349-4570-8ce8-9852c127086f",
                     "expectedControlType": "Button",
@@ -187,39 +178,6 @@
                 },
                 {
                     "name": "",
-                    "id": "efb9ca34-74bd-43e9-b478-c15454662ec2",
-                    "path": "<Keyboard>/shift",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard",
-                    "action": "Sprint",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "fa99af06-1ef1-4494-a83e-8a8549fc173f",
-                    "path": "<Gamepad>/leftStickPress",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "Sprint",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "54b77ccd-9f56-4cd7-971b-87219dad80df",
-                    "path": "<Gamepad>/buttonEast",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "Sprint",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "62b6e095-dabb-4140-a9fe-0b25dce125e3",
                     "path": "<Mouse>/position",
                     "interactions": "",
@@ -258,7 +216,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "Melee",
+                    "action": "Spin",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -269,7 +227,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "Melee",
+                    "action": "Spin",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
