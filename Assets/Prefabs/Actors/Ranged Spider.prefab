@@ -5410,9 +5410,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30aa6625f9ff90448b7e07eb5f472b54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  staggerHealthPercentage: 50
+  staggerHealthPercentage: 30
   healthBar: {fileID: 4425984467977687344}
-  maxHealth: 50
+  maxHealth: 75
   metalSounds:
   - {fileID: 8300000, guid: 769cc783ef8e94c4a9492edf54acdfec, type: 3}
   - {fileID: 8300000, guid: 64a745937ed9a1f4f9486f6c6d1e1694, type: 3}

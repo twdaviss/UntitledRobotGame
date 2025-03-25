@@ -222,7 +222,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7932e20a6058c04e878a19bbc2d1c5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultMoveSpeed: 5
+  defaultMoveSpeed: 6
   footsteps: {fileID: 0}
   playerSprite: {fileID: 7429379723091429669}
   playerAnimator: {fileID: 7899832127833797893}
@@ -566,7 +566,6 @@ MonoBehaviour:
   staggerTime: 0.2
   hurtSound: {fileID: 8300000, guid: 46d9b86314382f34d9c9ac33c94d2452, type: 3}
   healRate: 1
-  isHurt: 0
 --- !u!70 &5829717358442260822
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -647,12 +646,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4caea682c9887ba448c9097bd44a58d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentAmmo: 3
   maxAmmo: 3
   scrapPrefab: {fileID: 3162969577572220229, guid: 5d7d1cb4dbdd508488cd5b2df08cd810, type: 3}
   scrapSpeed: 400
-  scrapDamage: 20
-  scrapStun: 5
+  scrapDamage: 10
+  scrapStun: 20
   scrapRange: 10
   scrapCoolDownTime: 0
   magnetizeRadius: 20
