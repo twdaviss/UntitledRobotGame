@@ -12,6 +12,7 @@ public enum GameScene
 };
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] GameScene startScene;
     [SerializeField] private GameObject PauseMenu;
     [SerializeField] private GameObject OptionsMenu;
     [SerializeField] private GameObject TutorialPanel;
@@ -32,20 +33,24 @@ public class GameManager : MonoBehaviour
 
     public delegate void UnPaused();
     public static event UnPaused onUnPaused;
+
     private void Start()
     {
-        DontDestroyOnLoad(this);
-
         if (Instance == null)
         {
+            //First run, set the instance
             Instance = this;
+            DontDestroyOnLoad(gameObject);
         }
-        else
+        else if (Instance != this)
         {
-            Destroy(gameObject);
+            //Instance is not the same as the one we have, destroy old one, and reset to newest one
+            Destroy(Instance.gameObject);
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
         }
 
-        DisablePauseMenu();
+        DisableMenus();
         return;
     }
 
@@ -86,15 +91,17 @@ public class GameManager : MonoBehaviour
     #region UI
     public void EnablePauseMenu()
     {
+        if (SceneManager.GetActiveScene().name == "Main Menu") { return; }
         FreezeTimeScale();
         PauseMenu.SetActive(true);
     }
 
-    public void DisablePauseMenu()
+    public void DisableMenus()
     {
         StartCoroutine(ResetTimeScale());
         PauseMenu.SetActive(false);
         OptionsMenu.SetActive(false);
+        TutorialPanel.SetActive(false);
         onUnPaused();
     }
 
@@ -119,7 +126,7 @@ public class GameManager : MonoBehaviour
     }
     public bool IsTutorialEnabled()
     {
-        return PauseMenu.activeSelf;
+        return TutorialPanel.activeSelf;
     }
 
     public bool IsPauseMenuEnabled()
@@ -200,14 +207,27 @@ public class GameManager : MonoBehaviour
     public void OpenMainMenu()
     {
         StartCoroutine(ResetTimeScale());
+        InputManager.playerControls.Menu.Enable();
+        InputManager.playerControls.Gameplay.Disable();
         PauseMenu.SetActive(false);
         SceneManager.LoadScene((int)GameScene.MainMenu);
     }
-  
+
+    public void LoadStartScene()
+    {
+        InputManager.playerControls.Menu.Disable();
+        InputManager.playerControls.Gameplay.Enable();
+        SceneManager.LoadScene((int)startScene);
+    }
+
     private void OnSceneChange(Scene scene, LoadSceneMode mode)
     {
         if(scene.buildIndex == 0) { return;}
         SetGrid();
+    }
+    public void QuitGame()
+    {
+        Application.Quit();
     }
     #endregion
 }

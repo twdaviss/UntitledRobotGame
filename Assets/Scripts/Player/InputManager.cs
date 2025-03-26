@@ -56,13 +56,18 @@ public class InputManager : MonoBehaviour
 
     void Awake()
     {
-        if (Instance != null && Instance != this)
+        if (Instance == null)
         {
-            Destroy(this);
-        }
-        else
-        {
+            //First run, set the instance
             Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else if (Instance != this)
+        {
+            //Instance is not the same as the one we have, destroy old one, and reset to newest one
+            Destroy(Instance.gameObject);
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
         }
 
         if (playerControls == null)
@@ -72,8 +77,8 @@ public class InputManager : MonoBehaviour
     }
     private void Start()
     {
-        playerControls.Menu.Disable();
-        playerControls.Gameplay.Enable();
+        //playerControls.Menu.Disable();
+        //playerControls.Gameplay.Enable();
     }
 
     public void PauseGame(InputAction.CallbackContext context)
@@ -93,7 +98,7 @@ public class InputManager : MonoBehaviour
         {
             playerControls.Menu.Disable();
             playerControls.Gameplay.Enable();
-            GameManager.Instance.DisablePauseMenu();
+            GameManager.Instance.DisableMenus();
         }
         else
         {
