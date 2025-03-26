@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject PauseMenu;
     [SerializeField] private GameObject OptionsMenu;
     [SerializeField] private GameObject TutorialPanel;
+    [SerializeField] private GameObject DeathScreen;
+    [SerializeField] private GameObject GameplayUI;
     [SerializeField] private TextMeshProUGUI TutorialText;
     [SerializeField] private Image healthBar;
     [SerializeField] private Image meleeCooldownIcon;
@@ -102,7 +104,14 @@ public class GameManager : MonoBehaviour
         PauseMenu.SetActive(false);
         OptionsMenu.SetActive(false);
         TutorialPanel.SetActive(false);
+        DeathScreen.SetActive(false);
         onUnPaused();
+    }
+    public void EnableDeathScreen()
+    {
+        FreezeTimeScale();
+        InputManager.playerControls.Gameplay.Disable();
+        DeathScreen.SetActive(true);
     }
 
     public void EnableTutorial()
@@ -218,6 +227,7 @@ public class GameManager : MonoBehaviour
         InputManager.playerControls.Menu.Disable();
         InputManager.playerControls.Gameplay.Enable();
         SceneManager.LoadScene((int)startScene);
+        GameplayUI.SetActive(true);
     }
 
     private void OnSceneChange(Scene scene, LoadSceneMode mode)

@@ -83,7 +83,6 @@ public class PlayerHealth : MonoBehaviour
                 currentStaggerHealth = staggerHealth;
                 staggerTimer = 0.0f;
             }
-            //DropOil();
             audioSource.PlayOneShot(hurtSound);
             invincibilityTime = 0.2f;
         }
@@ -114,6 +113,6 @@ public class PlayerHealth : MonoBehaviour
 
     private void PlayerDeath()
     {
-        SceneManager.LoadScene(0);
+        GameManager.Instance.EnableDeathScreen();
     }
 }
