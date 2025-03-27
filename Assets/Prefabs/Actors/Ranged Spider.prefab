@@ -5757,7 +5757,7 @@ MonoBehaviour:
   wanderWaitTime: 0.5
   wanderTime: 0.5
   wanderMultiplier: 10
-  fleeDistanceThreshold: 15
+  fleeDistanceThreshold: 10
   fleeTime: 2
   isStunned: 0
   shootCooldownTimer: 0

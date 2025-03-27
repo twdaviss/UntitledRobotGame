@@ -61,6 +61,7 @@ public class EnemyController : EnemyStateMachine
 
     public bool isStunned = false;
     public float shootCooldownTimer = 0.0f;
+    public bool isAggroed = false;
 
     private void Awake()
     {
@@ -193,7 +194,7 @@ public class EnemyController : EnemyStateMachine
         }
 
         Vector2 moveTarget = path[0];
-        if (Vector3.Distance(transform.position, moveTarget) < 1.0)
+        if (Vector3.Distance(transform.position, moveTarget) < 1.5)
         {
             path.RemoveAt(0);
 

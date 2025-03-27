@@ -5740,6 +5740,7 @@ MonoBehaviour:
   enemyType: 0
   moveSpeed: 6
   target: {fileID: 0}
+  aggroDistance: 15
   meleeDamage: 10
   meleeRange: 3
   meleeBuildUpTime: 0.5

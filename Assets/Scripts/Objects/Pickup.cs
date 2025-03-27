@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 public enum PickupType
 {
@@ -13,6 +14,9 @@ public class Pickup : MonoBehaviour
 {
     [SerializeField] private PickupType pickup;
     [SerializeField] private Sprite sprite;
+    [SerializeField] private GameObject prompt;
+    [SerializeField] private GameObject description;
+
     private GameObject player;
 
     bool playerInRange;
@@ -25,7 +29,15 @@ public class Pickup : MonoBehaviour
 
     private void Update()
     {
-        
+        if (!playerInRange)
+        {
+            prompt.SetActive(false);
+            description.SetActive(false);
+            return;
+        }
+        prompt.SetActive(true);
+        prompt.GetComponent<TextMeshProUGUI>().text = "Press " + InputManager.GetBindingName("Interact", 0) + " to Pick Up"; 
+        description.SetActive(true);
     }
 
     private void Interact()

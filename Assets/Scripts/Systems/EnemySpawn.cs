@@ -30,8 +30,8 @@ public class EnemySpawn : MonoBehaviour
         int index = Random.Range(0, enemies.Length);
         Vector2 direction = Random.insideUnitCircle;
         Vector3 spawnPosition = transform.position;
-        spawnPosition.x += direction.x * 10.0f;
-        spawnPosition.y += direction.y * 10.0f;
+        spawnPosition.x += direction.x * 5.0f;
+        spawnPosition.y += direction.y * 5.0f;
         GameObject enemyObject = Instantiate(enemies[index], transform.position, enemies[index].transform.rotation);
         EnemyController enemy = enemyObject.GetComponent<EnemyController>();
         enemy.TransitionState(new EnemyKnockback(enemy, 40, direction));

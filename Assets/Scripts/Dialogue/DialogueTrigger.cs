@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 public class DialogueTrigger : MonoBehaviour
@@ -31,12 +32,21 @@ public class DialogueTrigger : MonoBehaviour
             visualCue.SetActive(true);
             prompt.SetActive(false);
         }
+
+        if (GameObject.FindGameObjectsWithTag("Enemy").Length > 0)
+        {
+            prompt.GetComponentInChildren<TextMeshProUGUI>().text = "Clear Remaining Enemies";
+        }
+        else
+        {
+            prompt.GetComponent<TextMeshProUGUI>().text = "Press " + InputManager.GetBindingName("Interact", 0) + " to Listen";
+        }
     }
 
     private void Interact()
     {
         if(playerInRange)
-        {
+        { 
             prompt.SetActive(false);
             DialogueManager.Instance.EnterDialogueMode(inkJSON);
         }
