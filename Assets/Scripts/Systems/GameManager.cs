@@ -45,7 +45,7 @@ public class GameManager : MonoBehaviour
     public bool enableRicochet = false;
     public bool increaseKnockBack = false;
     public bool enableGrapplePull = false;
-    public bool enableAutoHeal = true;
+    public bool enableAutoHeal = false;
 
     private void Start()
     {

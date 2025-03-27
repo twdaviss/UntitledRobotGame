@@ -1,3 +1,4 @@
+"You hear the woman from before"
 You again! Did you find any memory sticks?
 *[AFFIRMATIVE]
 Thats great! I hope they were of some use.

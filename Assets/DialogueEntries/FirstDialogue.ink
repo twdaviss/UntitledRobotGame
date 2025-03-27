@@ -1,3 +1,4 @@
+"Through the static, a female voice comes through"
 This is incredible! You're awake.
 
  * [00000000]

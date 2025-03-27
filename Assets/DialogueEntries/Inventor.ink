@@ -1,3 +1,4 @@
+"You hear a man's voice come through"
 I can't believe it... My creation is alive!
 
  * [INQUIRY. YOUR CREATION]

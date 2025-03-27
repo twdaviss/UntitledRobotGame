@@ -75,6 +75,7 @@ public class Scrap : MonoBehaviour
         this.range = range;
         this.direction = direction;
         this.player = player;
+        this.inert = false;
     }
 
     public void SetPool(ObjectPool<Scrap> pool)

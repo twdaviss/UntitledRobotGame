@@ -1210,7 +1210,7 @@ MonoBehaviour:
   enableRicochet: 0
   increaseKnockBack: 0
   enableGrapplePull: 0
-  enableAutoHeal: 1
+  enableAutoHeal: 0
 --- !u!114 &1804793534740944912
 MonoBehaviour:
   m_ObjectHideFlags: 0
