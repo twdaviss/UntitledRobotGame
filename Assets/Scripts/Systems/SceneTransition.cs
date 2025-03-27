@@ -37,7 +37,7 @@ public class SceneTransition : MonoBehaviour
         }
         if(GameObject.FindGameObjectsWithTag("Enemy").Length <= 0)
         {
-            SceneManager.LoadScene(scene.HumanName());
+            SceneManager.LoadScene(scene.ToString().Prettify());
         }
     }
 

@@ -1060,7 +1060,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09581bc7b6d35b8489dc45e30791b77a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startScene: 1
+  startScene: 3
   PauseMenu: {fileID: 6380215317107581336}
   OptionsMenu: {fileID: 3712793937716729876}
   TutorialPanel: {fileID: 6808858719146851018}

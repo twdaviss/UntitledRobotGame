@@ -230,7 +230,7 @@ public class GameManager : MonoBehaviour
     {
         InputManager.playerControls.Menu.Disable();
         InputManager.playerControls.Gameplay.Enable();
-        SceneManager.LoadScene(startScene.HumanName());
+        SceneManager.LoadScene(startScene.ToString().Prettify());
         GameplayUI.SetActive(true);
     }
 
