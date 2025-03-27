@@ -1009,9 +1009,9 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4116793678636239229, guid: ebf598f6c4bcb2b43ab014b39bb916f1, type: 3}
-      propertyPath: startScene
-      value: 3
-      objectReference: {fileID: 0}
+      propertyPath: EndScreen
+      value: 
+      objectReference: {fileID: 1195346955}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1587,6 +1587,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1086062929}
   m_CullTransparentMesh: 1
+--- !u!1 &1195346955 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2734817321780462121, guid: ebf598f6c4bcb2b43ab014b39bb916f1, type: 3}
+  m_PrefabInstance: {fileID: 399047247}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1701057200
 GameObject:
   m_ObjectHideFlags: 0

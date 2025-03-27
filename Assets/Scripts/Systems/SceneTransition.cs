@@ -7,8 +7,10 @@ public class SceneTransition : MonoBehaviour
 {
     [SerializeField] private GameScene scene;
     [SerializeField] private GameObject prompt;
+    [SerializeField] private bool endOfDemo;
 
-    bool playerInRange;
+    private bool playerInRange;
+    
     private void Awake()
     {
         playerInRange = false;
@@ -24,6 +26,10 @@ public class SceneTransition : MonoBehaviour
         {
             prompt.GetComponentInChildren<TextMeshProUGUI>().text = "Come here to Leave Level";
         }
+        else if (endOfDemo)
+        {
+            prompt.GetComponentInChildren<TextMeshProUGUI>().text = "Press " + InputManager.GetBindingName("Interact", 0) + " to Finish Demo";
+        }
         else
         {
             prompt.GetComponentInChildren<TextMeshProUGUI>().text = "Press " + InputManager.GetBindingName("Interact", 0) + " for Next Level";
@@ -35,10 +41,17 @@ public class SceneTransition : MonoBehaviour
         {
             return;
         }
-        if(GameObject.FindGameObjectsWithTag("Enemy").Length <= 0)
+        if(GameObject.FindGameObjectsWithTag("Enemy").Length > 0)
         {
-            SceneManager.LoadScene(scene.ToString().Prettify());
+            return;
         }
+
+        if(endOfDemo)
+        {
+            GameManager.Instance.EnableEndScreen();
+            return;
+        }
+        SceneManager.LoadScene(scene.ToString().Prettify());
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

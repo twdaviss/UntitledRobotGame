@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject OptionsMenu;
     [SerializeField] private GameObject TutorialPanel;
     [SerializeField] private GameObject DeathScreen;
+    [SerializeField] private GameObject EndScreen;
     [SerializeField] private GameObject GameplayUI;
     [SerializeField] private TextMeshProUGUI TutorialText;
     [SerializeField] private Image healthBar;
@@ -125,6 +126,13 @@ public class GameManager : MonoBehaviour
         FreezeTimeScale();
         InputManager.playerControls.Gameplay.Disable();
         DeathScreen.SetActive(true);
+    }
+
+    public void EnableEndScreen()
+    {
+        FreezeTimeScale();
+        InputManager.playerControls.Gameplay.Disable();
+        EndScreen.SetActive(true);
     }
 
     public void EnableTutorial()
@@ -232,11 +240,15 @@ public class GameManager : MonoBehaviour
         InputManager.playerControls.Menu.Enable();
         InputManager.playerControls.Gameplay.Disable();
         PauseMenu.SetActive(false);
-        SceneManager.LoadScene("Mainmenu");
+        SceneManager.LoadScene("MainMenu");
     }
 
     public void LoadStartScene()
     {
+        enableRicochet = false;
+        increaseKnockBack = false;
+        enableGrapplePull = false;
+        enableAutoHeal = true;
         InputManager.playerControls.Menu.Disable();
         InputManager.playerControls.Gameplay.Enable();
         SceneManager.LoadScene(startScene.ToString().Prettify());

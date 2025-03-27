@@ -46,16 +46,12 @@ public class Melee : MonoBehaviour
             {
                 if (target.gameObject.GetComponent<EnemyController>() != null)
                 {
-                    target.gameObject.GetComponent<EnemyController>().Damage(damage, stun, knockBack, (target.transform.position - playerController.transform.position).normalized);
+                    target.gameObject.GetComponent<EnemyController>().Damage(damage, stun, currentKnockback, (target.transform.position - playerController.transform.position).normalized);
                 }
             }
         }
     }
 
-    public void IncreaseKnockBack(float mult)
-    {
-        knockBack *= mult;
-    }
 
     private void FixedUpdate()
     {
