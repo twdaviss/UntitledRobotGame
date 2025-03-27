@@ -5,10 +5,15 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.InputSystem;
+using Unity.VisualScripting;
 public enum GameScene
 {
-    MainMenu,
-    TestScene,
+    Mainmenu,
+    Junkyard,
+    Parkinglot,
+    Building,
+    Street,
+    Alley,
 };
 public class GameManager : MonoBehaviour
 {
@@ -219,14 +224,14 @@ public class GameManager : MonoBehaviour
         InputManager.playerControls.Menu.Enable();
         InputManager.playerControls.Gameplay.Disable();
         PauseMenu.SetActive(false);
-        SceneManager.LoadScene((int)GameScene.MainMenu);
+        SceneManager.LoadScene("Mainmenu");
     }
 
     public void LoadStartScene()
     {
         InputManager.playerControls.Menu.Disable();
         InputManager.playerControls.Gameplay.Enable();
-        SceneManager.LoadScene((int)startScene);
+        SceneManager.LoadScene(startScene.HumanName());
         GameplayUI.SetActive(true);
     }
 

@@ -1,17 +1,12 @@
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public enum Scenes
-{
-    Building,
-    Alley,
-    Street,
-    Junkyard,
-    ParkingLot,
-}
 public class SceneTransition : MonoBehaviour
 {
-    [SerializeField] private Scenes scene;
+    [SerializeField] private GameScene scene;
+    [SerializeField] private GameObject prompt;
 
     bool playerInRange;
     private void Awake()
@@ -21,32 +16,28 @@ public class SceneTransition : MonoBehaviour
 
     private void Update()
     {
-        
+        if (GameObject.FindGameObjectsWithTag("Enemy").Length > 0)
+        {
+            prompt.GetComponentInChildren<TextMeshProUGUI>().text = "Clear Remaining Enemies";
+        }
+        else if (!playerInRange)
+        {
+            prompt.GetComponentInChildren<TextMeshProUGUI>().text = "Come here to Leave Level";
+        }
+        else
+        {
+            prompt.GetComponentInChildren<TextMeshProUGUI>().text = "Press " + InputManager.GetBindingName("Interact", 0) + " for Next Level";
+        }
     }
-
     private void Interact()
     {
         if (!playerInRange)
         {
             return;
         }
-        switch (scene)
+        if(GameObject.FindGameObjectsWithTag("Enemy").Length <= 0)
         {
-            case Scenes.Building:
-                SceneManager.LoadScene("Scene5Building");
-                break;
-            case Scenes.Alley:
-                SceneManager.LoadScene("Scene3Alley");
-                break;
-            case Scenes.Street:
-                SceneManager.LoadScene("Scene4Street");
-                break;
-            case Scenes.Junkyard:
-                SceneManager.LoadScene("Scene1Junkyard");
-                break;
-            case Scenes.ParkingLot:
-                SceneManager.LoadScene("Scene2ParkingLot");
-                break;
+            SceneManager.LoadScene(scene.HumanName());
         }
     }
 

@@ -1,11 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class DialogueTrigger : MonoBehaviour
 {
     [Header("Visual Cue")]
     [SerializeField] private GameObject visualCue;
+    [SerializeField] private GameObject prompt;
 
     [Header("Text Asset")]
     [SerializeField] private TextAsset inkJSON;
@@ -18,13 +17,19 @@ public class DialogueTrigger : MonoBehaviour
 
     private void Update()
     {
+        if(DialogueManager.Instance.dialogueIsPlaying)
+        {
+            return;
+        }
         if (playerInRange)
         {
             visualCue.SetActive(false);
+            prompt.SetActive(true);
         }
         else
         {
             visualCue.SetActive(true);
+            prompt.SetActive(false);
         }
     }
 
@@ -32,21 +37,22 @@ public class DialogueTrigger : MonoBehaviour
     {
         if(playerInRange)
         {
+            prompt.SetActive(false);
             DialogueManager.Instance.EnterDialogueMode(inkJSON);
         }
     }
-
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(other.CompareTag("Player"))
+        if(playerInRange) { return;}
+        if (collision.CompareTag("Player"))
         {
             playerInRange = true;
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    private void OnTriggerExit2D(Collider2D collision)
     {
-        if (other.CompareTag("Player"))
+        if (collision.CompareTag("Player"))
         {
             playerInRange = false;
         }
