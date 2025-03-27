@@ -17,12 +17,13 @@ public class PlayerController : PlayerStateMachine
 
     private void Awake()
     {
+        InputManager.onMelee += Attack;
         playerSprite = GetComponent<SpriteRenderer>();
         playerAnimator = GetComponent<Animator>();
         playerAudioSource = GetComponent<AudioSource>();
         playerMelee = GetComponentInChildren<Melee>();
 
-        SetState(new PlayerDefault(this));
+        TransitionState(new PlayerDefault(this));
     }
     void Update()
     {
@@ -75,6 +76,16 @@ public class PlayerController : PlayerStateMachine
         else { playerSprite.flipX = true; }
     }
 
+    private void Attack()
+    {
+        playerMelee.TryAttack();
+    }
+
+    private void OnDisable()
+    {
+        State.End();
+        InputManager.onMelee -= Attack;
+    }
     public string GetCurrentState()
     {
         return State.name;

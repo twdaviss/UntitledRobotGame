@@ -25,6 +25,7 @@ public class Scrap : MonoBehaviour
     {
         scrapRigidbody = GetComponent<Rigidbody2D>();
     }
+
     private void OnEnable()
     {
         InputManager.onMagnetizeScrap += Magnetize;
@@ -34,10 +35,16 @@ public class Scrap : MonoBehaviour
         isMagnetized = false;
     }
 
+    private void OnDisable()
+    {
+        InputManager.onMagnetizeScrap -= Magnetize;
+    }
+
     private void OnDestroy()
     {
         InputManager.onMagnetizeScrap -= Magnetize;
     }
+
     void Update()
     {
         if(scrapRigidbody.velocity.magnitude > 2.0f)

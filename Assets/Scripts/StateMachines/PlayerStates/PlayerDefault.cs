@@ -1,6 +1,4 @@
 using System.Collections;
-using Unity.VisualScripting;
-using UnityEngine;
 
 namespace RobotGame.States
 {
@@ -11,7 +9,6 @@ namespace RobotGame.States
         
         public override IEnumerator Start()
         {
-            InputManager.onMelee += Attack;
             yield break;
         }
 
@@ -20,13 +17,9 @@ namespace RobotGame.States
             player.InputHandler();
             yield break;
         }
-        private void Attack()
-        {
-            player.playerMelee.TryAttack();
-        }
+        
         public override IEnumerator End()
         {
-            InputManager.onMelee -= Attack;
             yield break;
         }
         public override IEnumerator FixedUpdate()

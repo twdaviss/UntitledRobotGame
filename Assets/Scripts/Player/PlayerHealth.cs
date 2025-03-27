@@ -19,7 +19,7 @@ public class PlayerHealth : MonoBehaviour
     private float staggerCooldown = 5.0f;
     private float staggerTimer = 0.0f;
     private float healCooldownTime = 1.0f;
-    private bool autoHeal = true;
+    private bool autoHeal = false;
     private float healCooldownTimer;
 
     private void Awake()

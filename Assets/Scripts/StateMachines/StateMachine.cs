@@ -13,9 +13,17 @@ namespace RobotGame.States
         }
         public virtual void TransitionState(PlayerState state)
         {
-            StartCoroutine(State.End());
+            if (State != null)
+            {
+                StartCoroutine(State.End());
+            }
             State = state;
             StartCoroutine(State.Start());
+        }
+
+        private void OnDisable()
+        {
+            Destroy(this);
         }
     }
 
@@ -33,6 +41,10 @@ namespace RobotGame.States
             StartCoroutine(State.End());
             State = state;
             StartCoroutine(State.Start());
+        }
+        private void OnDisable()
+        {
+            Destroy(this);
         }
     }
 }

@@ -140,6 +140,12 @@ public class ScrapShot : MonoBehaviour
         InputManager.onMagnetize += Magnetize;
     }
 
+    private void OnDisable()
+    {
+        InputManager.onScrapShot -= ShootScrap;
+        InputManager.onMagnetize -= Magnetize;
+    }
+
     private void OnDestroy()
     {
         InputManager.onScrapShot -= ShootScrap;

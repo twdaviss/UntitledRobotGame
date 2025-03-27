@@ -56,10 +56,6 @@ public class GameManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);
         }
-        if(pathfinder == null)
-        {
-            SetGrid();
-        }
         DisableMenus();
         return;
     }

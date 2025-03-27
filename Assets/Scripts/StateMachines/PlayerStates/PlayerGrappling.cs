@@ -17,7 +17,7 @@ namespace RobotGame.States
         private float totalDistance;
         private bool meleePressed = false;
 
-        public PlayerGrappling(PlayerController player, GameObject target, float startingSpeed, float targetSpeed) { this.player = player; name = "PlayerSlinging"; this.target = target; this.startingSpeed = startingSpeed; this.targetSpeed = targetSpeed; }
+        public PlayerGrappling(PlayerController player, GameObject target, float startingSpeed, float targetSpeed) { this.player = player; name = "PlayerGrappling"; this.target = target; this.startingSpeed = startingSpeed; this.targetSpeed = targetSpeed; }
         
         public override IEnumerator Start()
         {
