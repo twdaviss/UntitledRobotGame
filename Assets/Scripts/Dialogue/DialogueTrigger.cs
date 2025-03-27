@@ -10,6 +10,7 @@ public class DialogueTrigger : MonoBehaviour
     [Header("Text Asset")]
     [SerializeField] private TextAsset inkJSON;
     bool playerInRange;
+    bool activated = false;
     private void Awake()
     {
         playerInRange = false;
@@ -20,6 +21,12 @@ public class DialogueTrigger : MonoBehaviour
     {
         if(DialogueManager.Instance.dialogueIsPlaying)
         {
+            return;
+        }
+        if(activated)
+        {
+            visualCue.SetActive(false);
+            prompt.SetActive(false);
             return;
         }
         if (playerInRange)
@@ -45,10 +52,12 @@ public class DialogueTrigger : MonoBehaviour
 
     private void Interact()
     {
+        if(activated) { return; }
         if(playerInRange)
         { 
             prompt.SetActive(false);
             DialogueManager.Instance.EnterDialogueMode(inkJSON);
+            activated = true;
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)

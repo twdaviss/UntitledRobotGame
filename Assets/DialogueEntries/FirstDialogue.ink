@@ -16,7 +16,7 @@ Your creator... My father..
 *[...]
 -He died, however... His own inventions killed him
 *[INQUIRY. WHO IS 'YOU'?]
--I'm a mechanic. I've been trying to get you working for a while. I replaced your battery recently trying hoping that would do the trick but it must've been dead. Perhaps some time in the sun recharged it.
+-I'm a mechanic. I've been trying to get you working for a while. I replaced your battery recently hoping that would do the trick but it must've been dead. Perhaps some time in the sun recharged it.
 -> next
 
 === next ===
