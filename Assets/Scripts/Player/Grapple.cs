@@ -30,6 +30,7 @@ public class Grapple : MonoBehaviour
 
     private void Update()
     {
+        canGrapplePull = GameManager.Instance.enableGrapplePull;
         grappleCooldownTimer += Time.deltaTime;
         if (InputManager.playerControls.Gameplay.Grapple.inProgress)
         {

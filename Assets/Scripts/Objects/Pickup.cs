@@ -17,8 +17,7 @@ public class Pickup : MonoBehaviour
     [SerializeField] private GameObject prompt;
     [SerializeField] private GameObject description;
 
-    private GameObject player;
-
+    GameObject player;
     bool playerInRange;
     private void Awake()
     {
@@ -49,13 +48,13 @@ public class Pickup : MonoBehaviour
         switch (pickup)
         {
             case PickupType.Ricochet:
-                player.GetComponentInChildren<ScrapShot>().EnableRicochet();
+                GameManager.Instance.enableRicochet = true;
                 break;
             case PickupType.KnockBack:
-                player.GetComponentInChildren<Melee>().IncreaseKnockBack(1.5f);
+                GameManager.Instance.increaseKnockBack = true;
                 break;
             case PickupType.GrapplePull:
-                player.GetComponentInChildren<Grapple>().EnableGrapplePull();
+                GameManager.Instance.enableGrapplePull = true;
                 break;
             case PickupType.Health:
                 player.GetComponentInChildren<PlayerHealth>().Heal(20);
@@ -64,7 +63,7 @@ public class Pickup : MonoBehaviour
                 player.GetComponentInChildren<ScrapShot>().IncreaseAmmo(1);
                 break;
             case PickupType.AutoHeal:
-                player.GetComponentInChildren<PlayerHealth>().EnableAutoHeal();
+                GameManager.Instance.enableAutoHeal = true;
                 break;
         }
         Destroy(gameObject);

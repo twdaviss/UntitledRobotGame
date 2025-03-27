@@ -31,6 +31,7 @@ public class ScrapShot : MonoBehaviour
 
     private void Update()
     {
+        canRicochet = GameManager.Instance.enableRicochet;
         coolDownTimer += Time.deltaTime;
         if(currentAmmo > maxAmmo)
         {

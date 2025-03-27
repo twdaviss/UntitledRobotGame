@@ -41,6 +41,11 @@ public class GameManager : MonoBehaviour
     public delegate void UnPaused();
     public static event UnPaused onUnPaused;
 
+    public bool enableRicochet = false;
+    public bool increaseKnockBack = false;
+    public bool enableGrapplePull = false;
+    public bool enableAutoHeal = true;
+
     private void Start()
     {
         if (Instance == null)
@@ -52,6 +57,10 @@ public class GameManager : MonoBehaviour
         else if (Instance != this)
         {
             //Instance is not the same as the one we have, destroy old one, and reset to newest one
+            enableRicochet = Instance.enableRicochet;
+            increaseKnockBack= Instance.increaseKnockBack;
+            enableGrapplePull= Instance.enableGrapplePull;
+            enableAutoHeal= Instance.enableAutoHeal;
             Destroy(Instance.gameObject);
             Instance = this;
             DontDestroyOnLoad(gameObject);

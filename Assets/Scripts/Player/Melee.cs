@@ -15,6 +15,8 @@ public class Melee : MonoBehaviour
     private float meleeCooldownTimer;
     private bool isDealingDamage = false;
 
+    private float currentKnockback;
+
     private void Awake()
     {
         meleeCooldownTimer = meleeCooldownTime;
@@ -26,6 +28,14 @@ public class Melee : MonoBehaviour
 
     private void Update()
     {
+        if(GameManager.Instance.increaseKnockBack)
+        {
+            currentKnockback = knockBack * 2.0f; 
+        }
+        else
+        {
+            currentKnockback = knockBack;
+        }
         meleeCooldownTimer += Time.deltaTime;
         if(isDealingDamage)
         {
