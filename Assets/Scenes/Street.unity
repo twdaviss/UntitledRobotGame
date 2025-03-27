@@ -4308,9 +4308,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af5540670124ce34bafc1582ee38eab1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enableDebug: 0
-  width: 40
-  height: 25
+  enableDebug: 1
+  width: 45
+  height: 80
   cellSize: 1
 --- !u!4 &1301353808
 Transform:
@@ -6450,7 +6450,7 @@ Transform:
   m_GameObject: {fileID: 2301434646116805492}
   serializedVersion: 2
   m_LocalRotation: {x: -0.5, y: -0, z: -0, w: 0.8660254}
-  m_LocalPosition: {x: 120.3, y: 134.71922, z: -15.000002}
+  m_LocalPosition: {x: 120.3, y: 88.29924, z: -14.999998}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6519,11 +6519,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1672617182521118099, guid: e1ba6dadd6d10e249b115f4057bf955a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 157.7
+      value: 111.28
       objectReference: {fileID: 0}
     - target: {fileID: 1672617182521118099, guid: e1ba6dadd6d10e249b115f4057bf955a, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1672617182521118099, guid: e1ba6dadd6d10e249b115f4057bf955a, type: 3}
       propertyPath: m_LocalRotation.w
@@ -6666,7 +6666,7 @@ Transform:
   m_GameObject: {fileID: 8987628408442977532}
   serializedVersion: 2
   m_LocalRotation: {x: -0.5, y: -0, z: -0, w: 0.8660254}
-  m_LocalPosition: {x: 120.3, y: 134.71922, z: -14.3995}
+  m_LocalPosition: {x: 120.3, y: 91.991714, z: -14.3995}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

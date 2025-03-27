@@ -1930,8 +1930,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableDebug: 0
-  width: 40
-  height: 25
+  width: 60
+  height: 30
   cellSize: 1
 --- !u!4 &1301353808
 Transform:
