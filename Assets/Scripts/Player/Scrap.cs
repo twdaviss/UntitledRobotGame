@@ -134,7 +134,6 @@ public class Scrap : MonoBehaviour
             }
         }
         bounces = 0;
-        ClampVelocity();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
