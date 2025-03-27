@@ -20,6 +20,7 @@ public class EnemyController : EnemyStateMachine
     [SerializeField] public EnemyType enemyType;
     [SerializeField] public int moveSpeed;
     [SerializeField] public Transform target;
+    [SerializeField] public float aggroDistance;
 
     [Header("Melee")]
     [SerializeField] public float meleeDamage;

@@ -11,25 +11,31 @@ namespace RobotGame.States
         
         public override IEnumerator Start()
         {
-            switch (enemy.enemyType)
-            {
-                case EnemyType.Aggressive:
-                    enemy.SetState(new EnemyFollow(enemy));
-                    break;
-                case EnemyType.Shy:
-                    enemy.SetState(new EnemyFollow(enemy));
-                    break;
-                case EnemyType.Ranged:
-                    enemy.SetState(new EnemyFollow(enemy));
-                    break;
-                case EnemyType.Explosive:
-                    break;
-            }
+            
+
+            //switch (enemy.enemyType)
+            //{
+            //    case EnemyType.Aggressive:
+            //        enemy.SetState(new EnemyFollow(enemy));
+            //        break;
+            //    case EnemyType.Shy:
+            //        enemy.SetState(new EnemyFollow(enemy));
+            //        break;
+            //    case EnemyType.Ranged:
+            //        enemy.SetState(new EnemyFollow(enemy));
+            //        break;
+            //    case EnemyType.Explosive:
+            //        break;
+            //}
             yield break;
         }
 
         public override IEnumerator Update()
         {
+            if (Vector2.Distance(enemy.transform.position, enemy.target.position) < enemy.aggroDistance)
+            {
+                enemy.SetState(new EnemyFollow(enemy));
+            }
             yield break;
         }
 
