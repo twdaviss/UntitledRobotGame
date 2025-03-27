@@ -394,7 +394,7 @@ GameObject:
   - component: {fileID: 3538124195781019106}
   m_Layer: 0
   m_Name: Melee
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -529,7 +529,7 @@ GameObject:
   - component: {fileID: 5829717358442260822}
   m_Layer: 14
   m_Name: Health
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -614,7 +614,7 @@ GameObject:
   - component: {fileID: 2275517315256472430}
   m_Layer: 0
   m_Name: ScrapShot
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -652,10 +652,9 @@ MonoBehaviour:
   scrapDamage: 10
   scrapStun: 20
   scrapRange: 10
-  scrapCoolDownTime: 0
+  scrapCoolDownTime: 0.5
   magnetizeRadius: 20
   projectile: {fileID: 8300000, guid: 474b62e28094ec24d8acaa34e53fe8dc, type: 3}
-  canRicochet: 0
 --- !u!82 &2275517315256472430
 AudioSource:
   m_ObjectHideFlags: 0
@@ -765,7 +764,7 @@ GameObject:
   - component: {fileID: 1003408597905814130}
   m_Layer: 0
   m_Name: Grapple
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -807,8 +806,6 @@ MonoBehaviour:
   targetUIOffset: 0
   grappleStart: {fileID: 8300000, guid: 415e5c772fd4d7d4dba951fbaad83233, type: 3}
   grappleEnd: {fileID: 8300000, guid: c2be9156618601542b99b300ce919305, type: 3}
-  isAimingGrapple: 0
-  canPull: 0
 --- !u!82 &1003408597905814130
 AudioSource:
   m_ObjectHideFlags: 0

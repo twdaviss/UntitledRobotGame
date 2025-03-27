@@ -24,11 +24,13 @@ namespace RobotGame.States
 
         public override IEnumerator Update()
         {
-            if (enemy.CheckShootRange() && enemy.shootCooldownTimer <= 0)
+            if (enemy.enemyType == EnemyType.Ranged)
             {
-                enemy.TransitionState(new EnemyShoot(enemy));
+                if (enemy.CheckShootRange() && enemy.shootCooldownTimer <= 0)
+                {
+                    enemy.TransitionState(new EnemyShoot(enemy));
+                }
             }
-
             float distance = Vector2.Distance(enemy.transform.position, enemy.target.position);
             if (distance > minDistance || fleeTimer > fleeTime)
             {
