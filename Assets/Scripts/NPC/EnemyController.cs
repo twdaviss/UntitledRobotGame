@@ -97,7 +97,7 @@ public class EnemyController : EnemyStateMachine
 
     public void Damage(float damage = 0, float stun = 0, float knockBack = 0, Vector2 direction = default)
     {
-        if (invincibilityTime > 0.0f) { return; }
+        //if (invincibilityTime > 0.0f) { return; }
 
         if (damage > 0)
         {
@@ -109,7 +109,7 @@ public class EnemyController : EnemyStateMachine
             enemyStun.DealDamage(stun); 
         }
 
-        invincibilityTime = 0.1f;
+        //invincibilityTime = 0.1f;
     }
 
     public void Shoot(Vector2 direction, float speed)
