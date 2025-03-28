@@ -5761,6 +5761,7 @@ MonoBehaviour:
   fleeTime: 2
   isStunned: 0
   shootCooldownTimer: 0
+  isAggroed: 0
 --- !u!50 &1704032984399140240
 Rigidbody2D:
   serializedVersion: 4
@@ -5786,7 +5787,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!70 &2450777006771968736
 CapsuleCollider2D:

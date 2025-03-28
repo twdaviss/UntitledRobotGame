@@ -5464,7 +5464,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -5761,6 +5761,7 @@ MonoBehaviour:
   fleeTime: 2
   isStunned: 0
   shootCooldownTimer: 0
+  isAggroed: 0
 --- !u!50 &1704032984399140240
 Rigidbody2D:
   serializedVersion: 4
@@ -5786,7 +5787,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!70 &2450777006771968736
 CapsuleCollider2D:
@@ -5821,7 +5822,7 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.25, y: 0.0001}
+  m_Size: {x: 0.16, y: 0.0001}
   m_Direction: 0
 --- !u!95 &8318045903128526152
 Animator:
