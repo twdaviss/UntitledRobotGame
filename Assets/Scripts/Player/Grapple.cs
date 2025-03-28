@@ -96,6 +96,8 @@ public class Grapple : MonoBehaviour
         playerController.playerAnimator.SetBool("isBuildingUp", false);
 
         StartCoroutine(GameManager.Instance.ResetTimeScale());
+        GameManager.Instance.DisableHighlight();
+
         isAimingGrapple = false;
         targetObject = null;
     }
@@ -120,6 +122,7 @@ public class Grapple : MonoBehaviour
             playerController.playerAnimator.SetBool("isBuildingUp", false);
 
             StartCoroutine(GameManager.Instance.ResetTimeScale());
+            GameManager.Instance.DisableHighlight();
             targetObject = null;
             PlayGrappleEnd();
             playerController.playerAnimator.SetBool("isGrappling", true);
@@ -146,6 +149,7 @@ public class Grapple : MonoBehaviour
     public void CancelGrapple()
     {
         StartCoroutine(GameManager.Instance.ResetTimeScale());
+        GameManager.Instance.DisableHighlight();
         isAimingGrapple = false;
         targetObject = null;
         targetUI.SetActive(false);
@@ -164,6 +168,7 @@ public class Grapple : MonoBehaviour
             canGrappleAudio = false;
         }
         GameManager.Instance.SetSlowMoTimeScale();
+        GameManager.Instance.EnableHighlight();
         isAimingGrapple = true;
         Vector2 mousePosition = InputManager.Instance.GetMousePosition();
         Vector3 aimDirection = InputManager.Instance.GetAimDirection(playerController.transform.position);

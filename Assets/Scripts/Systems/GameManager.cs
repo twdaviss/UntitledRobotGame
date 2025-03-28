@@ -42,6 +42,12 @@ public class GameManager : MonoBehaviour
     public delegate void UnPaused();
     public static event UnPaused onUnPaused;
 
+    public delegate void Highlight();
+    public static event Highlight onHighlight;
+
+    public delegate void UnHighlight();
+    public static event UnHighlight onUnHighlight;
+
     public bool enableRicochet = false;
     public bool increaseKnockBack = false;
     public bool enableGrapplePull = false;
@@ -150,6 +156,17 @@ public class GameManager : MonoBehaviour
             "<color=\"blue\">Stun:</color> When enemies stun bars fill completely they will enter a <color=\"red\">weakened state.</color> Damage stunned enemies for <color=\"red\">large boost in damage.</color>\r\n";
         TutorialPanel.SetActive(true);
     }
+
+    public void EnableHighlight()
+    {
+        onHighlight();
+    }
+
+    public void DisableHighlight()
+    {
+        onUnHighlight();
+    }
+
     public void DisableTutorial()
     {
         TutorialPanel.SetActive(false);

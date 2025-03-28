@@ -11,6 +11,9 @@
         },
         {
             "m_Id": "2bf5e7876a724e3d98c697b8b76e0f80"
+        },
+        {
+            "m_Id": "78932abb58cc4711a20f992eacc8eac5"
         }
     ],
     "m_Keywords": [],
@@ -1802,6 +1805,9 @@
         },
         {
             "m_Id": "2bf5e7876a724e3d98c697b8b76e0f80"
+        },
+        {
+            "m_Id": "78932abb58cc4711a20f992eacc8eac5"
         }
     ]
 }
@@ -2674,9 +2680,9 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": 546.0,
-            "y": 843.0,
-            "width": 114.0,
+            "x": 493.00006103515627,
+            "y": 1036.0,
+            "width": 113.99993896484375,
             "height": 34.0
         }
     },
@@ -2888,6 +2894,34 @@
     "m_PreviewMode": 0,
     "m_CustomColors": {
         "m_SerializableColors": []
+    }
+}
+
+{
+    "m_SGVersion": 1,
+    "m_Type": "UnityEditor.ShaderGraph.Internal.Vector1ShaderProperty",
+    "m_ObjectId": "78932abb58cc4711a20f992eacc8eac5",
+    "m_Guid": {
+        "m_GuidSerialized": "5cd52ae3-1a56-4f59-8f81-1fe76dd46da5"
+    },
+    "m_Name": "Speed",
+    "m_DefaultRefNameVersion": 1,
+    "m_RefNameGeneratedByDisplayName": "Speed",
+    "m_DefaultReferenceName": "_Speed",
+    "m_OverrideReferenceName": "",
+    "m_GeneratePropertyBlock": true,
+    "m_UseCustomSlotLabel": false,
+    "m_CustomSlotLabel": "",
+    "m_DismissedVersion": 0,
+    "m_Precision": 0,
+    "overrideHLSLDeclaration": false,
+    "hlslDeclarationOverride": 0,
+    "m_Hidden": false,
+    "m_Value": 4.0,
+    "m_FloatType": 0,
+    "m_RangeValues": {
+        "x": 0.0,
+        "y": 1.0
     }
 }
 
@@ -3725,7 +3759,7 @@
     "hlslDeclarationOverride": 0,
     "m_Hidden": false,
     "m_Value": {
-        "m_SerializedTexture": "{\"texture\":{\"fileID\":2800000,\"guid\":\"321a29b8e67712c4ca5e4984283622c8\",\"type\":3}}",
+        "m_SerializedTexture": "{\"texture\":{\"fileID\":2800000,\"guid\":\"c77b66a2e850f414a97ec4869ef93c06\",\"type\":3}}",
         "m_Guid": ""
     },
     "isMainTexture": false,

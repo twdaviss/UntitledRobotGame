@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Spider
+  m_Name: HighlightThick
   m_Shader: {fileID: -6465566751694194690, guid: 991902e7fa09dc74996551b9b462b2ac, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -56,7 +56,7 @@ Material:
     m_Floats:
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Thickness: 0.002
+    - _Thickness: 0.008
     m_Colors:
     - _Outline: {r: 0, g: 0.96862745, b: 1, a: 0}
     - _OutlineThickness: {r: 0.01, g: 0, b: 0, a: 0}

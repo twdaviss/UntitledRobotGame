@@ -5644,6 +5644,7 @@ GameObject:
   - component: {fileID: 2450777006771968736}
   - component: {fileID: 8318045903128526152}
   - component: {fileID: -4044161635340709094}
+  - component: {fileID: 295476533833263585}
   m_Layer: 8
   m_Name: Aggressive Spider
   m_TagString: Enemy
@@ -5691,7 +5692,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 45db60ab5b5aef74cb27f0476933370b, type: 2}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5941,3 +5942,16 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &295476533833263585
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8132658211172884929}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89e60641891c83d47b0db66990b63be4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shaderMaterial: {fileID: 2100000, guid: 45db60ab5b5aef74cb27f0476933370b, type: 2}
